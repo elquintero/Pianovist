@@ -32,6 +32,7 @@ button.p{background:var(--ac);color:var(--at);font-weight:600}
 <dialog id="cfg"><h2>Ajustes</h2>
 <p><label class="btn">Elegir Bravura.otf<input id="ff" type="file" accept=".otf,.ttf,.woff,.woff2" hidden></label> <span id="fs">Sin fuente guardada</span></p>
 <p><label>Teclado MIDI <select id="mi"><option>Sin teclado</option></select></label></p>
+<p><label>Sonido <select id="sn"><option value="p">Piano real</option><option value="s">Sintetizador</option></select></label><br><small id="ps"></small></p>
 <p><label>Volumen <input id="vl" type="range" min="0" max="100" value="60"> <b id="vv">60%</b></label></p>
 <p><label>Tamaño de la partitura <input id="zm" type="range" min="70" max="200" step="10" value="100"> <b id="zv">100%</b></label></p>
 <p><label>Cuenta atrás <select id="ci"><option value="0">Sin cuenta</option><option value="2" selected>2 pulsos</option><option value="bm">1 compás</option></select></label></p>
@@ -57,8 +58,25 @@ if(fontOK)$('fs').textContent='Bravura.otf encontrada junto al HTML';else say('N
 $('ff').onchange=async e=>{const b=await e.target.files[0].arrayBuffer();await useFont(b.slice(0));idb('readwrite','font',b)};
 function theme(t){C=TH[t]||TH.clasico;document.documentElement.dataset.t=t;$('th').value=t;try{localStorage.lp=t}catch{}}
 /* ---------- audio ---------- */
-function A(){if(!ac){ac=new AudioContext();mg=ac.createGain();mg.gain.value=vol*2;mg.connect(ac.destination)}if(ac.state!='running')ac.resume()}
-function tone(m,w,d,v=.7){const o=ac.createOscillator(),o2=ac.createOscillator(),g=ac.createGain(),f=440*2**((m-69)/12);
+function AC(){if(!ac){ac=new AudioContext();mg=ac.createGain();mg.gain.value=vol*2;const cp=ac.createDynamicsCompressor();mg.connect(cp);cp.connect(ac.destination)}}
+function A(){AC();if(ac.state!='running')ac.resume();if(!A.d){A.d=1;pPre(rng(48,84))}}
+/* piano real: muestras mp3 en Sound/ (una por semitono: C4.mp3, Cs4.mp3 = Do#4...) */
+const SN=['C','Cs','D','Ds','E','F','Fs','G','Gs','A','As','B'],pName=m=>SN[m%12]+(Math.floor(m/12)-1),rng=(a,b)=>Array.from({length:b-a+1},(_,i)=>a+i);
+const PB=new Map(),PLD=new Set(),PMISS=new Set(),PQ=[];let PIANO=true,PACT=0;
+function pTrim(b){try{const n=Math.min(b.length,Math.ceil(b.sampleRate*6)),o=ac.createBuffer(b.numberOfChannels,n,b.sampleRate),f=Math.floor(b.sampleRate*.4);
+for(let c=0;c<b.numberOfChannels;c++){const d=b.getChannelData(c).slice(0,n);if(n<b.length)for(let i=0;i<f;i++)d[n-1-i]*=i/f;o.copyToChannel(d,c)}return o}catch{return b}}
+function pLoad(m){return fetch('Sound/'+pName(m)+'.mp3').then(r=>{if(!r.ok)throw 0;return r.arrayBuffer()})
+.then(ab=>new Promise((ok,ko)=>{const q=ac.decodeAudioData(ab,ok,ko);q&&q.catch&&q.catch(ko)})).then(b=>{PB.set(m,pTrim(b))}).catch(()=>{PMISS.add(m);pPre([m<27?27:m>94?94:m-1,m<27?28:m>94?93:m+1])})}
+function pPump(){while(PACT<4&&PQ.length){const m=PQ.shift();PACT++;pLoad(m).then(()=>{PACT--;PLD.delete(m);pStat();pPump()})}}
+function pPre(ms){if(!PIANO)return;AC();for(const m of ms)if(m>=21&&m<=108&&!PB.has(m)&&!PLD.has(m)&&!PMISS.has(m)){PLD.add(m);PQ.push(m)}pPump()}
+function pNear(m){const mx=PMISS.has(m)?14:2;for(let d=1;d<=mx;d++)for(const k of[m-d,m+d])if(PB.has(k))return[PB.get(k),2**((m-k)/12)];return null}
+function pStat(){const e=$('ps');if(!e)return;const ms=[...PMISS].sort((a,b)=>a-b).map(pName);
+e.textContent=PIANO?'Muestras cargadas: '+PB.size+(ms.length?' · faltan en Sound: '+ms.join(', ')+' (se usa la nota vecina)':''):'Sintetizador'}
+function tone(m,w,d,v=.7){if(PIANO){let b=PB.get(m),r=1;if(!b){pPre([m]);const q=pNear(m);if(q){b=q[0];r=q[1]}}if(b)return smp(b,r,w,d,v)}return synth(m,w,d,v)}
+function smp(b,r,w,d,v){const s=ac.createBufferSource(),g=ac.createGain();s.buffer=b;s.playbackRate.value=r;
+g.gain.setValueAtTime(0,w);g.gain.linearRampToValueAtTime(.15+.45*v,w+.004);s.connect(g);g.connect(mg);s.start(w);let x=0;
+const rel=t=>{if(x)return;x=1;t=Math.max(t,w+.01);g.gain.setTargetAtTime(0,t,.09);try{s.stop(t+.7)}catch{}};if(d)rel(w+d);return rel}
+function synth(m,w,d,v=.7){const o=ac.createOscillator(),o2=ac.createOscillator(),g=ac.createGain(),f=440*2**((m-69)/12);
 o.type='triangle';o2.type='sine';o.frequency.value=f;o2.frequency.value=f*2;
 g.gain.setValueAtTime(0,w);g.gain.linearRampToValueAtTime(.3*v,w+.01);g.gain.setTargetAtTime(.08*v,w+.01,.5);
 o.connect(g);o2.connect(g);g.connect(mg);o.start(w);o2.start(w);
@@ -123,7 +141,7 @@ throw Error('El .mxl no contiene MusicXML')}
 $('f').onchange=async e=>{const f=e.target.files[0];if(!f)return;stop();
 try{const x=f.name.toLowerCase().split('.').pop();
 song=x=='mxl'?parseXML(await unzip(await f.arrayBuffer())):/^mid/.test(x)?parseMID(await f.arrayBuffer()):parseXML(await f.text());
-$('bpm').value=song.tempo;setBpm();pos=0;
+$('bpm').value=song.tempo;setBpm();pos=0;pPre([...new Set(song.ev.filter(n=>!n.rest).map(n=>n.midi))].sort((a,b)=>a-b));
 say(`<b>${f.name}</b> cargado: ${song.ev.filter(n=>!n.rest).length} notas, compás ${song.ts.join('/')}.`+(/mid/.test(x)?' (MIDI: manos separadas por altura, sin ritmos escritos exactos).':''))}
 catch(err){song=null;say('No se pudo leer el archivo: '+err.message)}};
 /* ---------- MIDI ---------- */
@@ -134,7 +152,7 @@ const sel=()=>{m.inputs.forEach(i=>i.onmidimessage=null);const i=m.inputs.get($(
 m.onstatechange=fill;$('mi').onchange=sel;fill()},()=>{$('mi').innerHTML='<option>Permiso MIDI denegado</option>'})}
 function onmsg(e){const[s,a,b]=e.data,k=s&240;if(k==144&&b>0)down(a,b/127);else if(k==128||k==144)up(a)}
 function up(m){pressed.delete(m);voices[m]&&voices[m](ac.currentTime);delete voices[m]}
-function down(m,v){A();pressed.add(m);voices[m]=tone(m,ac.currentTime,0,v);if(!song)return;
+function down(m,v){A();pressed.add(m);if(voices[m])voices[m](ac.currentTime);voices[m]=tone(m,ac.currentTime,0,v);if(!song)return;
 if(mode=='tempo'){let b=null;for(const n of song.ev)if(!n.rest&&!n.st&&n.midi==m&&isSel(n)&&Math.abs(n.t-pos)<.6&&(!b||Math.abs(n.t-pos)<Math.abs(b.t-pos)))b=n;
 if(b){b.st='hit';hits++}else wrong++;stat()}
 else if(mode=='wait'&&!dr){const g=group(),n=g.find(x=>x.midi==m&&!x.st);if(n){n.st='hit';hits++}else wrong++;stat()}}
@@ -226,7 +244,10 @@ $('cg').onclick=()=>$('cfg').showModal();$('cc').onclick=()=>$('cfg').close();$(
 try{theme(localStorage.lp||'clasico')}catch{theme('clasico')}
 const sv=(k,v)=>{try{localStorage[k]=v}catch{}};
 $('vl').oninput=e=>{vol=e.target.value/100;$('vv').textContent=e.target.value+'%';if(mg)mg.gain.value=vol*2;sv('lpv',e.target.value)};
+$('sn').onchange=e=>{PIANO=e.target.value=='p';sv('lps',e.target.value);if(PIANO)pPre(rng(48,84));pStat()};
 $('zm').oninput=e=>{Z=e.target.value/100;$('zv').textContent=e.target.value+'%';sv('lpz',e.target.value);size()};
+try{if(localStorage.lps=='s'){$('sn').value='s';PIANO=false}}catch{}
+pStat();
 try{if(localStorage.lpv){$('vl').value=localStorage.lpv;$('vl').oninput({target:$('vl')})}if(localStorage.lpz){$('zm').value=localStorage.lpz;Z=localStorage.lpz/100;$('zv').textContent=localStorage.lpz+'%'}}catch{}
 cv.onpointerdown=e=>{if(!song||e.offsetY>KY)return;dr={x:e.clientX,xp:XT(pos)};cv.setPointerCapture(e.pointerId)};
 cv.onpointermove=e=>{if(dr)seek(invX(dr.xp-(e.clientX-dr.x)/Z))};cv.onpointerup=cv.onpointercancel=()=>{if(dr&&song&&mode=='idle'){const T=song.T;pos=T.reduce((a,t)=>Math.abs(t-pos)<Math.abs(a-pos)?t:a,T[0])}dr=null};
