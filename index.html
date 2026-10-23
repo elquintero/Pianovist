@@ -18,6 +18,7 @@ button:hover,.btn:hover{background:var(--bh)}button:focus-visible,select:focus-v
 button.p{background:var(--ac);color:var(--at);font-weight:600}
 input[type=range]{accent-color:var(--ac)}
 #top{flex:none;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:8px;height:58px;padding:0 12px;background:#000}
+#fsb{flex:none;width:34px;height:34px;padding:0;border-radius:8px;background:transparent;color:#ddd;display:grid;place-items:center;line-height:0}#fsb:hover{background:#222}#fsb svg{width:22px;height:22px}#fsb .co{display:none}#fsb.on .co{display:block}#fsb.on .ex{display:none}
 #lf{display:flex;align-items:center;gap:16px;min-width:0}#tmp{display:flex;align-items:center;gap:8px;font-size:14px;color:#ddd}#tmp input{width:150px;margin:0}#tmp b{font-size:18px;font-weight:500;min-width:30px;color:#fff}
 #ttl{justify-self:center}
 #mw{justify-self:start;display:flex;align-items:center;gap:8px;max-width:100%;padding:4px 8px 4px 10px;border:1px solid #3a3a3a;border-radius:10px;background:#0c0c0c;min-width:0}
@@ -55,13 +56,13 @@ dialog{background:var(--pn);color:var(--tx);border:1px solid var(--bh);border-ra
 dialog::backdrop{background:#000a}dialog h2{margin:0 0 6px;font-size:18px}dialog h3{margin:16px 0 4px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);font-weight:600}
 dialog p{margin:8px 0;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}dialog p label{display:flex;align-items:center;gap:8px}
 dialog input[type=range]{width:150px}#fs,#ps{color:var(--mut);font-size:12px}
-@media (max-height:520px){#top{height:44px}#tm{height:24px}#pgw{height:32px;margin-top:4px}#pgw button{width:26px;height:26px}#pgw button svg{width:18px;height:18px}#pg{height:30px}#pg::-webkit-slider-runnable-track{height:28px}#pg::-webkit-slider-thumb{width:22px;height:22px;margin-top:3px}#pg::-moz-range-track{height:28px}#pg::-moz-range-thumb{width:22px;height:22px}
-#ttl{padding:1px 14px}#ttl small{min-height:0;font-size:11px}#ttl b{font-size:14px}.hb{width:42px;height:42px}.hb svg{width:26px;height:26px}#pb{width:50px;height:50px}#pb svg{width:26px;height:26px}#ctl{top:5px;padding:3px 10px;gap:10px}#mw{padding:2px 6px 2px 8px}}
+@media (max-height:520px){#top{height:40px}#tm{height:24px}#pgw{display:none}#pg::-webkit-slider-runnable-track{height:28px}#pg::-webkit-slider-thumb{width:22px;height:22px;margin-top:3px}#pg::-moz-range-track{height:28px}#pg::-moz-range-thumb{width:22px;height:22px}
+#ttl{padding:1px 14px}#ttl small{min-height:0;font-size:11px}#ttl b{font-size:14px}.hb{width:38px;height:38px}.hb svg{width:24px;height:24px}#pb{width:46px;height:46px}#pb svg{width:26px;height:26px}#ctl{top:4px;padding:3px 10px;gap:10px}#mw{padding:2px 6px 2px 8px}}
 @media (max-width:760px){#tmp{font-size:0;gap:0}#tmp input{width:90px}#tmp b{font-size:16px;margin-left:8px}#lf{gap:10px}#ttl{display:none}}
-@media (max-width:640px){#top{height:52px}#ttl{padding:3px 8px;max-width:none}#ttl small{font-size:11px}#mw select{max-width:110px}}
+@media (max-width:640px){#pgw{display:none}#top{height:52px}#ttl{padding:3px 8px;max-width:none}#ttl small{font-size:11px}#mw select{max-width:110px}}
 </style></head><body>
 <header id="top">
-<div id="lf"><label id="mw" title="Teclado MIDI"><i id="dot"></i><select id="mi"><option>Sin teclado</option></select></label>
+<div id="lf"><button id="fsb" aria-label="Pantalla completa" title="Pantalla completa"><svg class="ex" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><svg class="co" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg></button><label id="mw" title="Teclado MIDI"><i id="dot"></i><select id="mi"><option>Sin teclado</option></select></label>
 <label id="tmp">Tempo <input id="bpm" type="range" min="30" max="220" value="80"> <b id="bv">80</b></label></div>
 <div id="ttl"><small id="cmp"></small><b id="tt">Lectura a primera vista</b></div>
 <button id="cg" aria-label="Ajustes"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
@@ -325,9 +326,9 @@ if(mode=='tempo'){for(const n of song.ev){if(n.t>pos)break;if(live(n)&&!n.st&&is
 if(pos>song.end+.5){mode=='tempo'?finish():(mode='idle')}}
 else if(mode=='wait'&&!dr){const g=group();if(g.length)pos+=(g[0].t-pos)*.15;else finish()}}
 if(song&&!pgd)$('pg').value=Math.round(1000*Math.max(0,Math.min(1,pos/song.end)));$('pg').style.setProperty('--p',$('pg').value/10+'%');const run=mode!='idle'&&mode!='';$('pb').classList.toggle('run',run);$('pgw').classList.toggle('run',run&&!pgd);$('ctl').classList.toggle('hide',run&&!dr&&performance.now()>ctlT);draw();requestAnimationFrame(loop)}
-function size(){const pw=$('pw'),dp=devicePixelRatio,vw=innerWidth,vh=innerHeight;KW=Math.max(100,vw-12);KH=Math.round(Math.min(150,Math.max(56,KW/52*4.5),vh*.2))+8;
+function size(){const pw=$('pw'),dp=devicePixelRatio,vw=innerWidth,vh=innerHeight;KW=Math.max(100,vw-12);KH=Math.round(Math.min(150,Math.max(50,KW/52*4.5),vh*(vh<520?.15:.2)))+8;
 if(kv.style.height!=KH+'px')kv.style.height=KH+'px';const kw=Math.round(KW*dp),kh=Math.round(KH*dp);if(kv.width!=kw||kv.height!=kh){kv.width=kw;kv.height=kh}
-W=pw.clientWidth;H=pw.clientHeight;const tr=$('ctl').offsetHeight+16;Z=Math.max(.35,Math.min(Zu,(H-tr)/(27*S)));SH=H/Z;const t0_=Math.max(tr/Z+3*S,(SH-16*S)*.42);Y[0]=t0_+4*S;Y[1]=t0_+16*S;
+W=pw.clientWidth;H=pw.clientHeight;const tr=$('ctl').offsetHeight+(vh<520?8:16);Z=Math.max(.35,Math.min(Zu,(H-tr)/(22.5*S)));SH=H/Z;const t0_=Math.max(tr/Z+3*S,(SH-16*S)*.42);Y[0]=t0_+4*S;Y[1]=t0_+16*S;
 const cw=Math.round(W*dp),ch=Math.round(H*dp);if(cv.width!=cw||cv.height!=ch){cv.width=cw;cv.height=ch}}
 $('cg').onclick=()=>$('cfg').showModal();$('cc').onclick=()=>$('cfg').close();$('th').onchange=e=>theme(e.target.value);
 try{theme(localStorage.lp||'clasico')}catch{theme('clasico')}
@@ -343,10 +344,11 @@ cv.onpointermove=e=>{if(dr)seek(invX(dr.xp-(e.clientX-dr.x)/Z))};cv.onpointerup=
 $('p0').onclick=()=>{if(song){seek(0);if(mode=='idle')pos=0}};$('p1').onclick=()=>{if(song){const e=song.T.at(-1);seek(e);if(mode=='idle')pos=e}};
 
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>0));
-let fsOut=0;const inFs=()=>document.fullscreenElement||navigator.standalone||matchMedia('(display-mode: fullscreen)').matches||matchMedia('(display-mode: standalone)').matches;
+let fsOut=0;const inFs=()=>document.fullscreenElement||matchMedia('(display-mode: fullscreen)').matches;
 const goFs=()=>{try{const d=document.documentElement;if(!inFs()&&d.requestFullscreen)d.requestFullscreen({navigationUI:'hide'}).catch(()=>{})}catch{}};
 for(const ev of['pointerdown','pointerup'])addEventListener(ev,()=>{if($('fsc').checked&&!fsOut)goFs()},true);
-document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement)fsOut=1});
+document.addEventListener('fullscreenchange',()=>{const f=!!document.fullscreenElement;if(!f)fsOut=1;$('fsb').classList.toggle('on',f);$('fsb').title=f?'Salir de pantalla completa':'Pantalla completa'});
+$('fsb').onclick=()=>{if(document.fullscreenElement){fsOut=1;try{document.exitFullscreen()}catch{}}else{fsOut=0;goFs()}};
 $('fsc').addEventListener('change',e=>{if(e.target.checked){fsOut=0;goFs()}else try{document.exitFullscreen&&document.fullscreenElement&&document.exitFullscreen()}catch{}});
 for(const id of['mode','oth','met','ci','fsc']){const e=$(id),ck=e.type=='checkbox';try{const v=localStorage['lp_'+id];if(v!=null){if(ck)e.checked=v=='1';else e.value=v}}catch{}e.onchange=()=>sv('lp_'+id,ck?(e.checked?1:0):e.value)}
 try{const h=localStorage.lph||'00';for(const[i,x]of['L','R'].entries())if(h[i]=='1')$('h'+x).onclick()}catch{}
