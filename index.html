@@ -19,7 +19,7 @@ button:hover,.btn:hover{background:var(--bh)}button:focus-visible,select:focus-v
 button.p{background:var(--ac);color:var(--at);font-weight:600}
 input[type=range]{accent-color:var(--ac)}
 #top{flex:none;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:8px;height:58px;padding:0 12px;background:#000}
-#fsb{flex:none;width:34px;height:34px;padding:0;border-radius:8px;background:transparent;color:#ddd;display:grid;place-items:center;line-height:0}#fsb:hover{background:#222}#fsb svg{width:22px;height:22px}#fsb .co{display:none}#fsb.on .co{display:block}#fsb.on .ex{display:none}
+#fsb{flex:none;width:28px;height:34px;padding:0;border:0;border-radius:0;box-shadow:none;background:none;opacity:.55;color:#fff;display:grid;place-items:center;line-height:0}#fsb:hover{background:none;opacity:.9}#fsb svg{width:18px;height:18px}#fsb .co{display:none}#fsb.on .co{display:block}#fsb.on .ex{display:none}
 #lf{display:flex;align-items:center;gap:16px;min-width:0}#tmp{display:flex;align-items:center;gap:8px;font-size:14px;color:#ddd}#tmp input{width:150px;margin:0}#tmp b{font-size:18px;font-weight:500;min-width:30px;color:#fff}
 #ttl{justify-self:center}
 #mw{justify-self:start;display:flex;align-items:center;gap:8px;max-width:100%;padding:4px 8px 4px 10px;border:1px solid #3a3a3a;border-radius:10px;background:#0c0c0c;min-width:0}
@@ -91,7 +91,6 @@ dialog input[type=range]{width:150px}#fs,#ps{color:var(--mut);font-size:12px}
 <h3>Pantalla</h3>
 <p><label>Tamaño de la partitura <input id="zm" type="range" min="70" max="250" step="10" value="140"> <b id="zv">140%</b></label></p>
 <p><label>Estilo <select id="th"><option value="clasico">Clásico (negro y naranja)</option><option value="negro">Negro con azul cielo oscuro</option></select></label></p>
-<p><label><input id="fsc" type="checkbox" checked> Pantalla completa</label></p>
 <p><button class="p" id="cc">Cerrar</button></p></dialog>
 <script>
 const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
@@ -347,12 +346,10 @@ $('p0').onclick=()=>{if(song){seek(0);if(mode=='idle')pos=0}};$('p1').onclick=()
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>0));
 let fsOut=0,pickT=0;const inFs=()=>document.fullscreenElement||matchMedia('(display-mode: fullscreen)').matches;
 const goFs=()=>{try{const d=document.documentElement;if(!inFs()&&d.requestFullscreen)d.requestFullscreen({navigationUI:'hide'}).catch(()=>{})}catch{}};
-for(const ev of['pointerdown','pointerup'])addEventListener(ev,()=>{if($('fsc').checked&&!fsOut)goFs()},true);
 document.addEventListener('fullscreenchange',()=>{const f=!!document.fullscreenElement;if(!f&&!(document.hidden||Date.now()-pickT<90000))fsOut=1;$('fsb').classList.toggle('on',f);$('fsb').title=f?'Salir de pantalla completa':'Pantalla completa'});
-$('f').addEventListener('click',()=>{pickT=Date.now()});$('f').addEventListener('change',()=>{pickT=Date.now();fsOut=0;setTimeout(goFs,0)});
+let wasFs=0;$('f').addEventListener('click',()=>{pickT=Date.now();wasFs=!!document.fullscreenElement});$('f').addEventListener('change',()=>{if(wasFs)setTimeout(goFs,0)});
 $('fsb').onclick=()=>{if(document.fullscreenElement){fsOut=1;try{document.exitFullscreen()}catch{}}else{fsOut=0;goFs()}};
-$('fsc').addEventListener('change',e=>{if(e.target.checked){fsOut=0;goFs()}else try{document.exitFullscreen&&document.fullscreenElement&&document.exitFullscreen()}catch{}});
-for(const id of['mode','oth','met','ci','fsc']){const e=$(id),ck=e.type=='checkbox';try{const v=localStorage['lp_'+id];if(v!=null){if(ck)e.checked=v=='1';else e.value=v}}catch{}e.onchange=()=>sv('lp_'+id,ck?(e.checked?1:0):e.value)}
+for(const id of['mode','oth','met','ci']){const e=$(id),ck=e.type=='checkbox';try{const v=localStorage['lp_'+id];if(v!=null){if(ck)e.checked=v=='1';else e.value=v}}catch{}e.onchange=()=>sv('lp_'+id,ck?(e.checked?1:0):e.value)}
 try{const h=localStorage.lph||'00';for(const[i,x]of['L','R'].entries())if(h[i]=='1')$('h'+x).onclick()}catch{}
 addEventListener('resize',size);try{new ResizeObserver(size).observe($('pw'))}catch{}size();chkFont();initMidi();loop();
 </script></body></html>
