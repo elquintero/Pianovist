@@ -8,7 +8,8 @@ App web de una sola página (`index.html`) para practicar lectura a primera vist
 - Botones de mano: **izquierda**, **▶ / ■** y **derecha**. Solo izquierda → practicas la izquierda; solo derecha → la derecha; las dos → ambas; ninguna → ▶ reproduce la canción.
 - Modo por defecto: **esperar mis notas** (en Ajustes también «con tempo»).
 - Arrastra la partitura con el dedo o el ratón: las notas que pasa el cursor se marcan en verde. La barra naranja de abajo también sirve para moverte.
-- Partitura con Bravura: armadura, compás, números de compás, ligaduras, voces y barras de corchea.
+- Partitura con Bravura: armadura, compás, números de compás, ligaduras, voces, barras de corchea, cambios de clave, acordes con segundas, arpegios y calderones.
+- Barra de abajo con botones de principio (⏮) y final (⏭) de la partitura.
 - Piano real (muestras de `Sound/`) o sintetizador.
 - En Ajustes: modo, oír la otra mano, metrónomo, cuenta atrás, sonido, volumen, tamaño de la partitura, estilo y fuente.
 
