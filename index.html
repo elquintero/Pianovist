@@ -151,7 +151,7 @@ if(e.querySelector('rest')){ev.push({t:on,dur,rest:1,hand,vo:q(e,'voice')});cont
 const st=q(e,'step'),al=+(q(e,'alter')||0),oc=+q(e,'octave'),mid=12*(oc+1)+SEMI[STEP[st]]+al,k=mid+hand;
 const bms=[...e.querySelectorAll('beam')].map(b=>[+b.getAttribute('number'),b.textContent]),vo=q(e,'voice'),pp=oc*7+STEP[st];
 if(e.querySelector('tie[type=stop]')&&ties[k]){const o=ties[k],c2={t:on,dur,dd:dur,midi:mid,pos:pp,step:STEP[st],alter:al,hand,vo,bms,bt:btAt(hand,on),tc:1,par:o,pv:o.lc||o};o.dur+=dur;o.lc=c2;ev.push(c2);if(!e.querySelector('tie[type=start]'))delete ties[k];continue}
-const fe=e.querySelector('fermata'),n={t:on,dur,dd:dur,midi:mid,pos:pp,step:STEP[st],alter:al,hand,vo,bms,bt:btAt(hand,on)};if(fe)n.fm=fe.getAttribute('type')=='inverted'?-1:1;if(e.querySelector('arpeggiate'))n.arp=1;ev.push(n);if(e.querySelector('tie[type=start]'))ties[k]=n}}}});
+const fe=e.querySelector('fermata'),n={t:on,dur,dd:dur,midi:mid,pos:pp,step:STEP[st],alter:al,hand,vo,bms,bt:btAt(hand,on)};if(fe)n.fm=fe.getAttribute('type')=='inverted'?-1:1;if(e.getElementsByTagName('arpeggiate').length)n.arp=1;ev.push(n);if(e.querySelector('tie[type=start]'))ties[k]=n}}}});
 const sg=fin(ev,bars,tempo||90,fifths,ts,ccs);sg.clef0={R:clefs.R[0]||{sign:'G',line:2,bt:30},L:clefs.L[0]||{sign:'F',line:4,bt:18}};sg.title=d.querySelector('movement-title')?.textContent?.trim()||d.querySelector('work-title')?.textContent?.trim()||'';
 sg.composer=[...d.querySelectorAll('creator')].find(x=>x.getAttribute('type')=='composer')?.textContent?.trim()||'';return sg}
 function parseMID(buf){const u=new Uint8Array(buf),v=new DataView(buf),div=v.getUint16(12),nt=v.getUint16(10),ev=[];let p=14,tempo=0,ts=[4,4];
@@ -176,19 +176,21 @@ const ka=[0,0,0,0,0,0,0],o=fifths>0?[3,0,4,1,5,2,6]:[6,2,5,1,4,0,3];for(let i=0;
 const ch={};for(const n of ev)if(!n.rest)(ch[n.hand+Math.round(n.t*1000)]??=[]).push(n);
 const farUp=l=>{const mid=l[0].bt+4;return l.reduce((a,n)=>Math.abs(n.pos-mid)>Math.abs(a-mid)?n.pos:a,mid)<mid};
 for(const g of grps)for(const it of g.it)for(const m of ch[g.hand+Math.round(it.t*1000)]||[])if(!m.grp){m.grp=g;it.ns.push(m)}
+const arT=new Set();for(const n of ev)if(n.arp)arT.add(Math.round(n.t*1000));
 for(const l of Object.values(ch)){const u=farUp(l);l.forEach(n=>n.up=u);l.sort((a,b)=>a.pos-b.pos);
 for(let i=1;i<l.length;i++)if(l[i].pos-l[i-1].pos==1&&!l[i-1].sec){l[i].sec=1;l[i-1].sec=-1}
 const cols=[];let mc=0;for(const n of[...l].reverse()){if(n.tc||n.alter==ka[n.step])continue;let c=0;while(cols[c]!=null&&cols[c]-n.pos<6)c++;cols[c]=n.pos;n.ac=c;mc=Math.max(mc,c+1)}
 l.forEach(n=>n.acn=mc);const f=l.find(n=>n.fm),fv=f&&f.fm;if(f){l.forEach(n=>delete n.fm);(fv>0?l.at(-1):l[0]).fm=fv}
-if(l.some(n=>n.arp)&&l.length>1){l.forEach(n=>delete n.arp);l[0].arp=l.at(-1)}else l.forEach(n=>delete n.arp)}
+if((l.some(n=>n.arp)||arT.has(Math.round(l[0].t*1000)))&&l.length>1){l.forEach(n=>delete n.arp);l[0].arp=l.at(-1)}else l.forEach(n=>delete n.arp)}
 for(const g of grps){const all=g.it.flatMap(i=>i.ns);g.up=farUp(all);all.forEach(n=>n.up=g.up)}
-const vs={R:[],L:[]};for(const n of ev)if(n.vo!=null&&!vs[n.hand].includes(n.vo))vs[n.hand].push(n.vo);for(const h in vs)vs[h].sort();
+const vs={R:[],L:[]},av={};for(const n of ev)if(n.vo!=null){const a=av[n.hand+'|'+n.vo]??={h:n.hand,v:n.vo,s:0,c:0};if(!n.rest){a.s+=n.midi;a.c++}}
+for(const a of Object.values(av)){a.m=a.c?a.s/a.c:(parseInt(a.v)%2?1000:-1000);vs[a.h].push(a)}for(const h in vs)vs[h]=vs[h].sort((a,b)=>b.m-a.m).map(a=>a.v);
 for(const n of ev)if(!n.rest&&vs[n.hand].length>1)n.up=n.vo==vs[n.hand][0];for(const g of grps)g.up=g.it[0].ns[0].up;
 const on=[];for(const n of ev){const k=Math.round(n.t*1000)/1000;if(!on.length||on.at(-1).t!=k)on.push({t:k,a:0,s:0});const o=on.at(-1);if(!n.rest&&n.alter!=ka[n.step])o.a=Math.max(o.a,(n.ac||0)+1);if(n.sec)o.s=1;o.w=Math.max(o.w||0,(n.acn||0)*11+(n.arp?10:0))}
 const ccT=new Set();for(const c of ccs||[]){const k=Math.round(c.t*1000)/1000;ccT.add(k);const o=on.find(x=>x.t>=k-.0005);if(o)o.c=1}
-const T=on.map(o=>o.t),XS=[0];for(let i=1;i<on.length;i++)XS.push(XS[i-1]+Math.max(44+(on[i].a?16+11*(on[i].a-1):0)+10*on[i-1].s+(on[i].c?26:0)+(on[i].w&&!on[i].a?on[i].w:0),(T[i]-T[i-1])*PXB));
+const T=on.map(o=>o.t),XS=[0];for(let i=1;i<on.length;i++)XS.push(XS[i-1]+Math.max(48+(on[i].a?16+11*(on[i].a-1):0)+10*on[i-1].s+(on[i].c?26:0)+(on[i].w&&!on[i].a?on[i].w:0),(T[i]-T[i-1])*PXB));
 const WW={};for(const o of on)WW[o.t]=o.w||0;
-return{ev,bars,tempo:Math.round(tempo),fifths,ts,bm,end,ka,grps,T,XS,vs,ccs:ccs||[],ccT,WW}}
+return{ev,bars,tempo:Math.round(tempo),fifths,ts,bm,end,ka,grps,T,XS,vs,ccs:ccs||[],ccT,WW,ch}}
 async function unzip(buf){const v=new DataView(buf),u=new Uint8Array(buf);let e=buf.byteLength-22;while(v.getUint32(e,true)!=0x06054b50)e--;
 let n=v.getUint16(e+10,true),p=v.getUint32(e+16,true);
 for(;n--;){const cm=v.getUint16(p+10,true),cs=v.getUint32(p+20,true),nl=v.getUint16(p+28,true),xl=v.getUint16(p+30,true),kl=v.getUint16(p+32,true),lo=v.getUint32(p+42,true),
@@ -263,7 +265,7 @@ function drawTie(n,x2,col){const p=n.pv,x1=CX+XT(p.t)-xp,r=n.hand=='R'?0:1,y=yOf
 c.fillStyle=col;c.beginPath();c.moveTo(xa,y+d*5);c.quadraticCurveTo((xa+xb)/2,y+d*(5+h*2),xb,y+d*5);c.quadraticCurveTo((xa+xb)/2,y+d*(5+h*2-2.6),xa,y+d*5);c.fill()}
 function drawFerm(n,x){if(!fontOK)return;const r=n.hand=='R'?0:1,y=yOf(r,n.pos,n.bt);c.fillStyle=C.ink;c.font=`${4*S}px Bravura`;
 if(n.fm>0)G('\uE4C0',x-1.21*S,Math.min(Y[r]-4*S,y-2.5*S)-5);else G('\uE4C1',x-1.21*S,Math.max(Y[r],y+2.5*S)+5)}
-function drawArp(n,x,col){const r=n.hand=='R'?0:1,y1=yOf(r,n.pos,n.bt)+S*.6,y2=yOf(r,n.arp.pos,n.arp.bt)-S*.6,ax=x-17-(n.acn||0)*11;c.strokeStyle=col;c.lineWidth=1.3;c.beginPath();c.moveTo(ax,y1);
+function drawArp(n,x,col){const r=n.hand=='R'?0:1,y1=yOf(r,n.pos,n.bt)+S*.6,y2=yOf(r,n.arp.pos,n.arp.bt)-S*.6,ax=x-17-(n.acn||0)*11;c.strokeStyle=col;c.lineWidth=1.6;c.beginPath();c.moveTo(ax,y1);
 let k=0;for(let y=y1;y-3.4>=y2;y-=3.4,k++)c.quadraticCurveTo(ax+(k%2?-3:3),y-1.7,ax,y-3.4);c.stroke()}
 function drawCc(cc,x){if(!fontOK)return;const r=cc.hand=='R'?0:1;c.fillStyle=C.ink;c.font=`${3*S}px Bravura`;G(cc.sign=='F'?'\uE062':cc.sign=='C'?'\uE05C':'\uE050',x,Y[r]-(cc.line-1)*S)}
 function drawBeams(){for(const g of song.grps){const r=g.hand=='R'?0:1,all=g.it.flatMap(i=>i.ns),mid=all[0].bt+4;
@@ -280,7 +282,10 @@ for(let l=1;l<=4;l++){let st=null;g.it.forEach((it,i)=>{const b=it.ns[0].bms.fin
 if(v=='begin')st=i;else if(v=='end'&&st!=null){poly(X[st],X[i],(l-1)*7);st=null}
 else if(v=='forward hook')poly(X[i],X[i]+9,(l-1)*7);else if(v=='backward hook')poly(X[i]-9,X[i],(l-1)*7)})}}}
 function drawRest(n,x,col){const r=n.hand=='R'?0:1;if(!fontOK)return;c.fillStyle=col;c.font=`${4*S}px Bravura`;
-const k=n.dur>=4?0:n.dur>=2?1:n.dur>=1?2:n.dur>=.5?3:4;const vv=song.vs[n.hand],dy=vv&&vv.length>1?(n.vo==vv[0]?-1.5*S:1.5*S):0;G(String.fromCodePoint(0xE4E3+k),x-5,Y[r]-(k==0?3:2)*S+dy)}
+const k=n.dur>=4?0:n.dur>=2?1:n.dur>=1?2:n.dur>=.5?3:4,vv=song.vs[n.hand],multi=vv&&vv.length>1,up=multi&&n.vo==vv[0],y0=Y[r]-(k==0?3:2)*S;
+let yc=y0+(multi?(up?-2*S:2*S):0);const hh=([.5,.5,1.3,1.4,2][k]+.8)*S,ys=(song.ch[n.hand+Math.round(n.t*1000)]||[]).map(m=>yOf(r,m.pos,m.bt));
+for(let i=0;i<8&&ys.some(y=>Math.abs(y-(yc+(k==0?.5*S:0)))<hh);i++)yc+=up?-S:S;
+G(String.fromCodePoint(0xE4E3+k),x-5,yc)}
 const TS=[[38,35,39,36,33,37,34],[24,28,25,29,26,30,27]],TF=[[34,37,33,36,32,35,31],[20,23,19,22,18,21,17]];
 function draw(){c.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);c.clearRect(0,0,W,H);const Wr=W;W=Wr/Z;c.save();c.scale(Z,Z);c.lineWidth=1;c.strokeStyle=C.ln;
 for(let r=0;r<2;r++)for(let l=0;l<5;l++){c.beginPath();c.moveTo(0,Y[r]-l*S);c.lineTo(W,Y[r]-l*S);c.stroke()}
