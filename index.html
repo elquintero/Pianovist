@@ -248,7 +248,7 @@ function G(ch,x,y){c.textAlign='left';c.textBaseline='alphabetic';c.fillText(ch,
 const TSA=[1.88,1.336,1.784,1.684,1.88,1.612,1.736,1.764,1.744,1.736],tsW=n=>String(n).split('').reduce((t,d)=>t+TSA[+d],0);
 const KX=8+3.5*S,kAdv=f=>f>0?1.15*S:S,symOf=ts=>ts.sy=='common'||ts.sy=='cut'?ts.sy:'';
 function sigLay(sg){const fa=sg.fifths,kw=Math.abs(fa)*kAdv(fa),tx=KX+kw+(fa?.7*S:.2*S),bw=symOf(sg.ts)?1.7*S:Math.max(tsW(sg.ts[0]),tsW(sg.ts[1]))*S;return{tx,bw}}
-function setHdr(){const l=sigLay(song);HDR=Math.max(150,Math.ceil(l.tx+l.bw+18));CX=HDR+70}
+function setHdr(){const l=sigLay(song);HDR=Math.max(100,Math.ceil(l.tx+l.bw+6));CX=HDR+70}
 function XT(t){const T=song.T,XS=song.XS,n=T.length;if(t<=T[0])return XS[0]+(t-T[0])*PXB;if(t>=T[n-1])return XS[n-1]+(t-T[n-1])*PXB;
 let a=0,b=n-1;while(b-a>1){const m=(a+b)>>1;T[m]<=t?a=m:b=m}return XS[a]+(t-T[a])/(T[b]-T[a])*(XS[b]-XS[a])}
 function invX(x){const T=song.T,XS=song.XS,n=T.length;if(x<=XS[0])return T[0]+(x-XS[0])/PXB;if(x>=XS[n-1])return T[n-1]+(x-XS[n-1])/PXB;
@@ -345,10 +345,11 @@ cv.onpointermove=e=>{if(dr)seek(invX(dr.xp-(e.clientX-dr.x)/Z))};cv.onpointerup=
 $('p0').onclick=()=>{if(song){seek(0);if(mode=='idle')pos=0}};$('p1').onclick=()=>{if(song){const e=song.T.at(-1);seek(e);if(mode=='idle')pos=e}};
 
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>0));
-let fsOut=0;const inFs=()=>document.fullscreenElement||matchMedia('(display-mode: fullscreen)').matches;
+let fsOut=0,pickT=0;const inFs=()=>document.fullscreenElement||matchMedia('(display-mode: fullscreen)').matches;
 const goFs=()=>{try{const d=document.documentElement;if(!inFs()&&d.requestFullscreen)d.requestFullscreen({navigationUI:'hide'}).catch(()=>{})}catch{}};
 for(const ev of['pointerdown','pointerup'])addEventListener(ev,()=>{if($('fsc').checked&&!fsOut)goFs()},true);
-document.addEventListener('fullscreenchange',()=>{const f=!!document.fullscreenElement;if(!f)fsOut=1;$('fsb').classList.toggle('on',f);$('fsb').title=f?'Salir de pantalla completa':'Pantalla completa'});
+document.addEventListener('fullscreenchange',()=>{const f=!!document.fullscreenElement;if(!f&&!(document.hidden||Date.now()-pickT<90000))fsOut=1;$('fsb').classList.toggle('on',f);$('fsb').title=f?'Salir de pantalla completa':'Pantalla completa'});
+$('f').addEventListener('click',()=>{pickT=Date.now()});$('f').addEventListener('change',()=>{pickT=Date.now();fsOut=0;setTimeout(goFs,0)});
 $('fsb').onclick=()=>{if(document.fullscreenElement){fsOut=1;try{document.exitFullscreen()}catch{}}else{fsOut=0;goFs()}};
 $('fsc').addEventListener('change',e=>{if(e.target.checked){fsOut=0;goFs()}else try{document.exitFullscreen&&document.fullscreenElement&&document.exitFullscreen()}catch{}});
 for(const id of['mode','oth','met','ci','fsc']){const e=$(id),ck=e.type=='checkbox';try{const v=localStorage['lp_'+id];if(v!=null){if(ck)e.checked=v=='1';else e.value=v}}catch{}e.onchange=()=>sv('lp_'+id,ck?(e.checked?1:0):e.value)}
