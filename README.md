@@ -10,13 +10,13 @@ App web de una sola página (`index.html`) para practicar lectura a primera vist
 - Arrastra la partitura con el dedo o el ratón: las notas que pasa el cursor se marcan en verde. La barra naranja de abajo también sirve para moverte.
 - Partitura con Bravura: armadura, compás, números de compás, ligaduras, voces, barras de corchea, cambios de clave, acordes con segundas, arpegios y calderones.
 - Barra de abajo con botones de principio (⏮) y final (⏭) de la partitura.
-- Piano real (muestras de `Sound/`) o sintetizador.
+- Piano real o sintetizador. Muestras en `Sound/<capa>/<nota>.mp3` (capa 2 = suave, 3 = media, 4 = fuerte; ej. `Sound/3/Cs4.mp3` = Do♯4), que se eligen según la fuerza con la que pulsas.
+- Pantalla completa (Ajustes → Pantalla completa) y botón de play que se oculta mientras suena.
 - En Ajustes: modo, oír la otra mano, metrónomo, cuenta atrás, sonido, volumen, tamaño de la partitura, estilo y fuente.
 
 ## Fuente Bravura
 La partitura usa la fuente SMuFL **Bravura** (licencia SIL OFL, se puede redistribuir).
 Colócala en **`fonts/Bravura.otf`** (fuente completa de https://github.com/steinbergmedia/bravura).
-También se puede cargar desde ⚙ Ajustes (queda guardada en el navegador).
 
 ## Instalar en Android (PWA)
 1. Publica el repositorio con GitHub Pages (ver abajo).

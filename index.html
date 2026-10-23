@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="preload" href="fonts/Bravura.otf" as="font" type="font/otf" crossorigin>
 <style>@font-face{font-family:Bravura;src:url("fonts/Bravura.otf") format("opentype"),url("Fonts/Bravura.otf") format("opentype")}</style>
 <title>Lectura a primera vista</title>
@@ -10,13 +11,15 @@
 :root{--bg:#000;--pn:#111;--ac:#e8820c;--tx:#f2f2f2;--bt:#262626;--bh:#3a3a3a;--pa:#fbf9f3;--at:#fff;--mut:#9a9a9a}
 :root[data-t=negro]{--bg:#000;--pn:#0b0b0c;--ac:#1b84c4;--tx:#e6e6e6;--bt:#1c1c1f;--bh:#2b2b30;--pa:#08080a;--at:#fff}
 *{box-sizing:border-box}html,body{height:100%}
-body{margin:0;background:var(--bg);color:var(--tx);font:15px system-ui,sans-serif;display:flex;flex-direction:column;height:100vh;height:100dvh;overflow:hidden;overscroll-behavior:none;user-select:none;-webkit-user-select:none}
+body{margin:0;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);background:var(--bg);color:var(--tx);font:15px system-ui,sans-serif;display:flex;flex-direction:column;height:100vh;height:100dvh;overflow:hidden;overscroll-behavior:none;user-select:none;-webkit-user-select:none}
 label,button,select{font:inherit}
 button,select,.btn{background:var(--bt);color:var(--tx);border:0;border-radius:8px;padding:8px 14px;cursor:pointer}
 button:hover,.btn:hover{background:var(--bh)}button:focus-visible,select:focus-visible,.btn:focus-within,input:focus-visible{outline:2px solid var(--ac)}
 button.p{background:var(--ac);color:var(--at);font-weight:600}
 input[type=range]{accent-color:var(--ac)}
-#top{flex:none;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;height:58px;padding:0 12px;background:#000}
+#top{flex:none;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:8px;height:58px;padding:0 12px;background:#000}
+#lf{display:flex;align-items:center;gap:16px;min-width:0}#tmp{display:flex;align-items:center;gap:8px;font-size:14px;color:#ddd}#tmp input{width:150px;margin:0}#tmp b{font-size:18px;font-weight:500;min-width:30px;color:#fff}
+#ttl{justify-self:center}
 #mw{justify-self:start;display:flex;align-items:center;gap:8px;max-width:100%;padding:4px 8px 4px 10px;border:1px solid #3a3a3a;border-radius:10px;background:#0c0c0c;min-width:0}
 #mw select{background:transparent;padding:4px 2px;border-radius:6px;max-width:180px;text-overflow:ellipsis;color:#fff}
 #mw select option{background:#222;color:#fff}
@@ -28,8 +31,9 @@ input[type=range]{accent-color:var(--ac)}
 #cg{justify-self:end;background:transparent;padding:6px;border-radius:50%;color:#fff;line-height:0}#cg:hover{background:#222}
 #pw{flex:1;min-height:0;position:relative;margin:0 6px;border-radius:12px 12px 0 0;overflow:hidden;background:var(--pa)}
 #cv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
-#ctl{position:absolute;top:10px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:16px;padding:7px 16px;border-radius:30px;background:#ffffffb8;pointer-events:auto}
+#ctl{transition:opacity .25s;position:absolute;top:10px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:16px;padding:7px 16px;border-radius:30px;background:#ffffffb8;pointer-events:auto}
 :root[data-t=negro] #ctl{background:#1a1a1ab8}
+#ctl.hide{opacity:0;pointer-events:none}
 .hb,#pb{width:58px;height:58px;padding:0;border-radius:50%;display:grid;place-items:center;border:1px solid #cfcfcf;background:#f4f4f4;color:#4a4a4a;line-height:0;box-shadow:0 1px 3px #0003}
 .hb:hover{background:#e6e6e6}.hb svg{width:36px;height:36px}.hb.l svg{transform:scaleX(-1)}
 .hb.on{background:var(--ac);border-color:var(--ac);color:#fff}
@@ -41,7 +45,8 @@ input[type=range]{accent-color:var(--ac)}
 #kv{flex:none;display:block;margin:0 6px;width:calc(100% - 12px);background:#000;touch-action:none}
 #pgw{flex:none;display:flex;align-items:center;gap:4px;margin-top:6px;padding:0 10px;height:42px;background:var(--ac);border-top:2px solid #ffffffd0}
 #pgw button{flex:none;width:34px;height:34px;padding:0;border-radius:50%;background:transparent;color:#fff;display:grid;place-items:center;line-height:0}#pgw button:hover{background:#ffffff30}#pgw button svg{width:22px;height:22px}
-#pg{-webkit-appearance:none;appearance:none;flex:1;min-width:0;display:block;height:38px;margin:0 6px;padding:0;background:linear-gradient(#ffffff80,#ffffff80) center/100% 2px no-repeat;cursor:pointer}
+#pg{-webkit-appearance:none;appearance:none;flex:1;min-width:0;display:block;height:38px;margin:0 6px;padding:0;background:linear-gradient(#fff,#fff) left center/var(--p,0%) 4px no-repeat,linear-gradient(#ffffff80,#ffffff80) center/100% 2px no-repeat;cursor:pointer}
+#pgw.run #pg::-webkit-slider-thumb{opacity:0}#pgw.run #pg::-moz-range-thumb{opacity:0}
 #pg::-webkit-slider-runnable-track{height:36px;background:transparent}
 #pg::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;margin-top:5px;border-radius:50%;background:#fff;box-shadow:0 1px 4px #0006}
 #pg::-moz-range-track{height:36px;background:transparent}
@@ -52,10 +57,12 @@ dialog p{margin:8px 0;display:flex;align-items:center;justify-content:space-betw
 dialog input[type=range]{width:150px}#fs,#ps{color:var(--mut);font-size:12px}
 @media (max-height:520px){#top{height:44px}#tm{height:24px}#pgw{height:32px;margin-top:4px}#pgw button{width:26px;height:26px}#pgw button svg{width:18px;height:18px}#pg{height:30px}#pg::-webkit-slider-runnable-track{height:28px}#pg::-webkit-slider-thumb{width:22px;height:22px;margin-top:3px}#pg::-moz-range-track{height:28px}#pg::-moz-range-thumb{width:22px;height:22px}
 #ttl{padding:1px 14px}#ttl small{min-height:0;font-size:11px}#ttl b{font-size:14px}.hb{width:42px;height:42px}.hb svg{width:26px;height:26px}#pb{width:50px;height:50px}#pb svg{width:26px;height:26px}#ctl{top:5px;padding:3px 10px;gap:10px}#mw{padding:2px 6px 2px 8px}}
-@media (max-width:640px){#top{grid-template-columns:auto 1fr auto;height:52px}#ttl{padding:3px 8px;max-width:none}#ttl small{font-size:11px}#mw select{max-width:110px}}
+@media (max-width:760px){#tmp{font-size:0;gap:0}#tmp input{width:90px}#tmp b{font-size:16px;margin-left:8px}#lf{gap:10px}#ttl{display:none}}
+@media (max-width:640px){#top{height:52px}#ttl{padding:3px 8px;max-width:none}#ttl small{font-size:11px}#mw select{max-width:110px}}
 </style></head><body>
 <header id="top">
-<label id="mw" title="Teclado MIDI"><i id="dot"></i><select id="mi"><option>Sin teclado</option></select></label>
+<div id="lf"><label id="mw" title="Teclado MIDI"><i id="dot"></i><select id="mi"><option>Sin teclado</option></select></label>
+<label id="tmp">Tempo <input id="bpm" type="range" min="30" max="220" value="80"> <b id="bv">80</b></label></div>
 <div id="ttl"><small id="cmp"></small><b id="tt">Lectura a primera vista</b></div>
 <button id="cg" aria-label="Ajustes"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
 </header>
@@ -66,12 +73,11 @@ dialog input[type=range]{width:150px}#fs,#ps{color:var(--mut);font-size:12px}
 <button id="hR" class="hb" aria-label="Mano derecha" aria-pressed="false" title="Mano derecha"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="7.2" y="4.2" width="2.7" height="9" rx="1.35"/><rect x="10.2" y="2.4" width="2.7" height="10.6" rx="1.35"/><rect x="13.2" y="3.2" width="2.7" height="9.8" rx="1.35"/><rect x="16.2" y="5.4" width="2.6" height="8" rx="1.3"/><path d="M7.2 11v3.2L4.6 11.4a1.5 1.5 0 0 0-2.1 2.1l4.3 5.5A5 5 0 0 0 10.7 21H14a4.8 4.8 0 0 0 4.8-4.8V12H7.2z"/></svg></button>
 </div>
 <div id="st">Carga una canción en ⚙ Ajustes y conecta tu teclado.</div></div>
-<div id="tm"><label>Tempo <input id="bpm" type="range" min="30" max="220" value="80"> <b id="bv">80</b></label></div>
 <canvas id="kv"></canvas>
 <div id="pgw"><button id="p0" aria-label="Ir al principio" title="Principio"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2.2v14H6zM19 5v14L9.5 12z"/></svg></button><input id="pg" type="range" min="0" max="1000" value="0" aria-label="Posición en la canción"><button id="p1" aria-label="Ir al final" title="Final"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.8 5H18v14h-2.2zM5 5l9.5 7L5 19z"/></svg></button></div>
 <dialog id="cfg"><h2>Ajustes</h2>
 <h3>Canción</h3>
-<p><label class="btn">Cargar canción<input id="f" type="file" accept=".musicxml,.xml,.mxl,.mid,.midi" hidden></label><button id="rw">⏮ Volver al inicio</button></p>
+<p><label class="btn">Cargar canción<input id="f" type="file" accept=".musicxml,.xml,.mxl,.mid,.midi" hidden></label></p>
 <h3>Práctica</h3>
 <p><label>Modo <select id="mode"><option value="wait" selected>Esperar mis notas</option><option value="tempo">Con tempo</option></select></label></p>
 <p><label><input id="oth" type="checkbox" checked> Oír la otra mano</label></p>
@@ -83,11 +89,11 @@ dialog input[type=range]{width:150px}#fs,#ps{color:var(--mut);font-size:12px}
 <h3>Pantalla</h3>
 <p><label>Tamaño de la partitura <input id="zm" type="range" min="70" max="250" step="10" value="140"> <b id="zv">140%</b></label></p>
 <p><label>Estilo <select id="th"><option value="clasico">Clásico (negro y naranja)</option><option value="negro">Negro con azul cielo oscuro</option></select></label></p>
-<p><label class="btn">Elegir Bravura.otf<input id="ff" type="file" accept=".otf,.ttf,.woff,.woff2" hidden></label> <span id="fs">Sin fuente guardada</span></p>
+<p><label><input id="fsc" type="checkbox" checked> Pantalla completa</label></p>
 <p><button class="p" id="cc">Cerrar</button></p></dialog>
 <script>
 const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
-const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
+const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,ctlT=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
 let song=null,mode='idle',pos=0,bpm=80,t0=0,sp0=0,nb=0,ni=0,ac,fontOK=false,W=600,wrong=0,hits=0,miss=0;
 const pressed=new Set(),voices={};
 const hs={L:0,R:0},isSel=n=>(!hs.L&&!hs.R)||(hs.L&&hs.R)||(n.hand=='L'?hs.L:hs.R),live=n=>!n.rest&&!n.tc,GREEN='#1f9d55';
@@ -99,32 +105,29 @@ const say=h=>$('st').innerHTML=h;
 const TH={clasico:{ln:'#222',ink:'#1c1c1c',gr:'#aaa',kw:'#fff',kb:'#222',kl:'#999',cur:'#e8820c',hr:'#34a853',ac:'#e8820c',ex:'#4aa3e8',ex2:'#2b78b8',pa:'#fbf9f3'},
 negro:{ln:'#7d7d85',ink:'#e6e6e6',gr:'#55555c',kw:'#d6d6da',kb:'#101012',kl:'#444',cur:'#1b84c4',hr:'#3ddc97',ac:'#1b84c4',ex:'#5bb8e8',ex2:'#2f86b8',pa:'#08080a'}};let C=TH.clasico;
 /* ---------- fuente ---------- */
-const db=()=>new Promise((ok,ko)=>{const r=indexedDB.open('lpiano',1);r.onupgradeneeded=()=>r.result.createObjectStore('k');r.onsuccess=()=>ok(r.result);r.onerror=ko});
-const idb=async(m,k,v)=>{const d=await db();return new Promise(ok=>{const o=d.transaction('k',m).objectStore('k'),r=m=='readwrite'?o.put(v,k):o.get(k);r.onsuccess=()=>ok(r.result);r.onerror=()=>ok()})};
-async function useFont(b){const f=new FontFace('Bravura',b);document.fonts.add(await f.load());fontOK=true;$('fs').textContent='Bravura cargada y guardada en este navegador'}
-async function chkFont(){try{const b=await idb('readonly','font');if(b){await useFont(b);return}}catch{}
-await document.fonts.load('40px Bravura','\uE050\uE062\uE0A4\uE262\uE080').then(l=>fontOK=l.length>0,()=>0);
-if(fontOK)$('fs').textContent='Bravura cargada desde fonts/Bravura.otf';else say('No encuentro <b>fonts/Bravura.otf</b>: súbela a la carpeta fonts/ o elígela en ⚙ Ajustes.')}
-$('ff').onchange=async e=>{const b=await e.target.files[0].arrayBuffer();await useFont(b.slice(0));idb('readwrite','font',b)};
+async function chkFont(){await document.fonts.load('40px Bravura','\uE050\uE062\uE0A4\uE262\uE080').then(l=>fontOK=l.length>0,()=>0);if(!fontOK)say('No encuentro <b>fonts/Bravura.otf</b>.')}
 function theme(t){C=TH[t]||TH.clasico;document.documentElement.dataset.t=t;$('th').value=t;try{localStorage.lp=t}catch{}}
 /* ---------- audio ---------- */
 function AC(){if(!ac){ac=new AudioContext();mg=ac.createGain();mg.gain.value=vol*2;const cp=ac.createDynamicsCompressor();mg.connect(cp);cp.connect(ac.destination)}}
 function A(){AC();if(ac.state!='running')ac.resume();if(!A.d){A.d=1;pPre(rng(48,84))}}
 /* piano real: muestras mp3 en Sound/ (una por semitono: C4.mp3, Cs4.mp3 = Do#4...) */
 const SN=['C','Cs','D','Ds','E','F','Fs','G','Gs','A','As','B'],pName=m=>SN[m%12]+(Math.floor(m/12)-1),rng=(a,b)=>Array.from({length:b-a+1},(_,i)=>a+i);
-const PB=new Map(),PLD=new Set(),PMISS=new Set(),PQ=[];let PIANO=true,PACT=0;
+const PAV={2:new Set([50, 53, 55, 57, 58, 59, 60, 62, 64, 66, 67, 69, 71, 72, 73, 74, 76, 77, 79, 81]),3:new Set([36, 41, 42, 43, 44, 47, 48, 50, 51, 52, 53, 55, 56, 57, 58, 59, 60, 62, 63, 64, 65, 66, 67, 69, 71, 72, 73, 74, 76, 77, 79, 81]),4:new Set([36, 41, 42, 43, 44, 47, 48, 50, 51, 52, 53, 55, 56, 57, 58, 59, 60, 62, 63, 64, 65, 66, 67, 69, 71, 72, 73, 74, 76, 77, 79, 81])},PB=new Map(),PLD=new Set(),PBAD=new Set(),PQ=[];let PIANO=true,PACT=0;
+/* muestras: Sound/<capa>/<nota>.mp3 · capa 2 = suave, 3 = media, 4 = fuerte (según la velocidad con la que pulsas) */
+const pk=(L,m)=>L*1000+m,layerOf=(v,m)=>{const L=v<.4?2:v<.72?3:4;return L==2&&m<50?3:L};
+function pSrc(L,m){let b=null,bd=99;for(const x of PAV[L]){const d=Math.abs(x-m);if(d<bd){bd=d;b=x}}return b}
 function pTrim(b){try{const n=Math.min(b.length,Math.ceil(b.sampleRate*6)),o=ac.createBuffer(b.numberOfChannels,n,b.sampleRate),f=Math.floor(b.sampleRate*.4);
 for(let c=0;c<b.numberOfChannels;c++){const d=b.getChannelData(c).slice(0,n);if(n<b.length)for(let i=0;i<f;i++)d[n-1-i]*=i/f;o.copyToChannel(d,c)}return o}catch{return b}}
-function pLoad(m){return fetch('Sound/'+pName(m)+'.mp3').then(r=>{if(!r.ok)throw 0;return r.arrayBuffer()})
-.then(ab=>new Promise((ok,ko)=>{const q=ac.decodeAudioData(ab,ok,ko);q&&q.catch&&q.catch(ko)})).then(b=>{PB.set(m,pTrim(b))}).catch(()=>{PMISS.add(m);pPre([m<27?27:m>94?94:m-1,m<27?28:m>94?93:m+1])})}
-function pPump(){while(PACT<4&&PQ.length){const m=PQ.shift();PACT++;pLoad(m).then(()=>{PACT--;PLD.delete(m);pStat();pPump()})}}
-function pPre(ms){if(!PIANO)return;AC();for(const m of ms)if(m>=21&&m<=108&&!PB.has(m)&&!PLD.has(m)&&!PMISS.has(m)){PLD.add(m);PQ.push(m)}pPump()}
-function pNear(m){const mx=PMISS.has(m)?14:2;for(let d=1;d<=mx;d++)for(const k of[m-d,m+d])if(PB.has(k))return[PB.get(k),2**((m-k)/12)];return null}
-function pStat(){const e=$('ps');if(!e)return;const ms=[...PMISS].sort((a,b)=>a-b).map(pName);
-e.textContent=PIANO?'Muestras cargadas: '+PB.size+(ms.length?' · faltan en Sound: '+ms.join(', ')+' (se usa la nota vecina)':''):'Sintetizador'}
-function tone(m,w,d,v=.7){if(PIANO){let b=PB.get(m),r=1;if(!b){pPre([m]);const q=pNear(m);if(q){b=q[0];r=q[1]}}if(b)return smp(b,r,w,d,v)}return synth(m,w,d,v)}
+function pLoad(k){const L=k/1000|0,m=k%1000;return fetch('Sound/'+L+'/'+pName(m)+'.mp3').then(r=>{if(!r.ok)throw 0;return r.arrayBuffer()})
+.then(ab=>new Promise((ok,ko)=>{const q=ac.decodeAudioData(ab,ok,ko);q&&q.catch&&q.catch(ko)})).then(b=>{PB.set(k,pTrim(b))}).catch(()=>{PBAD.add(k)})}
+function pPump(){while(PACT<4&&PQ.length){const k=PQ.shift();PACT++;pLoad(k).then(()=>{PACT--;PLD.delete(k);pStat();pPump()})}}
+function pPre(ms,L=3){if(!PIANO)return;AC();for(const m of ms){if(m<21||m>108)continue;const LL=L==2&&m<50?3:L,k=pk(LL,pSrc(LL,m));if(!PB.has(k)&&!PLD.has(k)&&!PBAD.has(k)){PLD.add(k);PQ.push(k)}}pPump()}
+function pGet(m,v){const L=layerOf(v,m),src=pSrc(L,m),b=PB.get(pk(L,src));if(b)return[b,2**((m-src)/12)];pPre([m],L);
+let best=null,bd=1e9;for(const[kk,bb]of PB){const mm=kk%1000,d=Math.abs(mm-m)+((kk/1000|0)==L?0:.5);if(d<bd){bd=d;best=[bb,2**((m-mm)/12)]}}return bd<=14?best:null}
+function pStat(){const e=$('ps');if(!e)return;e.textContent=PIANO?'Muestras cargadas: '+PB.size+' · 3 intensidades · C2–A5 (fuera de ese rango se transpone)':'Sintetizador'}
+function tone(m,w,d,v=.7){if(PIANO){const q=pGet(m,v);if(q)return smp(q[0],q[1],w,d,v)}return synth(m,w,d,v)}
 function smp(b,r,w,d,v){const s=ac.createBufferSource(),g=ac.createGain();s.buffer=b;s.playbackRate.value=r;
-g.gain.setValueAtTime(0,w);g.gain.linearRampToValueAtTime(.15+.45*v,w+.004);s.connect(g);g.connect(mg);s.start(w);let x=0;
+g.gain.setValueAtTime(0,w);g.gain.linearRampToValueAtTime(3.4*(.7+.3*v),w+.004);s.connect(g);g.connect(mg);s.start(w);let x=0;
 const rel=t=>{if(x)return;x=1;t=Math.max(t,w+.01);g.gain.setTargetAtTime(0,t,.09);try{s.stop(t+.7)}catch{}};if(d)rel(w+d);return rel}
 function synth(m,w,d,v=.7){const o=ac.createOscillator(),o2=ac.createOscillator(),g=ac.createGain(),f=440*2**((m-69)/12);
 o.type='triangle';o2.type='sine';o.frequency.value=f;o2.frequency.value=f*2;
@@ -219,7 +222,7 @@ if(mode=='tempo'){let b=null;for(const n of song.ev)if(live(n)&&!n.st&&n.midi==m
 if(b){b.st='hit';hits++}else wrong++;stat()}
 else if(mode=='wait'&&!dr){const g=group(),n=g.find(x=>x.midi==m&&!x.st);if(n){n.st='hit';hits++}else wrong++;stat()}}
 const group=()=>{const l=song.ev.filter(n=>live(n)&&!n.st&&isSel(n)&&n.t>=lo);if(!l.length)return[];const t=l[0].t;return l.filter(n=>Math.abs(n.t-t)<.01)};
-const stat=()=>say(`Aciertos <b>${hits}</b> · Fallos <b>${miss}</b> · Notas erróneas <b>${wrong}</b>`);
+const stat=()=>mode=='listen'?say(''):say(`Aciertos <b>${hits}</b> · Fallos <b>${miss}</b> · Notas erróneas <b>${wrong}</b>`);
 /* ---------- transporte ---------- */
 function setBpm(){const nb_=+$('bpm').value;if(mode=='listen'||mode=='tempo'){sp0=pos;t0=ac.currentTime}bpm=nb_;$('bv').textContent=bpm}
 $('bpm').oninput=setBpm;
@@ -321,7 +324,7 @@ if(mode=='listen'||mode=='tempo'){pos=sp0+(ac.currentTime-t0)*bpm/60;
 if(mode=='tempo'){for(const n of song.ev){if(n.t>pos)break;if(live(n)&&!n.st&&isSel(n)&&n.t>=lo&&n.t+.6<pos){n.st='miss';miss++;stat()}}}
 if(pos>song.end+.5){mode=='tempo'?finish():(mode='idle')}}
 else if(mode=='wait'&&!dr){const g=group();if(g.length)pos+=(g[0].t-pos)*.15;else finish()}}
-if(song&&!pgd)$('pg').value=Math.round(1000*Math.max(0,Math.min(1,pos/song.end)));$('pb').classList.toggle('run',mode!='idle'&&mode!='');draw();requestAnimationFrame(loop)}
+if(song&&!pgd)$('pg').value=Math.round(1000*Math.max(0,Math.min(1,pos/song.end)));$('pg').style.setProperty('--p',$('pg').value/10+'%');const run=mode!='idle'&&mode!='';$('pb').classList.toggle('run',run);$('pgw').classList.toggle('run',run&&!pgd);$('ctl').classList.toggle('hide',run&&!dr&&performance.now()>ctlT);draw();requestAnimationFrame(loop)}
 function size(){const pw=$('pw'),dp=devicePixelRatio,vw=innerWidth,vh=innerHeight;KW=Math.max(100,vw-12);KH=Math.round(Math.min(150,Math.max(56,KW/52*4.5),vh*.2))+8;
 if(kv.style.height!=KH+'px')kv.style.height=KH+'px';const kw=Math.round(KW*dp),kh=Math.round(KH*dp);if(kv.width!=kw||kv.height!=kh){kv.width=kw;kv.height=kh}
 W=pw.clientWidth;H=pw.clientHeight;const tr=$('ctl').offsetHeight+16;Z=Math.max(.35,Math.min(Zu,(H-tr)/(27*S)));SH=H/Z;const t0_=Math.max(tr/Z+3*S,(SH-16*S)*.42);Y[0]=t0_+4*S;Y[1]=t0_+16*S;
@@ -335,12 +338,17 @@ $('zm').oninput=e=>{Zu=e.target.value/100;$('zv').textContent=e.target.value+'%'
 try{if(localStorage.lps=='s'){$('sn').value='s';PIANO=false}}catch{}
 pStat();
 try{if(localStorage.lpv){$('vl').value=localStorage.lpv;$('vl').oninput({target:$('vl')})}if(localStorage.lpz2){$('zm').value=localStorage.lpz2;Zu=localStorage.lpz2/100;$('zv').textContent=localStorage.lpz2+'%'}}catch{}
-cv.onpointerdown=e=>{if(!song)return;dr={x:e.clientX,xp:XT(pos)};cv.setPointerCapture(e.pointerId)};
-cv.onpointermove=e=>{if(dr)seek(invX(dr.xp-(e.clientX-dr.x)/Z))};cv.onpointerup=cv.onpointercancel=()=>{if(dr&&song&&mode=='idle'){const T=song.T;pos=T.reduce((a,t)=>Math.abs(t-pos)<Math.abs(a-pos)?t:a,T[0])}dr=null};
+cv.onpointerdown=e=>{ctlT=performance.now()+3000;if(!song)return;dr={x:e.clientX,xp:XT(pos)};cv.setPointerCapture(e.pointerId)};
+cv.onpointermove=e=>{if(dr)seek(invX(dr.xp-(e.clientX-dr.x)/Z))};cv.onpointerup=cv.onpointercancel=()=>{ctlT=performance.now()+2500;if(dr&&song&&mode=='idle'){const T=song.T;pos=T.reduce((a,t)=>Math.abs(t-pos)<Math.abs(a-pos)?t:a,T[0])}dr=null};
 $('p0').onclick=()=>{if(song){seek(0);if(mode=='idle')pos=0}};$('p1').onclick=()=>{if(song){const e=song.T.at(-1);seek(e);if(mode=='idle')pos=e}};
-$('rw').onclick=()=>{if(song){stop();seek(0);pos=0}$('cfg').close()};
+
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>0));
-for(const id of['mode','oth','met','ci']){const e=$(id),ck=e.type=='checkbox';try{const v=localStorage['lp_'+id];if(v!=null){if(ck)e.checked=v=='1';else e.value=v}}catch{}e.onchange=()=>sv('lp_'+id,ck?(e.checked?1:0):e.value)}
+let fsOut=0;const inFs=()=>document.fullscreenElement||navigator.standalone||matchMedia('(display-mode: fullscreen)').matches||matchMedia('(display-mode: standalone)').matches;
+const goFs=()=>{try{const d=document.documentElement;if(!inFs()&&d.requestFullscreen)d.requestFullscreen({navigationUI:'hide'}).catch(()=>{})}catch{}};
+for(const ev of['pointerdown','pointerup'])addEventListener(ev,()=>{if($('fsc').checked&&!fsOut)goFs()},true);
+document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement)fsOut=1});
+$('fsc').addEventListener('change',e=>{if(e.target.checked){fsOut=0;goFs()}else try{document.exitFullscreen&&document.fullscreenElement&&document.exitFullscreen()}catch{}});
+for(const id of['mode','oth','met','ci','fsc']){const e=$(id),ck=e.type=='checkbox';try{const v=localStorage['lp_'+id];if(v!=null){if(ck)e.checked=v=='1';else e.value=v}}catch{}e.onchange=()=>sv('lp_'+id,ck?(e.checked?1:0):e.value)}
 try{const h=localStorage.lph||'00';for(const[i,x]of['L','R'].entries())if(h[i]=='1')$('h'+x).onclick()}catch{}
 addEventListener('resize',size);try{new ResizeObserver(size).observe($('pw'))}catch{}size();chkFont();initMidi();loop();
 </script></body></html>
