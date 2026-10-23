@@ -3,17 +3,19 @@
 App web de una sola página (`index.html`) para practicar lectura a primera vista con un teclado MIDI, al estilo Flowkey.
 
 ## Funciones
-- Carga de canciones en **MusicXML** (`.musicxml`, `.xml`, `.mxl`) y MIDI (`.mid`).
-- Conexión con teclado MIDI (Web MIDI: Chrome o Edge).
-- Práctica con tempo o esperando tus notas, mano derecha / izquierda / ambas.
-- Metrónomo, cuenta atrás, tempo ajustable, reproducción de la canción.
-- Arrastrar la partitura para elegir dónde empezar.
-- Ajustes: teclado MIDI, volumen, tamaño de la partitura, tema, fuente Bravura.
+- Carga de canciones en **MusicXML** (`.musicxml`, `.xml`, `.mxl`) y MIDI (`.mid`) desde ⚙ Ajustes.
+- Conexión con teclado MIDI (Web MIDI: Chrome o Edge): selector arriba a la izquierda, con punto verde cuando hay teclado.
+- Botones de mano: **izquierda**, **▶ / ■** y **derecha**. Solo izquierda → practicas la izquierda; solo derecha → la derecha; las dos → ambas; ninguna → ▶ reproduce la canción.
+- Modo por defecto: **esperar mis notas** (en Ajustes también «con tempo»).
+- Arrastra la partitura con el dedo o el ratón: las notas que pasa el cursor se marcan en verde. La barra naranja de abajo también sirve para moverte.
+- Partitura con Bravura: armadura, compás, números de compás, ligaduras, voces y barras de corchea.
+- Piano real (muestras de `Sound/`) o sintetizador.
+- En Ajustes: modo, oír la otra mano, metrónomo, cuenta atrás, sonido, volumen, tamaño de la partitura, estilo y fuente.
 
 ## Fuente Bravura
 La partitura usa la fuente SMuFL **Bravura** (licencia SIL OFL, se puede redistribuir).
-Descarga `Bravura.otf` desde https://github.com/steinbergmedia/bravura y colócala **junto a `index.html`**
-(o cárgala desde ⚙ Ajustes, queda guardada en el navegador).
+Colócala en **`fonts/Bravura.otf`** (fuente completa de https://github.com/steinbergmedia/bravura).
+También se puede cargar desde ⚙ Ajustes (queda guardada en el navegador).
 
 ## Instalar en Android (PWA)
 1. Publica el repositorio con GitHub Pages (ver abajo).
