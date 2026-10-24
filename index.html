@@ -5,7 +5,7 @@
 <link rel="preload" href="fonts/Bravura.otf" as="font" type="font/otf" crossorigin>
 <style>@font-face{font-family:Bravura;src:url("fonts/Bravura.otf") format("opentype"),url("Fonts/Bravura.otf") format("opentype")}@media (max-width:640px),(max-height:520px){#cg{padding:4px}#cg svg{width:22px;height:22px}}
 </style>
-<title>Lectura a primera vista</title>
+<title>SightKeys</title>
 <link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#000000">
 <link rel="icon" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/icon-192.png">
 <style>
@@ -18,11 +18,11 @@ button,select,.btn{background:var(--bt);color:var(--tx);border:0;border-radius:8
 button:hover,.btn:hover{background:var(--bh)}button:focus-visible,select:focus-visible,.btn:focus-within,input:focus-visible{outline:2px solid var(--ac)}
 button.p{background:var(--ac);color:var(--at);font-weight:600}
 input[type=range]{accent-color:var(--ac)}
-#top{flex:none;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:8px;height:58px;padding:0 12px;background:#000}
+#top{position:relative;flex:none;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:8px;height:58px;padding:0 12px;background:#000}
 #lf{display:flex;align-items:center;gap:16px;min-width:0}#tmp{display:flex;align-items:center;gap:8px;font-size:14px;color:#ddd}#tmp input{width:150px;margin:0}#tmp b{font-size:18px;font-weight:500;min-width:30px;color:#fff}
-#ttl{justify-self:center}
+#ttl{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}#lf{grid-column:1}#cg{grid-column:3}
 #mw{justify-self:start;display:flex;align-items:center;gap:8px;max-width:100%;padding:4px 6px;border:0;border-radius:0;background:none;min-width:0}
-#mw select{background:transparent;padding:4px 2px;border-radius:6px;max-width:180px;text-overflow:ellipsis;color:#fff}
+#mw select{background:transparent;padding:4px 2px;border-radius:6px;width:6.2ch;text-overflow:ellipsis;color:#fff}
 #mw select option{background:#222;color:#fff}
 #dot{width:14px;height:14px;border-radius:50%;background:#777;flex:none}#dot.on{background:#18d33a;box-shadow:0 0 6px #18d33a99}
 #ttl{display:flex;flex-direction:column;align-items:center;text-align:center;padding:5px 18px;border-radius:8px;background:#141414;min-width:0;max-width:46vw}
@@ -58,8 +58,8 @@ dialog p{margin:8px 0;display:flex;align-items:center;justify-content:space-betw
 dialog input[type=range]{width:150px}#fs,#ps{color:var(--mut);font-size:12px}
 @media (max-height:520px){#top{height:40px}#tm{height:24px}#pgw{display:none}#pg::-webkit-slider-runnable-track{height:28px}#pg::-webkit-slider-thumb{width:22px;height:22px;margin-top:3px}#pg::-moz-range-track{height:28px}#pg::-moz-range-thumb{width:22px;height:22px}
 #ttl{padding:1px 14px}#ttl small{min-height:0;font-size:11px}#ttl b{font-size:14px}.hb{width:38px;height:38px}.hb svg{width:24px;height:24px}#pb{width:46px;height:46px}#pb svg{width:26px;height:26px}#ctl{top:4px;padding:3px 10px;gap:10px}#mw{padding:2px 6px 2px 8px}}
-@media (max-width:760px){#lf{gap:10px}#ttl{display:none}}
-@media (max-width:640px){#pgw{display:none}#top{height:52px}#ttl{padding:3px 8px;max-width:none}#ttl small{font-size:11px}#mw select{max-width:110px}}
+@media (max-width:520px){#lf{gap:10px}#ttl{display:none}}
+@media (max-width:640px){#pgw{display:none}#top{height:52px}#ttl{padding:3px 8px;max-width:50vw}#ttl small{font-size:11px}#mw select{width:6.2ch}}
 body.home #app{display:none}body:not(.home) #home{display:none}
 #app{flex:1;min-height:0;display:flex;flex-direction:column}
 #home{flex:1;min-height:0;display:flex;flex-direction:column;background:#141414}
@@ -78,6 +78,7 @@ body.home #app{display:none}body:not(.home) #home{display:none}
 .hc .tx{flex:1;min-width:0}.hc .tx b{display:block;font-size:18px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hc .tx small{display:block;margin-top:3px;font-size:12.5px;color:var(--mut);line-height:1.3}
 .hc .n{color:var(--mut);font-size:14px}.hc .cv{width:20px;height:20px;color:#777;flex:none}.hc:hover .cv{color:var(--ac)}
+dialog .dh{display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:2;background:inherit;padding:2px 0 8px}dialog .dh h2{margin:0}
 #hcfgd{max-width:min(94vw,460px);max-height:90vh;overflow:auto}
 #hcfgd input[type=text],#hcfgd select{width:100%;margin-top:4px;padding:8px;background:var(--bt);color:var(--tx);border:1px solid #3a3a3a;border-radius:8px}
 #hcfgd label:not(.btn){display:block}#hcfgd p{margin:10px 0}#hcfgd small{color:var(--mut)}
@@ -92,7 +93,7 @@ body.home #app{display:none}body:not(.home) #home{display:none}
 <header id="top">
 <div id="lf"><button id="bk" aria-label="Volver a las categorías" title="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><label id="mw" title="Teclado MIDI"><i id="dot"></i><select id="mi"><option>Sin teclado</option></select></label>
 </div>
-<div id="ttl"><small id="cmp"></small><b id="tt">Lectura a primera vista</b></div>
+<div id="ttl"><small id="cmp"></small><b id="tt">SightKeys</b></div>
 <button id="cg" aria-label="Ajustes"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
 </header>
 <div id="pw"><canvas id="cv"></canvas>
@@ -105,8 +106,8 @@ body.home #app{display:none}body:not(.home) #home{display:none}
 <canvas id="kv"></canvas>
 <div id="pgw"><button id="p0" aria-label="Ir al principio" title="Principio"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2.2v14H6zM19 5v14L9.5 12z"/></svg></button><input id="pg" type="range" min="0" max="1000" value="0" aria-label="Posición en la canción"><button id="p1" aria-label="Ir al final" title="Final"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.8 5H18v14h-2.2zM5 5l9.5 7L5 19z"/></svg></button></div>
 </div>
-<div id="home"><header id="htop"><button id="hback" hidden aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><div id="htt">Lectura a primera vista</div><button id="hcg" aria-label="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></header><main id="hl"><div class="w" id="hw"></div></main></div>
-<dialog id="hcfgd"><h2>Ajustes</h2><h3 id="hh">Añadir canción</h3>
+<div id="home"><header id="htop"><button id="hback" hidden aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><div id="htt">SightKeys</div><button id="hcg" aria-label="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></header><main id="hl"><div class="w" id="hw"></div></main></div>
+<dialog id="hcfgd"><div class="dh"><h2>Ajustes</h2><button class="p" id="hcl">Cerrar</button></div><h3 id="hh">Añadir canción</h3>
 <p><label class="btn">Elegir archivo<input id="hf" type="file" accept=".mxl,.musicxml,.xml,.mid,.midi" hidden></label> <small id="hfn">Ningún archivo</small></p>
 <p><label>Título<input id="hti" type="text" autocomplete="off"></label></p>
 <p><label>Compositor<input id="hco" type="text" autocomplete="off"></label></p>
@@ -116,8 +117,8 @@ body.home #app{display:none}body:not(.home) #home{display:none}
 <h3>Instalación</h3><p><button id="hin" class="p" hidden>Instalar app</button> <small id="hist"></small></p>
 <h3>Mis canciones</h3><ul id="hsl"></ul>
 <p><small class="ver"></small></p>
-<p><button class="p" id="hcl">Cerrar</button></p></dialog>
-<dialog id="cfg"><h2>Ajustes</h2>
+</dialog>
+<dialog id="cfg"><div class="dh"><h2>Ajustes</h2><button class="p" id="cc">Cerrar</button></div>
 <h3>Práctica</h3>
 <p><label>Modo <select id="mode"><option value="wait" selected>Esperar mis notas</option><option value="tempo">Con tempo</option></select></label></p>
 <p><label id="tmp">Tempo <input id="bpm" type="range" min="30" max="220" value="80"> <b id="bv">80</b></label></p>
@@ -130,7 +131,7 @@ body.home #app{display:none}body:not(.home) #home{display:none}
 <h3>Pantalla</h3>
 <p><label>Tamaño de la partitura <input id="zm" type="range" min="70" max="250" step="10" value="140"> <b id="zv">140%</b></label></p>
 <p><label>Estilo <select id="th"><option value="clasico">Clásico (negro y naranja)</option><option value="negro">Negro con azul cielo oscuro</option></select></label></p>
-<p><button class="p" id="cc">Cerrar</button></p></dialog>
+</dialog>
 <script>
 const VER='1.0.0';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,ctlT=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
@@ -248,14 +249,14 @@ const sg=x=='mxl'?parseXML(await unzip(buf)):/^mid/.test(x)?parseMID(buf):parseX
 sg.title=sg.title||name.replace(/\.[^.]+$/,'');return sg}
 function setSong(sg,title){stop();song=sg;if(title)song.title=title;$('tt').textContent=song.title;$('cmp').textContent=song.composer||'';setHdr();$('bpm').value=song.tempo;setBpm();pos=0;say('');pPre([...new Set(song.ev.filter(n=>live(n)).map(n=>n.midi))].sort((a,b)=>a-b))}
 /* ---------- MIDI ---------- */
-let midiOk=0,midiBusy=0;
+let midiOk=0,midiBusy=0,midiTry=0;
 function initMidi(){if(!navigator.requestMIDIAccess){$('mi').innerHTML='<option>MIDI no disponible</option>';say('Este navegador no tiene Web MIDI. Usa Chrome en Android o escritorio, y abre la app por https.');return}
 if(midiOk||midiBusy)return;midiBusy=1;
 navigator.requestMIDIAccess().then(m=>{midiOk=1;midiBusy=0;say('');const fill=()=>{const s=$('mi');s.innerHTML='';const ins=[...m.inputs.values()];
 if(!ins.length)s.innerHTML='<option>Sin teclado</option>';ins.forEach(i=>s.add(new Option(i.name,i.id)));$('dot').className=ins.length?'on':'';sel()};
 const sel=()=>{m.inputs.forEach(i=>i.onmidimessage=null);const i=m.inputs.get($('mi').value);if(i)i.onmidimessage=onmsg};
-m.onstatechange=fill;$('mi').onchange=sel;fill()},err=>{midiBusy=0;$('mi').innerHTML='<option>Toca para activar MIDI</option>';$('dot').className='';
-say('No se pudo activar MIDI ('+(err&&err.name||'error')+'). Toca el selector de teclado para volver a intentarlo. Si Chrome lo tiene bloqueado: ⋮ › Ajustes › Ajustes de sitios › Dispositivos MIDI.')})}
+m.onstatechange=fill;$('mi').onchange=sel;fill()},err=>{midiBusy=0;if(err&&err.name=='InvalidStateError'&&midiTry++<3){setTimeout(initMidi,1500);return}midiTry=0;$('mi').innerHTML='<option>Toca para activar MIDI</option>';$('dot').className='';
+say('No se pudo activar MIDI ('+(err&&err.name||'error')+'). Toca el selector de teclado para volver a intentarlo. '+(err&&err.name=='InvalidStateError'?'Chrome no logra abrir el sistema MIDI del móvil: cierra otras apps o navegadores que usen el teclado (por ejemplo Brave), desconecta y vuelve a conectar el cable y reabre Chrome.':'Si Chrome lo tiene bloqueado: ⋮ › Ajustes › Ajustes de sitios › Dispositivos MIDI.'))})}
 $('mw').addEventListener('click',e=>{if(!midiOk){e.preventDefault();e.stopPropagation();initMidi()}},true);
 addEventListener('pointerdown',()=>{if(!midiOk)initMidi()},{capture:true});
 function onmsg(e){const[s,a,b]=e.data,k=s&240;if(k==144&&b>0)down(a,b/127);else if(k==128||k==144)up(a)}
@@ -458,7 +459,7 @@ const tint=(c,a)=>{const n=parseInt(c.slice(1),16);return`rgba(${n>>16},${n>>8&2
 async function loadSongs(){try{songs=await DB.all()}catch{songs=[]}songs.sort((a,b)=>a.title.localeCompare(b.title,'es'))}
 function cats(){const m=new Map();for(const s of songs){if(!m.has(s.cat))m.set(s.cat,{...catInfo(s.cat,s.catName),n:0});m.get(s.cat).n++}return[...m.values()].sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'))}
 function renderHome(){const w=$('hw');w.textContent='';const ci=curCat?catInfo(curCat,(songs.find(s=>s.cat==curCat)||{}).catName):null;
-$('htt').textContent=ci?ci.nombre:'Lectura a primera vista';$('hback').hidden=!ci;
+$('htt').textContent=ci?ci.nombre:'SightKeys';$('hback').hidden=!ci;
 if(!songs.length){const e=h('div','emp');e.append('Aún no hay canciones.',document.createElement('br'),'Pulsa ⚙ para añadir tu primera partitura (.mxl) y elegir su categoría.');w.append(e);return}
 if(!ci){w.append(h('div','hint','Elige una categoría'));for(const c of cats()){const b=h('button','hc'),tl=h('span','tl'),tx=h('span','tx');tl.style.background=tint(c.col,.16);tl.append(svgIcon(c.ic,c.col));tx.append(h('b',0,c.nombre));if(c.desc)tx.append(h('small',0,c.desc));b.append(tl,tx,h('span','n',String(c.n)),chev());b.onclick=()=>{curCat=c.id;history.pushState({v:'cat',id:c.id},'');renderHome();$('hl').scrollTop=0};w.append(b)}return}
 w.append(h('div','hint','Elige una canción para tocarla'));for(const s of songs.filter(x=>x.cat==curCat)){const b=h('button','hc'),tl=h('span','tl'),tx=h('span','tx');tl.style.background=tint(ci.col,.16);tl.append(svgIcon('nota',ci.col));tx.append(h('b',0,s.title));if(s.author)tx.append(h('small',0,s.author));b.append(tl,tx,chev());b.onclick=()=>playSong(s);w.append(b)}}
