@@ -132,7 +132,7 @@ body.home #app{display:none}body:not(.home) #home{display:none}
 <p><small class="ver"></small></p>
 <p><button class="p" id="cc">Cerrar</button></p></dialog>
 <script>
-const VER='24';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
+const VER='25';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,ctlT=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
 let song=null,mode='idle',pos=0,bpm=80,t0=0,sp0=0,nb=0,ni=0,ac,fontOK=false,W=600,wrong=0,hits=0,miss=0;
 const pressed=new Set(),voices={};
@@ -338,9 +338,14 @@ if(mode=='tempo')song.ev.forEach(n=>{if(live(n)&&!n.st&&isSel(n)&&n.t>pos-.3&&n.
 if(mode=='wait')group().forEach(n=>exp.add(n.midi));
 const hear=new Map();if(mode=='listen'||mode=='tempo')song.ev.forEach(n=>{if(live(n)&&n.t>=ps-.001&&n.t<=pos&&pos<n.t+n.dur&&(mode=='listen'||(!isSel(n)&&$('oth').checked)))hear.set(n.midi,n.hand)});
 if(dr||pgd)song.ev.forEach(n=>{if(live(n)&&n.t<=pos+.001&&pos<n.t+Math.max(n.dur,.4))hear.set(n.midi,n.hand)});
-glowSet=new Set();if(mode=='wait')group().forEach(n=>glowSet.add(n));
-if(mode=='tempo')song.ev.forEach(n=>{if(live(n)&&!n.st&&isSel(n)&&n.t>pos-.3&&n.t<pos+.5)glowSet.add(n)});
-if(dr||pgd||mode=='listen'||mode=='tempo')song.ev.forEach(n=>{if(live(n)&&n.t<=pos+.001&&pos<n.t+Math.max(n.dur,.4)&&(dr||pgd||n.t>=ps-.001))glowSet.add(n)});
+glowSet=new Set();
+{const on=song.on||(song.on=[...new Set(song.ev.filter(live).map(n=>Math.round(n.t*1000)/1000))].sort((a,b)=>a-b));
+let a=0,b=on.length;while(a<b){const m=(a+b)>>1;on[m]<=pos+.001?a=m+1:b=m}
+const tc=a?on[a-1]:null,at=t=>song.ev.filter(n=>live(n)&&Math.abs(n.t-t)<.002);
+if(mode=='wait')group().forEach(n=>glowSet.add(n));
+else if(tc!=null&&(dr||pgd)){at(tc).forEach(n=>glowSet.add(n))}
+else if(tc!=null&&(mode=='listen'||mode=='tempo')&&pos>=ps-.001){const g=at(tc);if(pos<tc+Math.max(.2,...g.map(n=>n.dur)))g.forEach(n=>{if(mode=='listen'||(!isSel(n)&&$('oth').checked))glowSet.add(n)})}
+if(mode=='tempo'){const e=song.ev.find(n=>live(n)&&!n.st&&isSel(n)&&n.t>pos-.3);if(e&&e.t<pos+.5)song.ev.forEach(n=>{if(live(n)&&!n.st&&isSel(n)&&Math.abs(n.t-e.t)<.002)glowSet.add(n)})}}
 c.save();c.beginPath();c.rect(HDR,0,W-HDR,SH);c.clip();
 c.strokeStyle=C.ln;song.bars.forEach((b,i)=>{const kb=Math.round(b*1000)/1000,x=CX+XT(b)-xp-16-(song.WW[kb]||0)-(song.ccT.has(kb)?26:0);if(x<HDR||x>W)return;c.beginPath();c.moveTo(x,Y[0]-4*S);c.lineTo(x,Y[1]);c.stroke();
 if(i){c.fillStyle='#888';c.font='11px system-ui,sans-serif';c.textAlign='left';c.textBaseline='alphabetic';if(fontOK){c.font=`${2.4*S}px Bravura`;String(i+1).split('').forEach((d,k)=>G(String.fromCodePoint(0xE880+ +d),x+4+k*1.276*.6*S,Y[0]-4*S-5))}else c.fillText(i+1,x+4,Y[0]-4*S-5)}});
@@ -360,7 +365,7 @@ c.strokeStyle=C.cur;c.lineWidth=2;c.beginPath();c.moveTo(CX,Y[0]-6*S);c.lineTo(C
 c.restore();W=Wr;keys(exp,hear)}else{c.restore();W=Wr;keys(new Set(),new Map())}
 if(!song){c.save();c.scale(Z,Z);c.fillStyle='#777';c.font='16px system-ui';c.textAlign='left';c.fillText('Aquí aparecerá la partitura',HDR,Y[0]-4*S-14);c.restore()}}
 function keys(exp,hear){const k=kc,w=KW/52,kh=KH-8;k.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);k.clearRect(0,0,KW,KH);const wk=[];for(let m=21;m<=108;m++)if(!PCA[m%12])wk.push(m);
-const khm=new Map();glowSet.forEach(n=>khm.set(n.midi,n.hand));hear.forEach((h,m)=>khm.set(m,h));
+const khm=new Map();glowSet.forEach(n=>khm.set(n.midi,n.hand));
 wk.forEach((m,i)=>{k.fillStyle=khm.has(m)?mc(m):pressed.has(m)?C.ac:C.kw;k.fillRect(i*w,0,w,kh);k.fillStyle=C.kl;k.fillRect(i*w,0,1,kh)});
 for(let m=21;m<=108;m++)if(PCA[m%12]){const i=wk.indexOf(m-1);k.fillStyle=khm.has(m)?mc(m):pressed.has(m)?C.ac:C.kb;k.fillRect((i+1)*w-w*.3,0,w*.6,kh*.62)}
 k.fillStyle='#000';k.fillRect(0,kh,KW,8)}
