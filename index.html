@@ -132,7 +132,7 @@ body.home #app{display:none}body:not(.home) #home{display:none}
 <p><small class="ver"></small></p>
 <p><button class="p" id="cc">Cerrar</button></p></dialog>
 <script>
-const VER='19';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
+const VER='20';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,ctlT=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
 let song=null,mode='idle',pos=0,bpm=80,t0=0,sp0=0,nb=0,ni=0,ac,fontOK=false,W=600,wrong=0,hits=0,miss=0;
 const pressed=new Set(),voices={};
@@ -294,13 +294,13 @@ if(mode=='listen'||mode=='tempo'){sp0=p;t0=ac.currentTime;nb=Math.ceil(p);ni=son
 song.ev.forEach(n=>{if(n.t>=lo)delete n.st});hits=song.ev.filter(n=>n.st=='hit').length;miss=song.ev.filter(n=>n.st=='miss').length}
 else if(mode=='wait'){lo=p-.01;song.ev.forEach(n=>{if(n.t>=lo)delete n.st})}}
 function drawNote(n,x,col){const d=[4,3,2,1.5,1,.75,.5,.25].find(v=>(n.dd??n.dur)>=v*.88)||.25,so=d>=4?17:11.8,hx=x+((n.up&&n.sec==1)?so:(!n.up&&n.sec==-1)?-so:0),r=n.hand=='R'?0:1,y=yOf(r,n.pos,n.bt),bt=n.bt;
-c.fillStyle=c.strokeStyle=col;c.lineWidth=1.6;
+const nc=isSel(n.par||n)?C.ink:C.gr;c.fillStyle=c.strokeStyle=nc;c.lineWidth=1.6;
 const LL=yy=>{if(fontOK){c.font=`${4*S}px Bravura`;G('\uE022',hx-.664*S,yy)}else{c.beginPath();c.moveTo(hx-10,yy);c.lineTo(hx+10,yy);c.stroke()}};
 for(let p=bt-2;p>=n.pos;p-=2)LL(yOf(r,p,bt));
 for(let p=bt+10;p<=n.pos;p+=2)LL(yOf(r,p,bt));
 if(d<4&&!n.grp){const up=n.up,sx=up?x+5.3:x-5.3,ey=up?y-33:y+33;c.beginPath();c.moveTo(sx,y);c.lineWidth=1.2;c.lineTo(sx,ey);c.stroke();
 if(d<=.5&&fontOK)G(String.fromCodePoint((d<.5?0xE242:0xE240)+(up?0:1)),sx,ey)}
-c.lineWidth=1.6;if(fontOK){c.font=`${4*S}px Bravura`;G(d>=4?GL.w:d>=2?GL.h:GL.q,hx-(d>=4?8.44:5.9),y)}else{c.beginPath();c.ellipse(hx,y,6,4.5,-.4,0,7);d>=2?c.stroke():c.fill()}
+c.lineWidth=1.6;c.fillStyle=c.strokeStyle=col;if(fontOK){c.font=`${4*S}px Bravura`;G(d>=4?GL.w:d>=2?GL.h:GL.q,hx-(d>=4?8.44:5.9),y)}else{c.beginPath();c.ellipse(hx,y,6,4.5,-.4,0,7);d>=2?c.stroke():c.fill()}c.fillStyle=c.strokeStyle=nc;
 if([3,1.5,.75].includes(d)){if(fontOK){c.font=`${4*S}px Bravura`;G('\uE1E7',hx+(d>=4?11:8.6),y-(n.pos%2?0:S/2))}else{c.beginPath();c.arc(hx+11,y-(n.pos%2?0:S/2),2,0,7);c.fill()}}
 if(fontOK&&!n.tc&&n.alter!=song.ka[n.step]){c.font=`${4*S}px Bravura`;G(n.alter>0?GL.s:n.alter<0?GL.b:GL.n,hx-22-(n.ac||0)*11,y)}}
 function drawTie(n,x2,col){const p=n.pv,x1=CX+XT(p.t)-xp,r=n.hand=='R'?0:1,y=yOf(r,n.pos,n.bt),d=n.up?1:-1,xa=x1+7,xb=x2-7,h=Math.min(9,6+(xb-xa)/14);if(xb<=xa)return;
@@ -318,7 +318,7 @@ if(ext.at(-1)[2]<HDR-30||ext[0][2]>W+30)continue;
 const X=ext.map(e=>e[2]+sx),req=ext.map(e=>up?e[0]-30:e[1]+30),x0=X[0];
 const s=Math.max(-S*1.2,Math.min(S*1.2,req.at(-1)-req[0]))/Math.max(1,X.at(-1)-x0);
 const ys=req.map((q,i)=>q-s*(X[i]-x0)),a=up?Math.min(...ys):Math.max(...ys),Yb=x=>a+s*(x-x0),d=up?1:-1;
-const IC=g.it.map(i=>noteCol(i.ns[0]));c.lineWidth=1.2;
+const gc=isSel(all[0])?C.ink:C.gr,IC=g.it.map(()=>gc);c.lineWidth=1.2;
 ext.forEach((e,i)=>{c.strokeStyle=IC[i];c.beginPath();c.moveTo(X[i],up?e[1]:e[0]);c.lineTo(X[i],Yb(X[i]));c.stroke()});
 const poly=(xa,xb,o,k)=>{const ya=Yb(xa)+d*o,yb=Yb(xb)+d*o;c.fillStyle=IC[k];c.beginPath();c.moveTo(xa,ya);c.lineTo(xb,yb);c.lineTo(xb,yb+d*5);c.lineTo(xa,ya+d*5);c.fill()};
 for(let l=1;l<=4;l++){let st=null;g.it.forEach((it,i)=>{const b=it.ns[0].bms.find(x=>x[0]==l),v=b&&b[1];
@@ -342,7 +342,7 @@ c.strokeStyle=C.ln;song.bars.forEach((b,i)=>{const kb=Math.round(b*1000)/1000,x=
 if(i){c.fillStyle='#888';c.font='11px system-ui,sans-serif';c.textAlign='left';c.textBaseline='alphabetic';if(fontOK){c.font=`${2.4*S}px Bravura`;String(i+1).split('').forEach((d,k)=>G(String.fromCodePoint(0xE880+ +d),x+4+k*1.276*.6*S,Y[0]-4*S-5))}else c.fillText(i+1,x+4,Y[0]-4*S-5)}});
 if(song.grps.length)drawBeams();
 for(const n of song.ev){const x=CX+XT(n.t)-xp;if(x<HDR-20)continue;if(x>W+20)break;
-if(n.rest)drawRest(n,x,isSel(n)?C.ink:C.gr);else{const col=noteCol(n);drawNote(n,x,col);if(n.tc)drawTie(n,x,col);if(n.fm)drawFerm(n,x);if(n.arp)drawArp(n,x,col)}}
+if(n.rest)drawRest(n,x,isSel(n)?C.ink:C.gr);else{const col=noteCol(n);const nc=isSel(n.par||n)?C.ink:C.gr;drawNote(n,x,col);if(n.tc)drawTie(n,x,nc);if(n.fm)drawFerm(n,x);if(n.arp)drawArp(n,x,nc)}}
 for(const cc of song.ccs){const x=CX+XT(cc.t)-xp-36-(song.WW[Math.round(cc.t*1000)/1000]||0);if(x>HDR-30&&x<W+10)drawCc(cc,x)}
 c.restore();
 c.fillStyle=C.pa;c.fillRect(0,0,HDR,SH);c.strokeStyle=C.ln;
