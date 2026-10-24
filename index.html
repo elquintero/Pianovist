@@ -86,7 +86,9 @@ body.home #app{display:none}body:not(.home) #home{display:none}
 #hsl li{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;background:#1b1b1b}#hsl li span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#hsl li small{display:block}
 #hsl button{padding:4px 10px;flex:none}
 #bk{flex:none;width:28px;height:34px;padding:0;border:0;background:none;color:#fff;display:grid;place-items:center;line-height:0;opacity:.8}#bk:hover{background:none;opacity:1}#bk svg{width:22px;height:22px}
+#rot{display:none}@media (orientation:portrait) and (max-width:700px){body:not(.home) #rot{position:fixed;inset:0;z-index:99;background:#000;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:24px;font-size:18px}#rot svg{width:64px;height:64px;animation:rt 2s ease-in-out infinite}}@keyframes rt{0%,30%{transform:rotate(0)}60%,100%{transform:rotate(-90deg)}}
 </style></head><body class="home">
+<div id="rot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></svg><div>Gira el teléfono<br><small style="color:#9a9a9a">El player se usa en horizontal</small></div></div>
 <div id="app">
 <header id="top">
 <div id="lf"><button id="bk" aria-label="Volver a las categorías" title="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><button id="fsb" aria-label="Pantalla completa" title="Pantalla completa"><svg class="ex" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><svg class="co" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg></button><label id="mw" title="Teclado MIDI"><i id="dot"></i><select id="mi"><option>Sin teclado</option></select></label>
@@ -105,12 +107,13 @@ body.home #app{display:none}body:not(.home) #home{display:none}
 <div id="pgw"><button id="p0" aria-label="Ir al principio" title="Principio"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2.2v14H6zM19 5v14L9.5 12z"/></svg></button><input id="pg" type="range" min="0" max="1000" value="0" aria-label="Posición en la canción"><button id="p1" aria-label="Ir al final" title="Final"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.8 5H18v14h-2.2zM5 5l9.5 7L5 19z"/></svg></button></div>
 </div>
 <div id="home"><header id="htop"><button id="hback" hidden aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><div id="htt">Lectura a primera vista</div><button id="hcg" aria-label="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></header><main id="hl"><div class="w" id="hw"></div></main></div>
-<dialog id="hcfgd"><h2>Ajustes</h2><h3>Añadir canción</h3>
+<dialog id="hcfgd"><h2>Ajustes</h2><h3 id="hh">Añadir canción</h3>
 <p><label class="btn">Elegir archivo<input id="hf" type="file" accept=".mxl,.musicxml,.xml,.mid,.midi" hidden></label> <small id="hfn">Ningún archivo</small></p>
 <p><label>Título<input id="hti" type="text" autocomplete="off"></label></p>
+<p><label>Compositor<input id="hco" type="text" autocomplete="off"></label></p>
 <p><label>Categoría<select id="hca"></select></label></p>
 <p id="hnp" hidden><label>Nombre de la nueva categoría<input id="hnc" type="text" autocomplete="off"></label></p>
-<p><button class="p" id="hadd">Añadir canción</button> <small id="hmsg"></small></p>
+<p><button class="p" id="hadd">Añadir canción</button> <button id="hcan" hidden>Cancelar</button> <small id="hmsg"></small></p>
 <h3>Mis canciones</h3><ul id="hsl"></ul>
 <p><button class="p" id="hcl">Cerrar</button></p></dialog>
 <dialog id="cfg"><h2>Ajustes</h2>
@@ -436,10 +439,11 @@ $('htt').textContent=ci?ci.nombre:'Lectura a primera vista';$('hback').hidden=!c
 if(!songs.length){const e=h('div','emp');e.append('Aún no hay canciones.',document.createElement('br'),'Pulsa ⚙ para añadir tu primera partitura (.mxl) y elegir su categoría.');w.append(e);return}
 if(!ci){w.append(h('div','hint','Elige una categoría'));for(const c of cats()){const b=h('button','hc'),tl=h('span','tl'),tx=h('span','tx');tl.style.background=tint(c.col,.16);tl.append(svgIcon(c.ic,c.col));tx.append(h('b',0,c.nombre));if(c.desc)tx.append(h('small',0,c.desc));b.append(tl,tx,h('span','n',String(c.n)),chev());b.onclick=()=>{curCat=c.id;history.pushState({v:'cat',id:c.id},'');renderHome();$('hl').scrollTop=0};w.append(b)}return}
 w.append(h('div','hint','Elige una canción para tocarla'));for(const s of songs.filter(x=>x.cat==curCat)){const b=h('button','hc'),tl=h('span','tl'),tx=h('span','tx');tl.style.background=tint(ci.col,.16);tl.append(svgIcon('nota',ci.col));tx.append(h('b',0,s.title));if(s.author)tx.append(h('small',0,s.author));b.append(tl,tx,chev());b.onclick=()=>playSong(s);w.append(b)}}
-function showHome(){if(document.fullscreenElement)try{document.exitFullscreen()}catch{}stop();document.body.classList.add('home');renderHome()}
-async function playSong(s){goFs();try{const sg=await parseFile(s.name,s.buf);setSong(sg,s.title);document.body.classList.remove('home');history.pushState({v:'play'},'');size();setTimeout(size,60)}catch(err){alert('No se pudo abrir la canción: '+err.message)}}
+function lockL(){try{screen.orientation.lock('landscape').catch(()=>0)}catch{}}
+function showHome(){try{screen.orientation.unlock()}catch{}if(document.fullscreenElement)try{document.exitFullscreen()}catch{}stop();document.body.classList.add('home');renderHome()}
+async function playSong(s){goFs();try{const sg=await parseFile(s.name,s.buf);setSong(sg,s.title);if(s.author){song.composer=s.author;$('cmp').textContent=s.author}document.body.classList.remove('home');history.pushState({v:'play'},'');lockL();size();setTimeout(size,60)}catch(err){alert('No se pudo abrir la canción: '+err.message)}}
 $('hback').onclick=()=>history.back();$('bk').onclick=()=>history.back();
-addEventListener('popstate',e=>{const st=e.state||{v:'home'};if(st.v=='play'&&!song)return history.go(-1);if(st.v=='play'){document.body.classList.remove('home');size();return}
+addEventListener('popstate',e=>{const st=e.state||{v:'home'};if(st.v=='play'&&!song)return history.go(-1);if(st.v=='play'){document.body.classList.remove('home');lockL();size();return}
 curCat=st.v=='cat'?st.id:null;showHome()});
 /* ajustes de la pantalla previa */
 let pend=null;
@@ -447,16 +451,20 @@ function fillCats(){const sel=$('hca'),keep=sel.value,seen=new Set(Object.keys(D
 for(const s of songs)if(!seen.has(s.cat)){seen.add(s.cat);const o=h('option',0,s.catName||s.cat);o.value=s.cat;sel.append(o)}
 const o=h('option',0,'Nueva categoría…');o.value='__new';sel.append(o);if(keep&&[...sel.options].some(x=>x.value==keep))sel.value=keep;$('hnp').hidden=sel.value!='__new'}
 function fillList(){const u=$('hsl');u.textContent='';if(!songs.length){u.append(h('small',0,'Todavía no has añadido ninguna.'));return}
-for(const s of songs){const li=h('li'),sp=h('span'),b=h('button',0,'Borrar');sp.append(s.title);sp.append(h('small',0,catInfo(s.cat,s.catName).nombre));b.onclick=async()=>{if(!confirm('¿Borrar «'+s.title+'»?'))return;await DB.del(s.id);await loadSongs();if(curCat&&!songs.some(x=>x.cat==curCat)){curCat=null;history.replaceState({v:'home'},'')}fillCats();fillList();renderHome()};li.append(sp,b);u.append(li)}}
-$('hcg').onclick=()=>{$('hmsg').textContent='';fillCats();fillList();$('hcfgd').showModal()};$('hcl').onclick=()=>$('hcfgd').close();
+for(const s of songs){const li=h('li'),sp=h('span'),b=h('button',0,'Borrar'),eb=h('button',0,'Editar');eb.onclick=()=>editSong(s);sp.append(s.title);sp.append(h('small',0,(s.author?s.author+' · ':'')+catInfo(s.cat,s.catName).nombre));b.onclick=async()=>{if(!confirm('¿Borrar «'+s.title+'»?'))return;await DB.del(s.id);await loadSongs();if(curCat&&!songs.some(x=>x.cat==curCat)){curCat=null;history.replaceState({v:'home'},'')}fillCats();fillList();renderHome()};li.append(sp,eb,b);u.append(li)}}
+$('hcg').onclick=()=>{endEdit();$('hmsg').textContent='';fillCats();fillList();$('hcfgd').showModal()};$('hcl').onclick=()=>$('hcfgd').close();
 $('hca').onchange=()=>{$('hnp').hidden=$('hca').value!='__new'};
 $('hf').onchange=async e=>{const f=e.target.files[0];pend=null;$('hmsg').textContent='';if(!f){$('hfn').textContent='Ningún archivo';return}
-try{const buf=await f.arrayBuffer(),sg=await parseFile(f.name,buf.slice(0));pend={name:f.name,buf,title:sg.title,author:sg.composer||''};$('hfn').textContent=f.name;$('hti').value=sg.title}
+try{const buf=await f.arrayBuffer(),sg=await parseFile(f.name,buf.slice(0));pend={name:f.name,buf,title:sg.title,author:sg.composer||''};$('hfn').textContent=f.name;$('hti').value=sg.title;$('hco').value=pend.author}
 catch(err){$('hfn').textContent='Ningún archivo';$('hmsg').textContent='No se pudo leer: '+err.message}};
-$('hadd').onclick=async()=>{if(!pend)return $('hmsg').textContent='Elige primero un archivo.';
+let editId=null;
+function endEdit(){editId=null;pend=null;$('hf').value='';$('hfn').textContent='Ningún archivo';$('hti').value='';$('hco').value='';$('hnc').value='';$('hh').textContent='Añadir canción';$('hadd').textContent='Añadir canción';$('hcan').hidden=true;$('hca').onchange()}
+function editSong(sg){editId=sg.id;pend=null;$('hf').value='';$('hfn').textContent='Archivo actual: '+sg.name;$('hti').value=sg.title;$('hco').value=sg.author||'';fillCats();$('hca').value=sg.cat;$('hca').onchange();$('hh').textContent='Editar canción';$('hadd').textContent='Guardar cambios';$('hcan').hidden=false;$('hmsg').textContent='';$('hcfgd').scrollTop=0}
+$('hcan').onclick=()=>{endEdit();$('hmsg').textContent=''};
+$('hadd').onclick=async()=>{const old=editId?songs.find(x=>x.id==editId):null;if(!pend&&!old)return $('hmsg').textContent='Elige primero un archivo.';
 let cat=$('hca').value,catName=$('hca').selectedOptions[0].textContent;if(cat=='__new'){catName=$('hnc').value.trim();if(!catName)return $('hmsg').textContent='Escribe el nombre de la categoría.';cat=slug(catName)}
-const rec={id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),title:$('hti').value.trim()||pend.title,author:pend.author,cat,catName,name:pend.name,buf:pend.buf,added:Date.now()};
-try{await DB.put(rec);try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch{}await loadSongs();pend=null;$('hf').value='';$('hfn').textContent='Ningún archivo';$('hti').value='';$('hnc').value='';$('hmsg').textContent='Añadida ✓';fillCats();fillList();renderHome()}
+const src=pend||old,rec={id:old?old.id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),title:$('hti').value.trim()||src.title,author:$('hco').value.trim(),cat,catName,name:src.name,buf:src.buf,added:old?old.added:Date.now()};
+try{await DB.put(rec);try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch{}await loadSongs();const was=!!old;endEdit();$('hmsg').textContent=was?'Guardado ✓':'Añadida ✓';if(curCat&&!songs.some(x=>x.cat==curCat)){curCat=null;history.replaceState({v:'home'},'')}fillCats();fillList();renderHome()}
 catch(err){$('hmsg').textContent='No se pudo guardar: '+err.message}};
 history.replaceState({v:'home'},'');loadSongs().then(renderHome);
 addEventListener('resize',size);try{new ResizeObserver(size).observe($('pw'))}catch{}size();chkFont();initMidi();loop();
