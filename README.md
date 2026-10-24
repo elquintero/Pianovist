@@ -1,6 +1,6 @@
 # Lectura a primera vista (piano)
 
-App web de una sola página (`index.html`) para practicar lectura a primera vista con un teclado MIDI, al estilo Flowkey.
+App web de una sola página (`index.html`) para practicar lectura a primera vista con un teclado MIDI.
 
 ## Funciones
 - Carga de canciones en **MusicXML** (`.musicxml`, `.xml`, `.mxl`) y MIDI (`.mid`) desde ⚙ Ajustes.
