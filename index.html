@@ -132,18 +132,18 @@ body.home #app{display:none}body:not(.home) #home{display:none}
 <p><small class="ver"></small></p>
 <p><button class="p" id="cc">Cerrar</button></p></dialog>
 <script>
-const VER='20';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
+const VER='21';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,ctlT=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
 let song=null,mode='idle',pos=0,bpm=80,t0=0,sp0=0,nb=0,ni=0,ac,fontOK=false,W=600,wrong=0,hits=0,miss=0;
 const pressed=new Set(),voices={};
 const hs={L:0,R:0},isSel=n=>(!hs.L&&!hs.R)||(hs.L&&hs.R)||(n.hand=='L'?hs.L:hs.R),live=n=>!n.rest&&!n.tc,GREEN='#1f9d55';
 /* una nota cuenta como "marcada" si ya está acertada o el cursor ya la ha pasado (también al arrastrar la partitura) */
 function doneN(n){const o=n.par||n;if(o.st=='hit')return true;if(o.st=='miss'||!isSel(o))return false;return n.t<pos-.001&&!(mode=='tempo'&&n.t>=lo)}
-function noteCol(n){const o=n.par||n;if(mode=='listen'&&o.t>=ps-.001&&n.t<=pos&&pos<n.t+n.dur)return o.hand=='L'?C.hr:C.ex;
-if(o.st=='hit')return GREEN;if(o.st=='miss')return '#d63c3c';if(!isSel(o))return C.gr;return doneN(n)?GREEN:C.ink}
+function noteCol(n){const o=n.par||n;return isSel(o)?C.ink:C.gr}
+let glowSet=new Set();
 const say=h=>$('st').innerHTML=h;
-const TH={clasico:{ln:'#222',ink:'#0a0a0a',gr:'#aaa',kw:'#fff',kb:'#222',kl:'#999',cur:'#e8820c',hr:'#34a853',ac:'#e8820c',ex:'#4aa3e8',ex2:'#2b78b8',pa:'#fbf9f3'},
-negro:{ln:'#7d7d85',ink:'#e6e6e6',gr:'#55555c',kw:'#d6d6da',kb:'#101012',kl:'#444',cur:'#1b84c4',hr:'#3ddc97',ac:'#1b84c4',ex:'#5bb8e8',ex2:'#2f86b8',pa:'#08080a'}};let C=TH.clasico;
+const TH={clasico:{ln:'#222',ink:'#0a0a0a',gr:'#aaa',kw:'#fff',kb:'#222',kl:'#999',cur:'#e8820c',hr:'#f5a04a',ac:'#e8820c',ex:'#f5a04a',ex2:'#c26a00',pa:'#fbf9f3'},
+negro:{ln:'#7d7d85',ink:'#e6e6e6',gr:'#55555c',kw:'#d6d6da',kb:'#101012',kl:'#444',cur:'#1b84c4',hr:'#5bb8e8',ac:'#1b84c4',ex:'#5bb8e8',ex2:'#2f86b8',pa:'#08080a'}};let C=TH.clasico;
 /* ---------- fuente ---------- */
 async function chkFont(){await document.fonts.load('40px Bravura','\uE050\uE062\uE0A4\uE262\uE080').then(l=>fontOK=l.length>0,()=>0);if(!fontOK)say('No encuentro <b>fonts/Bravura.otf</b>.')}
 function theme(t){C=TH[t]||TH.clasico;document.documentElement.dataset.t=t;$('th').value=t;try{localStorage.lp=t}catch{}}
@@ -260,7 +260,7 @@ if(mode=='tempo'){let b=null;for(const n of song.ev)if(live(n)&&!n.st&&n.midi==m
 if(b){b.st='hit';hits++}else wrong++;stat()}
 else if(mode=='wait'&&!dr){const g=group(),n=g.find(x=>x.midi==m&&!x.st);if(n){n.st='hit';hits++}else wrong++;stat()}}
 const group=()=>{const l=song.ev.filter(n=>live(n)&&!n.st&&isSel(n)&&n.t>=lo);if(!l.length)return[];const t=l[0].t;return l.filter(n=>Math.abs(n.t-t)<.01)};
-const stat=()=>mode=='listen'?say(''):say(`Aciertos <b>${hits}</b> · Fallos <b>${miss}</b> · Notas erróneas <b>${wrong}</b>`);
+const stat=()=>say('');
 /* ---------- transporte ---------- */
 function setBpm(){const nb_=+$('bpm').value;if(mode=='listen'||mode=='tempo'){sp0=pos;t0=ac.currentTime}bpm=nb_;$('bv').textContent=bpm}
 $('bpm').oninput=setBpm;
@@ -271,7 +271,7 @@ function stop(){if(pos<fr)pos=fr;fr=-1e9;if(mode!='idle'&&mode!='')mode='idle';O
 $('pb').onclick=()=>{if(mode!='idle'&&mode!=''){const pr=mode!='listen'&&(hs.L||hs.R);stop();if(pr&&song){seek(0);pos=0}return}start(hs.L||hs.R?$('mode').value:'listen')};
 for(const h of['L','R'])$('h'+h).onclick=()=>{hs[h]^=1;$('h'+h).classList.toggle('on',!!hs[h]);$('h'+h).setAttribute('aria-pressed',!!hs[h]);sv('lph',hs.L+''+hs.R)};
 $('pg').oninput=e=>{if(!song)return;pgd=1;seek(e.target.value/1000*song.end)};$('pg').onchange=()=>{pgd=0;if(song&&mode=='idle'){const T=song.T;pos=T.reduce((a,t)=>Math.abs(t-pos)<Math.abs(a-pos)?t:a,T[0])}};
-function finish(){const tot=hits+miss;mode='idle';say(`Terminado: <b>${tot?Math.round(100*hits/tot):0}%</b> de precisión · ${hits} aciertos, ${miss} fallos, ${wrong} notas erróneas.`)}
+function finish(){mode='idle';say('')}
 setInterval(()=>{if(mode!='listen'&&mode!='tempo')return;const lim=ac.currentTime+.2,tb=b=>t0+(b-sp0)*60/bpm;
 while(tb(nb)<lim){if(nb<ps-.001){click(tb(nb),Math.abs(nb-sp0)<.001);nb++;if(nb>=ps-.001)nb=Math.ceil(ps-.001)}
 else{if($('met').checked)click(tb(nb),nb%song.bm==0);nb++}}
@@ -294,13 +294,14 @@ if(mode=='listen'||mode=='tempo'){sp0=p;t0=ac.currentTime;nb=Math.ceil(p);ni=son
 song.ev.forEach(n=>{if(n.t>=lo)delete n.st});hits=song.ev.filter(n=>n.st=='hit').length;miss=song.ev.filter(n=>n.st=='miss').length}
 else if(mode=='wait'){lo=p-.01;song.ev.forEach(n=>{if(n.t>=lo)delete n.st})}}
 function drawNote(n,x,col){const d=[4,3,2,1.5,1,.75,.5,.25].find(v=>(n.dd??n.dur)>=v*.88)||.25,so=d>=4?17:11.8,hx=x+((n.up&&n.sec==1)?so:(!n.up&&n.sec==-1)?-so:0),r=n.hand=='R'?0:1,y=yOf(r,n.pos,n.bt),bt=n.bt;
-const nc=isSel(n.par||n)?C.ink:C.gr;c.fillStyle=c.strokeStyle=nc;c.lineWidth=1.6;
+const nc=isSel(n.par||n)?C.ink:C.gr;if(glowSet.has(n.par||n)){const g=c.createRadialGradient(hx,y,0,hx,y,2.3*S);g.addColorStop(0,'rgba(255,150,25,.95)');g.addColorStop(.45,'rgba(255,150,25,.5)');g.addColorStop(1,'rgba(255,150,25,0)');c.fillStyle=g;c.fillRect(hx-2.4*S,y-2.4*S,4.8*S,4.8*S)}
+c.fillStyle=c.strokeStyle=nc;c.lineWidth=1.6;
 const LL=yy=>{if(fontOK){c.font=`${4*S}px Bravura`;G('\uE022',hx-.664*S,yy)}else{c.beginPath();c.moveTo(hx-10,yy);c.lineTo(hx+10,yy);c.stroke()}};
 for(let p=bt-2;p>=n.pos;p-=2)LL(yOf(r,p,bt));
 for(let p=bt+10;p<=n.pos;p+=2)LL(yOf(r,p,bt));
 if(d<4&&!n.grp){const up=n.up,sx=up?x+5.3:x-5.3,ey=up?y-33:y+33;c.beginPath();c.moveTo(sx,y);c.lineWidth=1.2;c.lineTo(sx,ey);c.stroke();
 if(d<=.5&&fontOK)G(String.fromCodePoint((d<.5?0xE242:0xE240)+(up?0:1)),sx,ey)}
-c.lineWidth=1.6;c.fillStyle=c.strokeStyle=col;if(fontOK){c.font=`${4*S}px Bravura`;G(d>=4?GL.w:d>=2?GL.h:GL.q,hx-(d>=4?8.44:5.9),y)}else{c.beginPath();c.ellipse(hx,y,6,4.5,-.4,0,7);d>=2?c.stroke():c.fill()}c.fillStyle=c.strokeStyle=nc;
+c.lineWidth=1.6;c.fillStyle=c.strokeStyle=nc;if(fontOK){c.font=`${4*S}px Bravura`;G(d>=4?GL.w:d>=2?GL.h:GL.q,hx-(d>=4?8.44:5.9),y)}else{c.beginPath();c.ellipse(hx,y,6,4.5,-.4,0,7);d>=2?c.stroke():c.fill()}c.fillStyle=c.strokeStyle=nc;
 if([3,1.5,.75].includes(d)){if(fontOK){c.font=`${4*S}px Bravura`;G('\uE1E7',hx+(d>=4?11:8.6),y-(n.pos%2?0:S/2))}else{c.beginPath();c.arc(hx+11,y-(n.pos%2?0:S/2),2,0,7);c.fill()}}
 if(fontOK&&!n.tc&&n.alter!=song.ka[n.step]){c.font=`${4*S}px Bravura`;G(n.alter>0?GL.s:n.alter<0?GL.b:GL.n,hx-22-(n.ac||0)*11,y)}}
 function drawTie(n,x2,col){const p=n.pv,x1=CX+XT(p.t)-xp,r=n.hand=='R'?0:1,y=yOf(r,n.pos,n.bt),d=n.up?1:-1,xa=x1+7,xb=x2-7,h=Math.min(9,6+(xb-xa)/14);if(xb<=xa)return;
@@ -337,6 +338,9 @@ if(mode=='tempo')song.ev.forEach(n=>{if(live(n)&&!n.st&&isSel(n)&&n.t>pos-.3&&n.
 if(mode=='wait')group().forEach(n=>exp.add(n.midi));
 const hear=new Map();if(mode=='listen'||mode=='tempo')song.ev.forEach(n=>{if(live(n)&&n.t>=ps-.001&&n.t<=pos&&pos<n.t+n.dur&&(mode=='listen'||(!isSel(n)&&$('oth').checked)))hear.set(n.midi,n.hand)});
 if(dr||pgd)song.ev.forEach(n=>{if(live(n)&&n.t<=pos+.001&&pos<n.t+Math.max(n.dur,.4))hear.set(n.midi,n.hand)});
+glowSet=new Set();if(mode=='wait')group().forEach(n=>glowSet.add(n));
+if(mode=='tempo')song.ev.forEach(n=>{if(live(n)&&!n.st&&isSel(n)&&n.t>pos-.3&&n.t<pos+.5)glowSet.add(n)});
+if(dr||pgd||mode=='listen'||mode=='tempo')song.ev.forEach(n=>{if(live(n)&&n.t<=pos+.001&&pos<n.t+Math.max(n.dur,.4)&&(dr||pgd||n.t>=ps-.001))glowSet.add(n)});
 c.save();c.beginPath();c.rect(HDR,0,W-HDR,SH);c.clip();
 c.strokeStyle=C.ln;song.bars.forEach((b,i)=>{const kb=Math.round(b*1000)/1000,x=CX+XT(b)-xp-16-(song.WW[kb]||0)-(song.ccT.has(kb)?26:0);if(x<HDR||x>W)return;c.beginPath();c.moveTo(x,Y[0]-4*S);c.lineTo(x,Y[1]);c.stroke();
 if(i){c.fillStyle='#888';c.font='11px system-ui,sans-serif';c.textAlign='left';c.textBaseline='alphabetic';if(fontOK){c.font=`${2.4*S}px Bravura`;String(i+1).split('').forEach((d,k)=>G(String.fromCodePoint(0xE880+ +d),x+4+k*1.276*.6*S,Y[0]-4*S-5))}else c.fillText(i+1,x+4,Y[0]-4*S-5)}});
@@ -384,7 +388,8 @@ $('p0').onclick=()=>{if(song){seek(0);if(mode=='idle')pos=0}};$('p1').onclick=()
 
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>0));
 let fsOut=0,pickT=0;const inFs=()=>document.fullscreenElement||matchMedia('(display-mode: fullscreen)').matches;
-const goFs=()=>{try{const d=document.documentElement;if(!inFs()&&d.requestFullscreen)d.requestFullscreen({navigationUI:'hide'}).catch(()=>{})}catch{}};
+const WIN=/Windows/i.test(navigator.userAgent)||(navigator.userAgentData&&navigator.userAgentData.platform=='Windows');if(WIN)$('fsb').style.display='none';
+const goFs=()=>{if(WIN)return;try{const d=document.documentElement;if(!inFs()&&d.requestFullscreen)d.requestFullscreen({navigationUI:'hide'}).catch(()=>{})}catch{}};
 document.addEventListener('fullscreenchange',()=>{const f=!!document.fullscreenElement;if(!f&&!(document.hidden||Date.now()-pickT<90000))fsOut=1;$('fsb').classList.toggle('on',f);$('fsb').title=f?'Salir de pantalla completa':'Pantalla completa'});
 $('fsb').onclick=()=>{if(document.fullscreenElement){fsOut=1;try{document.exitFullscreen()}catch{}}else{fsOut=0;goFs()}};
 for(const id of['mode','oth','met','ci']){const e=$(id),ck=e.type=='checkbox';try{const v=localStorage['lp_'+id];if(v!=null){if(ck)e.checked=v=='1';else e.value=v}}catch{}e.onchange=()=>sv('lp_'+id,ck?(e.checked?1:0):e.value)}
