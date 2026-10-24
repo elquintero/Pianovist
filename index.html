@@ -113,6 +113,7 @@ body.home #app{display:none}body:not(.home) #home{display:none}
 <p><label>Categoría<select id="hca"></select></label></p>
 <p id="hnp" hidden><label>Nombre de la nueva categoría<input id="hnc" type="text" autocomplete="off"></label></p>
 <p><button class="p" id="hadd">Añadir canción</button> <button id="hcan" hidden>Cancelar</button> <small id="hmsg"></small></p>
+<h3>Instalación</h3><p><button id="hin" class="p" hidden>Instalar app</button> <small id="hist"></small></p>
 <h3>Mis canciones</h3><ul id="hsl"></ul>
 <p><small class="ver"></small></p>
 <p><button class="p" id="hcl">Cerrar</button></p></dialog>
@@ -247,11 +248,16 @@ const sg=x=='mxl'?parseXML(await unzip(buf)):/^mid/.test(x)?parseMID(buf):parseX
 sg.title=sg.title||name.replace(/\.[^.]+$/,'');return sg}
 function setSong(sg,title){stop();song=sg;if(title)song.title=title;$('tt').textContent=song.title;$('cmp').textContent=song.composer||'';setHdr();$('bpm').value=song.tempo;setBpm();pos=0;say('');pPre([...new Set(song.ev.filter(n=>live(n)).map(n=>n.midi))].sort((a,b)=>a-b))}
 /* ---------- MIDI ---------- */
-function initMidi(){if(!navigator.requestMIDIAccess){$('mi').innerHTML='<option>Web MIDI no disponible (usa Chrome/Edge)</option>';return}
-navigator.requestMIDIAccess().then(m=>{const fill=()=>{const s=$('mi');s.innerHTML='';const ins=[...m.inputs.values()];
+let midiOk=0,midiBusy=0;
+function initMidi(){if(!navigator.requestMIDIAccess){$('mi').innerHTML='<option>MIDI no disponible</option>';say('Este navegador no tiene Web MIDI. Usa Chrome en Android o escritorio, y abre la app por https.');return}
+if(midiOk||midiBusy)return;midiBusy=1;
+navigator.requestMIDIAccess().then(m=>{midiOk=1;midiBusy=0;say('');const fill=()=>{const s=$('mi');s.innerHTML='';const ins=[...m.inputs.values()];
 if(!ins.length)s.innerHTML='<option>Sin teclado</option>';ins.forEach(i=>s.add(new Option(i.name,i.id)));$('dot').className=ins.length?'on':'';sel()};
 const sel=()=>{m.inputs.forEach(i=>i.onmidimessage=null);const i=m.inputs.get($('mi').value);if(i)i.onmidimessage=onmsg};
-m.onstatechange=fill;$('mi').onchange=sel;fill()},()=>{$('mi').innerHTML='<option>Permiso MIDI denegado</option>'})}
+m.onstatechange=fill;$('mi').onchange=sel;fill()},err=>{midiBusy=0;$('mi').innerHTML='<option>Toca para activar MIDI</option>';$('dot').className='';
+say('No se pudo activar MIDI ('+(err&&err.name||'error')+'). Toca el selector de teclado para volver a intentarlo. Si Chrome lo tiene bloqueado: ⋮ › Ajustes › Ajustes de sitios › Dispositivos MIDI.')})}
+$('mw').addEventListener('click',e=>{if(!midiOk){e.preventDefault();e.stopPropagation();initMidi()}},true);
+addEventListener('pointerdown',()=>{if(!midiOk)initMidi()},{capture:true});
 function onmsg(e){const[s,a,b]=e.data,k=s&240;if(k==144&&b>0)down(a,b/127);else if(k==128||k==144)up(a)}
 function up(m){pressed.delete(m);voices[m]&&voices[m](ac.currentTime);delete voices[m]}
 function down(m,v){A();pressed.add(m);if(voices[m])voices[m](ac.currentTime);voices[m]=tone(m,ac.currentTime,0,v);if(!song)return;
@@ -469,7 +475,7 @@ for(const s of songs)if(!seen.has(s.cat)){seen.add(s.cat);const o=h('option',0,s
 const o=h('option',0,'Nueva categoría…');o.value='__new';sel.append(o);if(keep&&[...sel.options].some(x=>x.value==keep))sel.value=keep;$('hnp').hidden=sel.value!='__new'}
 function fillList(){const u=$('hsl');u.textContent='';if(!songs.length){u.append(h('small',0,'Todavía no has añadido ninguna.'));return}
 for(const s of songs){const li=h('li'),sp=h('span'),b=h('button',0,'Borrar'),eb=h('button',0,'Editar');eb.onclick=()=>editSong(s);sp.append(s.title);sp.append(h('small',0,(s.author?s.author+' · ':'')+catInfo(s.cat,s.catName).nombre));b.onclick=async()=>{if(!confirm('¿Borrar «'+s.title+'»?'))return;await DB.del(s.id);await loadSongs();if(curCat&&!songs.some(x=>x.cat==curCat)){curCat=null;history.replaceState({v:'home'},'')}fillCats();fillList();renderHome()};li.append(sp,eb,b);u.append(li)}}
-$('hcg').onclick=()=>{endEdit();$('hmsg').textContent='';fillCats();fillList();$('hcfgd').showModal()};$('hcl').onclick=()=>$('hcfgd').close();
+$('hcg').onclick=()=>{stInst();endEdit();$('hmsg').textContent='';fillCats();fillList();$('hcfgd').showModal()};$('hcl').onclick=()=>$('hcfgd').close();
 $('hca').onchange=()=>{$('hnp').hidden=$('hca').value!='__new'};
 $('hf').onchange=async e=>{const f=e.target.files[0];pend=null;$('hmsg').textContent='';if(!f){$('hfn').textContent='Ningún archivo';return}
 try{const buf=await f.arrayBuffer(),sg=await parseFile(f.name,buf.slice(0));pend={name:f.name,buf,title:sg.title,author:sg.composer||''};$('hfn').textContent=f.name;$('hti').value=sg.title;$('hco').value=pend.author}
@@ -483,6 +489,14 @@ let cat=$('hca').value,catName=$('hca').selectedOptions[0].textContent;if(cat=='
 const src=pend||old,rec={id:old?old.id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),title:$('hti').value.trim()||src.title,author:$('hco').value.trim(),cat,catName,name:src.name,buf:src.buf,added:old?old.added:Date.now()};
 try{await DB.put(rec);try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch{}await loadSongs();const was=!!old;endEdit();$('hmsg').textContent=was?'Guardado ✓':'Añadida ✓';if(curCat&&!songs.some(x=>x.cat==curCat)){curCat=null;history.replaceState({v:'home'},'')}fillCats();fillList();renderHome()}
 catch(err){$('hmsg').textContent='No se pudo guardar: '+err.message}};
+
+let dip=null;addEventListener('beforeinstallprompt',e=>{e.preventDefault();dip=e;$('hin').hidden=false;stInst()});
+addEventListener('appinstalled',()=>{dip=null;$('hin').hidden=true;stInst()});
+$('hin').onclick=async()=>{if(!dip)return;dip.prompt();try{await dip.userChoice}catch{}dip=null;$('hin').hidden=true;stInst()};
+function stInst(){const inst=matchMedia('(display-mode: fullscreen)').matches||matchMedia('(display-mode: standalone)').matches||navigator.standalone,h=[];
+h.push(location.protocol=='https:'||location.hostname=='localhost'?'https ✓':'⚠ hay que abrirla por https');h.push('serviceWorker'in navigator?'service worker ✓':'⚠ sin service worker');
+h.push(inst?'ya está instalada':dip?'lista para instalar':'Chrome aún no la ofrece: ⋮ › Instalar app (si no sale, ⋮ › Añadir a pantalla de inicio)');$('hist').textContent=h.join(' · ')}
+stInst();
 document.querySelectorAll('.ver').forEach(e=>e.textContent='SightKeys · versión '+VER);
 history.replaceState({v:'home'},'');loadSongs().then(renderHome);
 addEventListener('resize',size);try{new ResizeObserver(size).observe($('pw'))}catch{}size();chkFont();initMidi();loop();
