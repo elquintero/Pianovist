@@ -132,7 +132,7 @@ body.home #app{display:none}body:not(.home) #home{display:none}
 <p><small class="ver"></small></p>
 <p><button class="p" id="cc">Cerrar</button></p></dialog>
 <script>
-const VER='17';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
+const VER='18';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,ctlT=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
 let song=null,mode='idle',pos=0,bpm=80,t0=0,sp0=0,nb=0,ni=0,ac,fontOK=false,W=600,wrong=0,hits=0,miss=0;
 const pressed=new Set(),voices={};
@@ -299,7 +299,7 @@ const LL=yy=>{if(fontOK){c.font=`${4*S}px Bravura`;G('\uE022',hx-.664*S,yy)}else
 for(let p=bt-2;p>=n.pos;p-=2)LL(yOf(r,p,bt));
 for(let p=bt+10;p<=n.pos;p+=2)LL(yOf(r,p,bt));
 if(fontOK){c.font=`${4*S}px Bravura`;G(d>=4?GL.w:d>=2?GL.h:GL.q,hx-(d>=4?8.44:5.9),y)}else{c.beginPath();c.ellipse(hx,y,6,4.5,-.4,0,7);d>=2?c.stroke():c.fill()}
-if(d<4&&!n.grp){const up=n.up,sx=up?x+5.05:x-5.05,ey=up?y-33:y+33;c.beginPath();c.moveTo(sx,y);c.lineWidth=1.7;c.lineTo(sx,ey);c.stroke();
+if(d<4&&!n.grp){const up=n.up,sx=up?x+5.3:x-5.3,ey=up?y-33:y+33;c.beginPath();c.moveTo(sx,y);c.lineWidth=1.2;c.lineTo(sx,ey);c.stroke();
 if(d<=.5&&fontOK)G(String.fromCodePoint((d<.5?0xE242:0xE240)+(up?0:1)),sx,ey)}
 if([3,1.5,.75].includes(d)){if(fontOK){c.font=`${4*S}px Bravura`;G('\uE1E7',hx+(d>=4?11:8.6),y-(n.pos%2?0:S/2))}else{c.beginPath();c.arc(hx+11,y-(n.pos%2?0:S/2),2,0,7);c.fill()}}
 if(fontOK&&!n.tc&&n.alter!=song.ka[n.step]){c.font=`${4*S}px Bravura`;G(n.alter>0?GL.s:n.alter<0?GL.b:GL.n,hx-22-(n.ac||0)*11,y)}}
@@ -312,13 +312,13 @@ if(!fontOK){c.strokeStyle=col;c.lineWidth=1.6;c.beginPath();c.moveTo(ax,y1);c.li
 c.save();c.fillStyle=col;c.font=`${4*S}px Bravura`;c.translate(ax+.24*S,y1);c.rotate(-Math.PI/2);for(let i=0;i<k;i++)G('\uEAA9',i*sw,0);c.restore()}
 function drawCc(cc,x){if(!fontOK)return;const r=cc.hand=='R'?0:1;c.fillStyle=C.ink;c.font=`${3*S}px Bravura`;G(cc.sign=='F'?'\uE062':cc.sign=='C'?'\uE05C':'\uE050',x,Y[r]-(cc.line-1)*S)}
 function drawBeams(){for(const g of song.grps){const r=g.hand=='R'?0:1,all=g.it.flatMap(i=>i.ns),mid=all[0].bt+4;
-const far=all.reduce((a,n)=>Math.abs(n.pos-mid)>Math.abs(a-mid)?n.pos:a,mid),up=g.up,sx=up?5.05:-5.05;
+const far=all.reduce((a,n)=>Math.abs(n.pos-mid)>Math.abs(a-mid)?n.pos:a,mid),up=g.up,sx=up?5.3:-5.3;
 const ext=g.it.map(i=>{const ys=i.ns.map(n=>yOf(r,n.pos,n.bt));return[Math.min(...ys),Math.max(...ys),CX+XT(i.t)-xp]});
 if(ext.at(-1)[2]<HDR-30||ext[0][2]>W+30)continue;
 const X=ext.map(e=>e[2]+sx),req=ext.map(e=>up?e[0]-30:e[1]+30),x0=X[0];
 const s=Math.max(-S*1.2,Math.min(S*1.2,req.at(-1)-req[0]))/Math.max(1,X.at(-1)-x0);
 const ys=req.map((q,i)=>q-s*(X[i]-x0)),a=up?Math.min(...ys):Math.max(...ys),Yb=x=>a+s*(x-x0),d=up?1:-1;
-c.fillStyle=c.strokeStyle=all.every(doneN)?GREEN:!isSel(all[0])?C.gr:C.ink;c.lineWidth=1.7;
+c.fillStyle=c.strokeStyle=all.every(doneN)?GREEN:!isSel(all[0])?C.gr:C.ink;c.lineWidth=1.2;
 ext.forEach((e,i)=>{c.beginPath();c.moveTo(X[i],up?e[1]:e[0]);c.lineTo(X[i],Yb(X[i]));c.stroke()});
 const poly=(xa,xb,o)=>{const ya=Yb(xa)+d*o,yb=Yb(xb)+d*o;c.beginPath();c.moveTo(xa,ya);c.lineTo(xb,yb);c.lineTo(xb,yb+d*5);c.lineTo(xa,ya+d*5);c.fill()};
 for(let l=1;l<=4;l++){let st=null;g.it.forEach((it,i)=>{const b=it.ns[0].bms.find(x=>x[0]==l),v=b&&b[1];
