@@ -19,10 +19,9 @@ button:hover,.btn:hover{background:var(--bh)}button:focus-visible,select:focus-v
 button.p{background:var(--ac);color:var(--at);font-weight:600}
 input[type=range]{accent-color:var(--ac)}
 #top{flex:none;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:8px;height:58px;padding:0 12px;background:#000}
-#fsb{flex:none;width:28px;height:34px;padding:0;border:0;border-radius:0;box-shadow:none;background:none;opacity:.55;color:#fff;display:grid;place-items:center;line-height:0}#fsb:hover{background:none;opacity:.9}#fsb svg{width:18px;height:18px}#fsb .co{display:none}#fsb.on .co{display:block}#fsb.on .ex{display:none}
 #lf{display:flex;align-items:center;gap:16px;min-width:0}#tmp{display:flex;align-items:center;gap:8px;font-size:14px;color:#ddd}#tmp input{width:150px;margin:0}#tmp b{font-size:18px;font-weight:500;min-width:30px;color:#fff}
 #ttl{justify-self:center}
-#mw{justify-self:start;display:flex;align-items:center;gap:8px;max-width:100%;padding:4px 8px 4px 10px;border:1px solid #3a3a3a;border-radius:10px;background:#0c0c0c;min-width:0}
+#mw{justify-self:start;display:flex;align-items:center;gap:8px;max-width:100%;padding:4px 6px;border:0;border-radius:0;background:none;min-width:0}
 #mw select{background:transparent;padding:4px 2px;border-radius:6px;max-width:180px;text-overflow:ellipsis;color:#fff}
 #mw select option{background:#222;color:#fff}
 #dot{width:14px;height:14px;border-radius:50%;background:#777;flex:none}#dot.on{background:#18d33a;box-shadow:0 0 6px #18d33a99}
@@ -59,7 +58,7 @@ dialog p{margin:8px 0;display:flex;align-items:center;justify-content:space-betw
 dialog input[type=range]{width:150px}#fs,#ps{color:var(--mut);font-size:12px}
 @media (max-height:520px){#top{height:40px}#tm{height:24px}#pgw{display:none}#pg::-webkit-slider-runnable-track{height:28px}#pg::-webkit-slider-thumb{width:22px;height:22px;margin-top:3px}#pg::-moz-range-track{height:28px}#pg::-moz-range-thumb{width:22px;height:22px}
 #ttl{padding:1px 14px}#ttl small{min-height:0;font-size:11px}#ttl b{font-size:14px}.hb{width:38px;height:38px}.hb svg{width:24px;height:24px}#pb{width:46px;height:46px}#pb svg{width:26px;height:26px}#ctl{top:4px;padding:3px 10px;gap:10px}#mw{padding:2px 6px 2px 8px}}
-@media (max-width:760px){#tmp{font-size:0;gap:0}#tmp input{width:90px}#tmp b{font-size:16px;margin-left:8px}#lf{gap:10px}#ttl{display:none}}
+@media (max-width:760px){#lf{gap:10px}#ttl{display:none}}
 @media (max-width:640px){#pgw{display:none}#top{height:52px}#ttl{padding:3px 8px;max-width:none}#ttl small{font-size:11px}#mw select{max-width:110px}}
 body.home #app{display:none}body:not(.home) #home{display:none}
 #app{flex:1;min-height:0;display:flex;flex-direction:column}
@@ -91,8 +90,8 @@ body.home #app{display:none}body:not(.home) #home{display:none}
 <div id="rot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></svg><div>Gira el teléfono<br><small style="color:#9a9a9a">El player se usa en horizontal</small></div></div>
 <div id="app">
 <header id="top">
-<div id="lf"><button id="bk" aria-label="Volver a las categorías" title="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><button id="fsb" aria-label="Pantalla completa" title="Pantalla completa"><svg class="ex" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><svg class="co" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg></button><label id="mw" title="Teclado MIDI"><i id="dot"></i><select id="mi"><option>Sin teclado</option></select></label>
-<label id="tmp">Tempo <input id="bpm" type="range" min="30" max="220" value="80"> <b id="bv">80</b></label></div>
+<div id="lf"><button id="bk" aria-label="Volver a las categorías" title="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><label id="mw" title="Teclado MIDI"><i id="dot"></i><select id="mi"><option>Sin teclado</option></select></label>
+</div>
 <div id="ttl"><small id="cmp"></small><b id="tt">Lectura a primera vista</b></div>
 <button id="cg" aria-label="Ajustes"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
 </header>
@@ -120,6 +119,7 @@ body.home #app{display:none}body:not(.home) #home{display:none}
 <dialog id="cfg"><h2>Ajustes</h2>
 <h3>Práctica</h3>
 <p><label>Modo <select id="mode"><option value="wait" selected>Esperar mis notas</option><option value="tempo">Con tempo</option></select></label></p>
+<p><label id="tmp">Tempo <input id="bpm" type="range" min="30" max="220" value="80"> <b id="bv">80</b></label></p>
 <p><label><input id="oth" type="checkbox" checked> Oír la otra mano</label></p>
 <p><label><input id="met" type="checkbox"> Metrónomo</label></p>
 <p><label>Cuenta atrás <select id="ci"><option value="0">Sin cuenta</option><option value="2" selected>2 pulsos</option><option value="bm">1 compás</option></select></label></p>
@@ -129,10 +129,9 @@ body.home #app{display:none}body:not(.home) #home{display:none}
 <h3>Pantalla</h3>
 <p><label>Tamaño de la partitura <input id="zm" type="range" min="70" max="250" step="10" value="140"> <b id="zv">140%</b></label></p>
 <p><label>Estilo <select id="th"><option value="clasico">Clásico (negro y naranja)</option><option value="negro">Negro con azul cielo oscuro</option></select></label></p>
-<p><small class="ver"></small></p>
 <p><button class="p" id="cc">Cerrar</button></p></dialog>
 <script>
-const VER='25';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
+const VER='1.0.0';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,ctlT=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
 let song=null,mode='idle',pos=0,bpm=80,t0=0,sp0=0,nb=0,ni=0,ac,fontOK=false,W=600,wrong=0,hits=0,miss=0;
 const pressed=new Set(),voices={};
@@ -337,13 +336,13 @@ if(song){xp=XT(Math.max(pos,fr));const exp=new Set();
 if(mode=='tempo')song.ev.forEach(n=>{if(live(n)&&!n.st&&isSel(n)&&n.t>pos-.3&&n.t<pos+.5)exp.add(n.midi)});
 if(mode=='wait')group().forEach(n=>exp.add(n.midi));
 const hear=new Map();if(mode=='listen'||mode=='tempo')song.ev.forEach(n=>{if(live(n)&&n.t>=ps-.001&&n.t<=pos&&pos<n.t+n.dur&&(mode=='listen'||(!isSel(n)&&$('oth').checked)))hear.set(n.midi,n.hand)});
-if(dr||pgd)song.ev.forEach(n=>{if(live(n)&&n.t<=pos+.001&&pos<n.t+Math.max(n.dur,.4))hear.set(n.midi,n.hand)});
+if(dr||pgd||fl)song.ev.forEach(n=>{if(live(n)&&n.t<=pos+.001&&pos<n.t+Math.max(n.dur,.4))hear.set(n.midi,n.hand)});
 glowSet=new Set();
 {const on=song.on||(song.on=[...new Set(song.ev.filter(live).map(n=>Math.round(n.t*1000)/1000))].sort((a,b)=>a-b));
 let a=0,b=on.length;while(a<b){const m=(a+b)>>1;on[m]<=pos+.001?a=m+1:b=m}
 const tc=a?on[a-1]:null,at=t=>song.ev.filter(n=>live(n)&&Math.abs(n.t-t)<.002);
 if(mode=='wait')group().forEach(n=>glowSet.add(n));
-else if(tc!=null&&(dr||pgd)){at(tc).forEach(n=>glowSet.add(n))}
+else if(tc!=null&&(dr||pgd||fl)){at(tc).forEach(n=>glowSet.add(n))}
 else if(tc!=null&&(mode=='listen'||mode=='tempo')&&pos>=ps-.001){const g=at(tc);if(pos<tc+Math.max(.2,...g.map(n=>n.dur)))g.forEach(n=>{if(mode=='listen'||(!isSel(n)&&$('oth').checked))glowSet.add(n)})}
 if(mode=='tempo'){const e=song.ev.find(n=>live(n)&&!n.st&&isSel(n)&&n.t>pos-.3);if(e&&e.t<pos+.5)song.ev.forEach(n=>{if(live(n)&&!n.st&&isSel(n)&&Math.abs(n.t-e.t)<.002)glowSet.add(n)})}}
 c.save();c.beginPath();c.rect(HDR,0,W-HDR,SH);c.clip();
@@ -369,7 +368,8 @@ const khm=new Map();glowSet.forEach(n=>khm.set(n.midi,n.hand));
 wk.forEach((m,i)=>{k.fillStyle=khm.has(m)?mc(m):pressed.has(m)?C.ac:C.kw;k.fillRect(i*w,0,w,kh);k.fillStyle=C.kl;k.fillRect(i*w,0,1,kh)});
 for(let m=21;m<=108;m++)if(PCA[m%12]){const i=wk.indexOf(m-1);k.fillStyle=khm.has(m)?mc(m):pressed.has(m)?C.ac:C.kb;k.fillRect((i+1)*w-w*.3,0,w*.6,kh*.62)}
 k.fillStyle='#000';k.fillRect(0,kh,KW,8)}
-function loop(){if(document.body.classList.contains('home')){requestAnimationFrame(loop);return}if(song){
+function loop(){if(document.body.classList.contains('home')){requestAnimationFrame(loop);return}
+if(fl){const n=performance.now(),dt=Math.min(50,n-fl.t);fl.t=n;if(!song||mode!='idle'||dr)fl=null;else{fl.x+=fl.v*dt;fl.v*=Math.exp(-dt/330);const q=invX(fl.x);seek(q);if(q<=-song.bm||q>=song.end||Math.abs(fl.v)<.03){fl=null;snap()}}}if(song){
 if(mode=='listen'||mode=='tempo'){pos=sp0+(ac.currentTime-t0)*bpm/60;
 if(mode=='tempo'){for(const n of song.ev){if(n.t>pos)break;if(live(n)&&!n.st&&isSel(n)&&n.t>=lo&&n.t+.6<pos){n.st='miss';miss++;stat()}}}
 if(pos>song.end+.5){mode=='tempo'?finish():(mode='idle')}}
@@ -388,16 +388,18 @@ $('zm').oninput=e=>{Zu=e.target.value/100;$('zv').textContent=e.target.value+'%'
 try{if(localStorage.lps=='s'){$('sn').value='s';PIANO=false}}catch{}
 pStat();
 try{if(localStorage.lpv){$('vl').value=localStorage.lpv;$('vl').oninput({target:$('vl')})}if(localStorage.lpz2){$('zm').value=localStorage.lpz2;Zu=localStorage.lpz2/100;$('zv').textContent=localStorage.lpz2+'%'}}catch{}
-cv.onpointerdown=e=>{ctlT=performance.now()+3000;if(!song)return;dr={x:e.clientX,xp:XT(pos)};cv.setPointerCapture(e.pointerId)};
-cv.onpointermove=e=>{if(dr)seek(invX(dr.xp-(e.clientX-dr.x)/Z))};cv.onpointerup=cv.onpointercancel=()=>{ctlT=performance.now()+2500;if(dr&&song&&mode=='idle'){const T=song.T;pos=T.reduce((a,t)=>Math.abs(t-pos)<Math.abs(a-pos)?t:a,T[0])}dr=null};
+let fl=null;
+cv.onpointerdown=e=>{ctlT=performance.now()+3000;fl=null;if(!song)return;dr={x:e.clientX,xp:XT(pos),s:[[performance.now(),e.clientX]]};cv.setPointerCapture(e.pointerId)};
+cv.onpointermove=e=>{if(dr){seek(invX(dr.xp-(e.clientX-dr.x)/Z));dr.s.push([performance.now(),e.clientX]);if(dr.s.length>12)dr.s.shift()}};
+const snap=()=>{if(song&&mode=='idle'){const T=song.T;pos=T.reduce((a,t)=>Math.abs(t-pos)<Math.abs(a-pos)?t:a,T[0])}};
+cv.onpointerup=cv.onpointercancel=()=>{ctlT=performance.now()+2500;fl=null;if(dr&&song&&mode=='idle'){const q=dr.s,n=performance.now(),a=q.find(v=>n-v[0]<=90)||q.at(-1),b=q.at(-1),dt=Math.max(1,b[0]-a[0]),v=(b[1]-a[1])/dt/Z;if(n-b[0]<80&&Math.abs(v)>.25)fl={x:XT(pos),v:-v,t:n};else snap()}dr=null};
 $('p0').onclick=()=>{if(song){seek(0);if(mode=='idle')pos=0}};$('p1').onclick=()=>{if(song){const e=song.T.at(-1);seek(e);if(mode=='idle')pos=e}};
 
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>0));
 let fsOut=0,pickT=0;const inFs=()=>document.fullscreenElement||matchMedia('(display-mode: fullscreen)').matches;
-const WIN=/Windows/i.test(navigator.userAgent)||(navigator.userAgentData&&navigator.userAgentData.platform=='Windows');if(WIN)$('fsb').style.display='none';
+const WIN=/Windows/i.test(navigator.userAgent)||(navigator.userAgentData&&navigator.userAgentData.platform=='Windows');
 const goFs=()=>{if(WIN)return;try{const d=document.documentElement;if(!inFs()&&d.requestFullscreen)d.requestFullscreen({navigationUI:'hide'}).catch(()=>{})}catch{}};
-document.addEventListener('fullscreenchange',()=>{const f=!!document.fullscreenElement;if(!f&&!(document.hidden||Date.now()-pickT<90000))fsOut=1;$('fsb').classList.toggle('on',f);$('fsb').title=f?'Salir de pantalla completa':'Pantalla completa'});
-$('fsb').onclick=()=>{if(document.fullscreenElement){fsOut=1;try{document.exitFullscreen()}catch{}}else{fsOut=0;goFs()}};
+document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement&&!(document.hidden||Date.now()-pickT<90000))fsOut=1});
 for(const id of['mode','oth','met','ci']){const e=$(id),ck=e.type=='checkbox';try{const v=localStorage['lp_'+id];if(v!=null){if(ck)e.checked=v=='1';else e.value=v}}catch{}e.onchange=()=>sv('lp_'+id,ck?(e.checked?1:0):e.value)}
 try{const h=localStorage.lph||'00';for(const[i,x]of['L','R'].entries())if(h[i]=='1')$('h'+x).onclick()}catch{}
 
