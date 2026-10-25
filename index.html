@@ -80,13 +80,23 @@ body.home #app{display:none}body:not(.home) #home{display:none}
 .hc .n{color:var(--mut);font-size:14px}.hc .cv{width:20px;height:20px;color:#777;flex:none}.hc:hover .cv{color:var(--ac)}
 dialog .dh{display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:2;background:inherit;padding:2px 0 8px}dialog .dh h2{margin:0}
 #hcfgd{max-width:min(94vw,460px);max-height:90vh;overflow:auto}
-#hcfgd input[type=text],#hcfgd select{width:100%;margin-top:4px;padding:8px;background:var(--bt);color:var(--tx);border:1px solid #3a3a3a;border-radius:8px}
+#hcfgd input[type=text],#hcfgd input[type=password],#hcfgd select{width:100%;margin-top:4px;padding:8px;background:var(--bt);color:var(--tx);border:1px solid #3a3a3a;border-radius:8px}
 #hcfgd label:not(.btn){display:block}#hcfgd p{margin:10px 0}#hcfgd small{color:var(--mut)}
 #hsl{display:flex;flex-direction:column;gap:6px;margin:0;padding:0;list-style:none}
 #hsl li{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;background:#1b1b1b}#hsl li span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#hsl li small{display:block}
 #hsl button{padding:4px 10px;flex:none}
 #bk{flex:none;width:28px;height:34px;padding:0;border:0;background:none;color:#fff;display:grid;place-items:center;line-height:0;opacity:.8}#bk:hover{background:none;opacity:1}#bk svg{width:22px;height:22px}
 #rot{display:none}@media (orientation:portrait) and (max-width:700px){body:not(.home) #rot{position:fixed;inset:0;z-index:99;background:#000;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:24px;font-size:18px}#rot svg{width:64px;height:64px;animation:rt 2s ease-in-out infinite}}@keyframes rt{0%,30%{transform:rotate(0)}60%,100%{transform:rotate(-90deg)}}
+
+.tabs{flex:none;display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--bh);margin:0 0 10px}
+.tabs button{background:none;border-radius:0;padding:9px 14px;color:var(--mut);border-bottom:3px solid transparent;white-space:nowrap}.tabs button:hover{background:none;color:var(--tx)}.tabs button.on{color:var(--tx);border-color:var(--ac)}
+.tp[hidden]{display:none}.tip{display:block!important;background:#1d1d1d;border-radius:8px;padding:10px 12px;font-size:13px;color:#cfcfcf;margin:8px 0}
+#hcfgd{width:min(720px,96vw)}#hcfgd[open]{display:flex;flex-direction:column;overflow:hidden}#hcfgd .tpw{overflow:auto;min-height:0;flex:1;padding-bottom:6px}#hcfgd .dh{position:static;flex:none}#hcfgd .fg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 14px}#hcfgd .fg label[hidden]{display:none}
+@media (max-width:520px){#hcfgd .fg{grid-template-columns:1fr}}
+#hsl button{margin-left:2px}
+#cfg{width:min(900px,96vw);padding:12px 20px 14px}#cfg .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 24px}#cfg h3{margin:10px 0 4px}#cfg p{margin:7px 0}
+#cfg p label{display:flex;align-items:center;gap:8px}#cfg p label:has(input[type=checkbox]){gap:8px}#cfg select,#cfg input[type=range]{flex:1;min-width:0;width:auto}#cfg b{flex:none;min-width:2.6em;text-align:right}
+@media (max-width:640px){#cfg .cols{grid-template-columns:1fr}}
 </style></head><body class="home">
 <div id="rot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></svg><div>Gira el teléfono<br><small style="color:#9a9a9a">El player se usa en horizontal</small></div></div>
 <div id="app">
@@ -107,33 +117,52 @@ dialog .dh{display:flex;align-items:center;justify-content:space-between;gap:12p
 <div id="pgw"><button id="p0" aria-label="Ir al principio" title="Principio"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2.2v14H6zM19 5v14L9.5 12z"/></svg></button><input id="pg" type="range" min="0" max="1000" value="0" aria-label="Posición en la canción"><button id="p1" aria-label="Ir al final" title="Final"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.8 5H18v14h-2.2zM5 5l9.5 7L5 19z"/></svg></button></div>
 </div>
 <div id="home"><header id="htop"><button id="hback" hidden aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><div id="htt">SightKeys</div><button id="hcg" aria-label="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></header><main id="hl"><div class="w" id="hw"></div></main></div>
-<dialog id="hcfgd"><div class="dh"><h2>Ajustes</h2><button class="p" id="hcl">Cerrar</button></div><h3 id="hh">Añadir canción</h3>
-<p><label class="btn">Elegir archivo<input id="hf" type="file" accept=".mxl,.musicxml,.xml,.mid,.midi" hidden></label> <small id="hfn">Ningún archivo</small></p>
-<p><label>Título<input id="hti" type="text" autocomplete="off"></label></p>
-<p><label>Compositor<input id="hco" type="text" autocomplete="off"></label></p>
-<p><label>Categoría<select id="hca"></select></label></p>
-<p id="hnp" hidden><label>Nombre de la nueva categoría<input id="hnc" type="text" autocomplete="off"></label></p>
-<p><button class="p" id="hadd">Añadir canción</button> <button id="hcan" hidden>Cancelar</button> <small id="hmsg"></small></p>
+<dialog id="hcfgd"><div class="dh"><h2>Ajustes</h2><button class="p" id="hcl">Cerrar</button></div>
+<div class="tabs" id="htabs"><button data-t="gen" class="on">General</button><button data-t="lib">Gestión de biblioteca</button><button data-t="sec">Seguridad</button></div>
+<div class="tpw">
+<div class="tp" id="t-gen">
+<h3>SightKeys</h3><p><small class="ver"></small></p>
 <h3>Instalación</h3><p><button id="hin" class="p" hidden>Instalar app</button> <small id="hist"></small></p>
-<h3>Mis canciones</h3><ul id="hsl"></ul>
-<p><small class="ver"></small></p>
+<h3>Biblioteca compartida</h3><p><button id="hsync">Sincronizar ahora</button> <small id="hsy"></small></p>
+</div>
+<div class="tp" id="t-lib" hidden>
+<p id="lib-lock" class="tip" hidden>Solo el administrador puede añadir, editar o borrar canciones. Configura el repositorio y el token en la pestaña <b>Seguridad</b>.</p>
+<div id="lib-adm">
+<h3 id="hh">Añadir canción</h3>
+<p><label class="btn">Elegir archivo<input id="hf" type="file" accept=".mxl,.musicxml,.xml,.mid,.midi" hidden></label> <small id="hfn">Ningún archivo</small></p>
+<div class="fg"><label>Título<input id="hti" type="text" autocomplete="off"></label><label>Compositor<input id="hco" type="text" autocomplete="off"></label></div>
+<div class="fg"><label>Categoría<select id="hca"></select></label><label id="hnp" hidden>Nombre de la nueva categoría<input id="hnc" type="text" autocomplete="off"></label></div>
+<p><button class="p" id="hadd">Añadir canción</button> <button id="hcan" hidden>Cancelar</button> <small id="hmsg"></small></p>
+</div>
+<h3>Canciones</h3><ul id="hsl"></ul>
+</div>
+<div class="tp" id="t-sec" hidden>
+<p class="tip">Solo hay un administrador: quien tenga el token de GitHub. El token se guarda únicamente en este dispositivo. Las canciones se guardan en <b>songs.json</b> del repositorio y las ven todos los dispositivos.</p>
+<div class="fg"><label>Repositorio (usuario/repositorio)<input id="sr" type="text" autocomplete="off" placeholder="elquintero/SightKeys"></label>
+<label>Token fine-grained (Contents: lectura y escritura)<input id="stk" type="password" autocomplete="off"></label></div>
+<p><button class="p" id="sok">Guardar y comprobar</button> <button id="sout" hidden>Cerrar sesión de administrador</button> <small id="smsg"></small></p>
+</div>
+</div>
 </dialog>
 <dialog id="cfg"><div class="dh"><h2>Ajustes</h2><button class="p" id="cc">Cerrar</button></div>
-<h3>Práctica</h3>
+<div class="cols">
+<section><h3>Práctica</h3>
 <p><label>Modo <select id="mode"><option value="wait" selected>Esperar mis notas</option><option value="tempo">Con tempo</option></select></label></p>
 <p><label id="tmp">Tempo <input id="bpm" type="range" min="30" max="220" value="80"> <b id="bv">80</b></label></p>
-<p><label><input id="oth" type="checkbox" checked> Oír la otra mano</label></p>
-<p><label><input id="met" type="checkbox"> Metrónomo</label></p>
 <p><label>Cuenta atrás <select id="ci"><option value="0">Sin cuenta</option><option value="2" selected>2 pulsos</option><option value="bm">1 compás</option></select></label></p>
-<h3>Sonido</h3>
-<p><label>Sonido <select id="sn"><option value="p">Piano real</option><option value="s">Sintetizador</option></select></label></p><p><small id="ps"></small></p>
+<p><label><input id="oth" type="checkbox" checked> Oír la otra mano</label></p>
+<p><label><input id="met" type="checkbox"> Metrónomo</label></p></section>
+<section><h3>Sonido</h3>
+<p><label>Sonido <select id="sn"><option value="p">Piano real</option><option value="s">Sintetizador</option></select></label></p>
 <p><label>Volumen <input id="vl" type="range" min="0" max="100" value="60"> <b id="vv">60%</b></label></p>
-<h3>Pantalla</h3>
-<p><label>Tamaño de la partitura <input id="zm" type="range" min="70" max="250" step="10" value="140"> <b id="zv">140%</b></label></p>
-<p><label>Estilo <select id="th"><option value="clasico">Clásico (negro y naranja)</option><option value="negro">Negro con azul cielo oscuro</option></select></label></p>
+<p><small id="ps"></small></p></section>
+<section><h3>Pantalla</h3>
+<p><label>Tamaño <input id="zm" type="range" min="70" max="250" step="10" value="140"> <b id="zv">140%</b></label></p>
+<p><label>Estilo <select id="th"><option value="clasico">Clásico</option><option value="negro">Negro y azul</option></select></label></p></section>
+</div>
 </dialog>
 <script>
-const VER='1.0.0';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
+const VER='1.0.1';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,ctlT=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
 let song=null,mode='idle',pos=0,bpm=80,t0=0,sp0=0,nb=0,ni=0,ac,fontOK=false,W=600,wrong=0,hits=0,miss=0;
 const pressed=new Set(),voices={};
@@ -424,7 +453,7 @@ const ICON_PATHS = {
   navidad: ["M 428.3 181.2 c 4.2 4.7 5.3 11.4 2.8 17.2 s -8.3 9.5 -14.6 9.5 l -47.3 0 l 91.9 118.2 c 3.7 4.8 4.4 11.4 1.8 16.8 s -8.3 9 -14.4 9 l -48 0 l 100.8 134.4 c 3.6 4.8 4.2 11.3 1.5 16.7 s -8.3 8.8 -14.3 8.8 l -464 0 c -6.1 0 -11.6 -3.4 -14.3 -8.8 s -2.1 -11.9 1.5 -16.7 l 100.8 -134.4 l -48 0 c -6.1 0 -11.7 -3.5 -14.4 -9 s -2 -12 1.8 -16.8 l 91.9 -118.2 l -47.3 0 c -6.3 0 -12.1 -3.7 -14.6 -9.5 s -1.5 -12.5 2.8 -17.2 l 73.7 -81.1 c 0.6 0.3 1.3 0.5 1.9 0.8 l 19.8 7.4 l 4.1 10.9 l -51.5 56.7 l 43.8 0 c 6.1 0 11.7 3.5 14.4 9 s 2 12 -1.8 16.8 L 97.2 320 L 144.5 320 c 6.1 0 11.6 3.4 14.3 8.8 s 2.1 11.9 -1.5 16.7 L 56.5 480 L 456.5 480 L 355.7 345.6 c -3.6 -4.8 -4.2 -11.3 -1.5 -16.7 s 8.3 -8.8 14.3 -8.8 l 47.3 0 l -91.9 -118.2 c -3.7 -4.8 -4.4 -11.4 -1.8 -16.8 s 8.3 -9 14.4 -9 l 43.8 0 l -51.6 -56.8 l 4.1 -10.9 l 19.9 -7.4 l 1.9 -0.8 l 73.8 81.1 Z M 320.5 440 a 24 24 0 1 1 0 -48 a 24 24 0 1 1 0 48 Z m -96 -128 a 24 24 0 1 1 0 -48 a 24 24 0 1 1 0 48 Z M 260.4 -63.7 c 7.7 1.2 14.5 5.9 18.4 12.7 l 1.7 3.6 l 15.1 40.2 l 40.3 15.1 l 3.6 1.7 c 8 4.5 13 13 13 22.3 c 0 10.7 -6.6 20.2 -16.6 24 l -40.3 15.1 l -15.1 40.3 c -3.8 10 -13.3 16.6 -24 16.6 c -9.3 0 -17.8 -5.1 -22.3 -13 l -1.7 -3.6 l -15.1 -40.3 l -40.2 -15.1 c -8.8 -3.3 -14.9 -11 -16.3 -20.1 l -0.3 -3.9 l 0.3 -3.9 c 1.4 -9 7.6 -16.8 16.3 -20.1 l 40.2 -15.1 l 15.1 -40.2 l 1.7 -3.6 c 4.5 -8 13 -13 22.3 -13 l 3.9 0.3 Z M 244.8 10.9 c -1.6 4.3 -5 7.8 -9.4 9.4 l -31.2 11.7 l 31.2 11.7 l 3.1 1.5 c 2.9 1.8 5.1 4.6 6.3 7.8 l 11.7 31.1 l 11.7 -31.1 l 1.5 -3.1 c 1.8 -2.9 4.6 -5.1 7.8 -6.3 L 308.7 32 L 277.6 20.3 c -3.2 -1.2 -6 -3.4 -7.8 -6.3 l -1.5 -3.1 l -11.7 -31.2 l -11.7 31.2 Z", [8.5, -64.0, 496.0, 575.8]],
   metronomo: ["M 39 6 L 33 0 L 27 6 L 23.071 26.004 L 24.563 28.589 L 28.449 8.807 C 28.541 8.338 28.952 8 29.43 8 L 36.57 8 C 37.048 8 37.459 8.338 37.551 8.807 L 44.781 45.614 C 45.024 46.85 44.078 48 42.819 48 L 33.739 48 C 33.735 47.993 33.736 47.986 33.732 47.979 L 29.49 40.742 L 29.654 40.647 C 30.051 40.417 30.242 39.947 30.115 39.506 L 29.196 36.292 L 27.467 37.291 L 15.865 17.499 C 15.59 17.023 14.976 16.858 14.499 17.133 C 14.023 17.408 13.858 18.023 14.133 18.499 L 25.735 38.291 L 24 39.292 L 26.323 41.695 C 26.642 42.025 27.145 42.095 27.542 41.866 L 27.758 41.742 L 31.426 48 L 23.181 48 C 21.922 48 20.976 46.85 21.219 45.615 L 22.804 37.543 L 21.312 34.958 L 16 62 L 18 62 C 18 63.105 18.895 64 20 64 C 21.105 64 22 63.105 22 62 L 44 62 C 44 63.105 44.895 64 46 64 C 47.105 64 48 63.105 48 62 L 50 62 L 39 6 Z", [14.0, 0, 36.0, 64]],
   ajustes: ["M 264.2 48 L 245 48 C 244 52.2 237.5 81.2 225.4 134.8 C 219.1 138 213.1 141.5 207.2 145.3 L 122.2 118.9 L 112.6 135.5 L 56.6 232.5 L 47 249.1 C 50.2 252 72 272.2 112.4 309.5 C 112.1 316.4 112.1 323.5 112.4 330.5 C 72 367.8 50.2 388 47 390.9 L 56.6 407.5 L 112.6 504.5 L 122.2 521.1 C 126.4 519.8 154.7 511 207.2 494.7 C 213.1 498.5 219.1 502 225.4 505.2 C 237.5 558.8 244 587.8 245 592 L 395.4 592 C 396.4 587.8 402.9 558.8 415 505.2 C 421.2 502 427.3 498.5 433.2 494.7 C 485.7 511 514 519.8 518.2 521.1 L 527.8 504.5 L 583.8 407.5 L 593.4 390.9 C 590.2 388 568.4 367.8 528 330.5 C 528.3 323.6 528.3 316.5 528 309.5 C 568.4 272.2 590.2 252 593.4 249.1 L 583.8 232.5 L 527.8 135.5 L 518.2 118.9 C 514 120.2 485.7 129 433.2 145.3 C 427.3 141.5 421.3 138 415 134.8 C 402.9 81.2 396.4 52.2 395.4 48 L 264.2 48 Z M 269.7 156.7 L 283.4 96 L 357 96 L 370.7 156.7 L 373.4 168.5 L 384.5 173.4 C 395.3 178.2 405.5 184.1 414.9 191 L 424.7 198.2 L 436.3 194.6 L 495.8 176.1 L 532.6 239.9 L 486.8 282.2 L 477.9 290.4 L 479.2 302.4 C 479.8 308.2 480.2 314 480.2 320 C 480.2 326 479.9 331.8 479.2 337.6 L 477.9 349.6 L 486.8 357.8 L 532.6 400.1 L 495.8 463.9 L 436.3 445.4 L 424.7 441.8 L 414.9 449 C 405.5 455.9 395.3 461.9 384.5 466.6 L 373.4 471.5 L 370.7 483.3 L 357 544 L 283.4 544 L 269.7 483.3 L 267 471.5 L 255.9 466.6 C 245.1 461.8 234.9 455.9 225.5 449 L 215.7 441.8 L 204.1 445.4 L 144.6 463.9 L 107.8 400.1 L 153.6 357.8 L 162.5 349.6 L 161.2 337.6 C 160.6 331.8 160.2 326 160.2 320 C 160.2 314 160.5 308.2 161.2 302.4 L 162.5 290.4 L 153.6 282.2 L 107.8 239.9 L 144.6 176.1 L 204.1 194.6 L 215.7 198.2 L 225.5 191 C 234.9 184.1 245.1 178.1 255.9 173.4 L 267 168.5 L 269.7 156.7 Z M 367.8 320 C 367.8 346.4 346.4 367.9 320 367.9 C 293.5 367.9 272.1 346.4 272.1 320 C 272.1 293.6 293.5 272.2 320 272.2 C 346.4 272.2 367.8 293.6 367.8 320 Z M 320.1 224 C 267.1 223.9 224 266.8 224 319.9 C 223.9 372.9 266.8 415.9 319.8 416 C 372.8 416.1 415.9 373.2 416 320.2 C 416 267.1 373.1 224.1 320.1 224 Z", [47, 48, 546.4, 544]],
-  nota: ["M3 17.5 A5 3.6 -25 1 0 13 17.5 A5 3.6 -25 1 0 3 17.5 Z M11.6 3 L11.6 17.5 L14 17.5 L14 3 Z M14 3 L14 7 C17 7.4 19 8.2 20 10 C20 5.5 16.5 4.2 14 3 Z", [2.8, 3, 17.2, 18.7]],
+  nota: ["M451 -594C400 -673 358 -755 342 -851C339 -867 331 -873 312 -873C307 -873 303 -871 302 -864V-118C283 -135 255 -144 222 -144C99 -144 0 -53 0 44C0 103 48 138 109 138C209 138 332 45 332 -50V-611C394 -573 468 -463 499 -390C514 -356 523 -299 523 -240C523 -195 516 -148 499 -103C497 -97 496 -92 496 -88C496 -72 506 -63 512 -59L514 -58C523 -57 535 -61 540 -78C540 -78 566 -173 566 -251C566 -376 514 -494 451 -594Z", [0.0, -873.0, 566.0, 1011.0]],
 };
 const _p2d = {};
 const CAT_ICONS = Object.keys(ICON_PATHS).filter((k) => k !== "ajustes");   // iconos válidos para una categoría
@@ -450,7 +479,32 @@ const slug=t=>t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[
 const DB=(()=>{let p;const op=()=>p||(p=new Promise((res,rej)=>{const r=indexedDB.open('sightkeys',1);r.onupgradeneeded=()=>r.result.createObjectStore('songs',{keyPath:'id'});r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}));
 const tx=async(m,f)=>{const d=await op();return new Promise((res,rej)=>{const t=d.transaction('songs',m),q=f(t.objectStore('songs'));t.oncomplete=()=>res(q&&q.result);t.onerror=()=>rej(t.error)})};
 return{all:()=>tx('readonly',s=>s.getAll()),put:r=>tx('readwrite',s=>s.put(r)),del:id=>tx('readwrite',s=>s.delete(id))}})();
-let songs=[],curCat=null;
+let songs=[],curCat=null,cfg={},CONF={repo:''},sha=null;const LS=localStorage;
+try{cfg=JSON.parse(LS.getItem('sk_cfg')||'{}')}catch{}
+const saveCfg=()=>{try{LS.setItem('sk_cfg',JSON.stringify(cfg))}catch{}};
+const REPO=()=>(cfg.repo||CONF.repo||'').trim(),isAdmin=()=>!!(cfg.token&&cfg.ok&&REPO());
+const api=()=>`https://api.github.com/repos/${REPO()}/contents/songs.json`;
+const hdr=raw=>{const x={Accept:raw?'application/vnd.github.raw+json':'application/vnd.github+json'};if(cfg.token)x.Authorization='Bearer '+cfg.token;return x};
+const b2buf=b=>{const t=atob(b),u=new Uint8Array(t.length);for(let i=0;i<t.length;i++)u[i]=t.charCodeAt(i);return u.buffer};
+const buf2b=buf=>{const u=new Uint8Array(buf);let t='';for(let i=0;i<u.length;i+=0x8000)t+=String.fromCharCode.apply(null,u.subarray(i,i+0x8000));return btoa(t)};
+const toRemote=s=>({id:s.id,title:s.title,author:s.author||'',cat:s.cat,catName:s.catName||'',name:s.name,data:buf2b(s.buf),added:s.added||Date.now()});
+const setSync=(m,err)=>{const e=$('hsy');e.textContent=m;e.style.color=err?'#e06a6a':''};
+async function fetchRemote(){if(!REPO())throw new Error('Sin repositorio configurado');let sh=null;
+if(cfg.token){const m=await fetch(api(),{headers:hdr(false),cache:'no-store'});if(m.status==404)return{doc:null,sha:null};if(!m.ok)throw new Error('GitHub respondió '+m.status);sh=(await m.json()).sha}
+const r=await fetch(api(),{headers:hdr(true),cache:'no-store'});if(r.status==404)return{doc:null,sha:sh};if(!r.ok)throw new Error('GitHub respondió '+r.status);return{doc:await r.json(),sha:sh}}
+async function applyRemote(doc){for(const s of await DB.all())if(s.src=='gh')await DB.del(s.id);
+for(const s of(doc&&doc.songs)||[])await DB.put({id:s.id,title:s.title,author:s.author||'',cat:s.cat,catName:s.catName||'',name:s.name,buf:b2buf(s.data),src:'gh',added:s.added||0});await loadSongs()}
+async function pull(){setSync('Sincronizando…');let doc=null,ok=false;
+try{const r=await fetchRemote();sha=r.sha;doc=r.doc;ok=true}catch(e){try{const r=await fetch('songs.json',{cache:'no-store'});if(r.ok){doc=await r.json();ok=true}else if(r.status==404&&!REPO()){doc=null;ok=false}}catch{}}
+if(!ok){setSync('Sin conexión con GitHub: se muestra la copia guardada en este dispositivo',1);return false}
+await applyRemote(doc);setSync('Sincronizado '+new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}));return true}
+async function mutate(fn,msg){if(!isAdmin())throw new Error('Solo el administrador puede modificar la biblioteca');
+for(let k=0;k<2;k++){const r=await fetchRemote();sha=r.sha;const doc=r.doc&&Array.isArray(r.doc.songs)?r.doc:{version:1,songs:[]};fn(doc);doc.updated=new Date().toISOString();
+const body={message:msg||'SightKeys '+doc.updated,content:btoa(unescape(encodeURIComponent(JSON.stringify(doc))))};if(sha)body.sha=sha;
+const res=await fetch(api(),{method:'PUT',headers:hdr(false),body:JSON.stringify(body)});
+if(res.status==409||res.status==422)continue;if(res.status==401||res.status==403)throw new Error('El token no tiene permiso de escritura o ha caducado');if(!res.ok)throw new Error('GitHub respondió '+res.status);
+sha=(await res.json()).content.sha;await applyRemote(doc);return}
+throw new Error('Conflicto al guardar: vuelve a intentarlo')}
 const h=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
 const catInfo=(id,name)=>{const d=DEFC[id],nombre=d?d[0]:(name||id),ic=resolveIcon({icono:id,id,nombre});return{id,nombre,desc:d?d[1]:'',ic,col:CAT_COL[ic]||'#e8820c'}};
 const svgIcon=(ic,col)=>{const ip=ICON_PATHS[ic]||ICON_PATHS.nota,b=ip[1],ns='http://www.w3.org/2000/svg',s=document.createElementNS(ns,'svg'),pa=document.createElementNS(ns,'path');s.setAttribute('viewBox',b.join(' '));pa.setAttribute('d',ip[0]);pa.setAttribute('fill',col);s.appendChild(pa);return s};
@@ -460,7 +514,7 @@ async function loadSongs(){try{songs=await DB.all()}catch{songs=[]}songs.sort((a
 function cats(){const m=new Map();for(const s of songs){if(!m.has(s.cat))m.set(s.cat,{...catInfo(s.cat,s.catName),n:0});m.get(s.cat).n++}return[...m.values()].sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'))}
 function renderHome(){const w=$('hw');w.textContent='';const ci=curCat?catInfo(curCat,(songs.find(s=>s.cat==curCat)||{}).catName):null;
 $('htt').textContent=ci?ci.nombre:'SightKeys';$('hback').hidden=!ci;
-if(!songs.length){const e=h('div','emp');e.append('Aún no hay canciones.',document.createElement('br'),'Pulsa ⚙ para añadir tu primera partitura (.mxl) y elegir su categoría.');w.append(e);return}
+if(!songs.length){const e=h('div','emp');e.append('Aún no hay canciones.',document.createElement('br'),'Si eres el administrador, añádelas en ⚙ › Gestión de biblioteca.');w.append(e);return}
 if(!ci){w.append(h('div','hint','Elige una categoría'));for(const c of cats()){const b=h('button','hc'),tl=h('span','tl'),tx=h('span','tx');tl.style.background=tint(c.col,.16);tl.append(svgIcon(c.ic,c.col));tx.append(h('b',0,c.nombre));if(c.desc)tx.append(h('small',0,c.desc));b.append(tl,tx,h('span','n',String(c.n)),chev());b.onclick=()=>{curCat=c.id;history.pushState({v:'cat',id:c.id},'');renderHome();$('hl').scrollTop=0};w.append(b)}return}
 w.append(h('div','hint','Elige una canción para tocarla'));for(const s of songs.filter(x=>x.cat==curCat)){const b=h('button','hc'),tl=h('span','tl'),tx=h('span','tx');tl.style.background=tint(ci.col,.16);tl.append(svgIcon('nota',ci.col));tx.append(h('b',0,s.title));if(s.author)tx.append(h('small',0,s.author));b.append(tl,tx,chev());b.onclick=()=>playSong(s);w.append(b)}}
 function lockL(){try{screen.orientation.lock('landscape').catch(()=>0)}catch{}}
@@ -470,35 +524,51 @@ $('hback').onclick=()=>history.back();$('bk').onclick=()=>history.back();
 addEventListener('popstate',e=>{const st=e.state||{v:'home'};if(st.v=='play'&&!song)return history.go(-1);if(st.v=='play'){document.body.classList.remove('home');lockL();size();return}
 curCat=st.v=='cat'?st.id:null;showHome()});
 /* ajustes de la pantalla previa */
-let pend=null;
+let pend=null,editId=null;
+function showTab(t){document.querySelectorAll('#htabs button').forEach(b=>b.classList.toggle('on',b.dataset.t==t));document.querySelectorAll('.tp').forEach(p=>p.hidden=p.id!=='t-'+t);if(t=='lib')libState();if(t=='sec')secState();if(t=='gen')stInst()}
+document.querySelectorAll('#htabs button').forEach(b=>b.onclick=()=>showTab(b.dataset.t));
+function libState(){const a=isAdmin();$('lib-lock').hidden=a;$('lib-adm').hidden=!a;fillCats();fillList()}
+function secState(){$('sr').value=cfg.repo||CONF.repo||'';$('stk').value=cfg.token||'';$('sout').hidden=!cfg.token;$('smsg').textContent=isAdmin()?'Modo administrador activo ✓':cfg.token?'Token guardado, sin comprobar':''}
 function fillCats(){const sel=$('hca'),keep=sel.value,seen=new Set(Object.keys(DEFC));sel.textContent='';for(const k in DEFC){const o=h('option',0,DEFC[k][0]);o.value=k;sel.append(o)}
 for(const s of songs)if(!seen.has(s.cat)){seen.add(s.cat);const o=h('option',0,s.catName||s.cat);o.value=s.cat;sel.append(o)}
 const o=h('option',0,'Nueva categoría…');o.value='__new';sel.append(o);if(keep&&[...sel.options].some(x=>x.value==keep))sel.value=keep;$('hnp').hidden=sel.value!='__new'}
-function fillList(){const u=$('hsl');u.textContent='';if(!songs.length){u.append(h('small',0,'Todavía no has añadido ninguna.'));return}
-for(const s of songs){const li=h('li'),sp=h('span'),b=h('button',0,'Borrar'),eb=h('button',0,'Editar');eb.onclick=()=>editSong(s);sp.append(s.title);sp.append(h('small',0,(s.author?s.author+' · ':'')+catInfo(s.cat,s.catName).nombre));b.onclick=async()=>{if(!confirm('¿Borrar «'+s.title+'»?'))return;await DB.del(s.id);await loadSongs();if(curCat&&!songs.some(x=>x.cat==curCat)){curCat=null;history.replaceState({v:'home'},'')}fillCats();fillList();renderHome()};li.append(sp,eb,b);u.append(li)}}
-$('hcg').onclick=()=>{stInst();endEdit();$('hmsg').textContent='';fillCats();fillList();$('hcfgd').showModal()};$('hcl').onclick=()=>$('hcfgd').close();
+async function run(fn,ok){$('hmsg').textContent='Guardando…';try{await fn();$('hmsg').textContent=ok||'';if(curCat&&!songs.some(x=>x.cat==curCat)){curCat=null;history.replaceState({v:'home'},'')}fillCats();fillList();renderHome();return true}catch(err){$('hmsg').textContent=String(err.message||err);return false}}
+function fillList(){const u=$('hsl');u.textContent='';if(!songs.length){u.append(h('small',0,'La biblioteca está vacía.'));return}const adm=isAdmin();
+for(const s of songs){const loc=s.src!='gh',li=h('li'),sp=h('span');sp.append(s.title);sp.append(h('small',0,(s.author?s.author+' · ':'')+catInfo(s.cat,s.catName).nombre+(loc?' · solo en este dispositivo':'')));li.append(sp);
+if(adm&&!loc){const eb=h('button',0,'Editar');eb.onclick=()=>editSong(s);li.append(eb)}
+if(adm&&loc){const ub=h('button',0,'Subir a GitHub');ub.onclick=()=>run(async()=>{await mutate(d=>d.songs.push(toRemote(s)),'Subir '+s.title);await DB.del(s.id);await loadSongs()},'Subida ✓');li.append(ub)}
+if(adm||loc){const b=h('button',0,'Borrar');b.onclick=()=>{if(!confirm('¿Borrar «'+s.title+'»?'))return;run(async()=>{if(loc){await DB.del(s.id);await loadSongs()}else await mutate(d=>{d.songs=d.songs.filter(x=>x.id!=s.id)},'Borrar '+s.title)},'Borrada ✓')};li.append(b)}
+u.append(li)}}
+$('hcg').onclick=()=>{endEdit();$('hmsg').textContent='';showTab('gen');$('hcfgd').showModal()};$('hcl').onclick=()=>$('hcfgd').close();
 $('hca').onchange=()=>{$('hnp').hidden=$('hca').value!='__new'};
 $('hf').onchange=async e=>{const f=e.target.files[0];pend=null;$('hmsg').textContent='';if(!f){$('hfn').textContent='Ningún archivo';return}
 try{const buf=await f.arrayBuffer(),sg=await parseFile(f.name,buf.slice(0));pend={name:f.name,buf,title:sg.title,author:sg.composer||''};$('hfn').textContent=f.name;$('hti').value=sg.title;$('hco').value=pend.author}
 catch(err){$('hfn').textContent='Ningún archivo';$('hmsg').textContent='No se pudo leer: '+err.message}};
-let editId=null;
 function endEdit(){editId=null;pend=null;$('hf').value='';$('hfn').textContent='Ningún archivo';$('hti').value='';$('hco').value='';$('hnc').value='';$('hh').textContent='Añadir canción';$('hadd').textContent='Añadir canción';$('hcan').hidden=true;$('hca').onchange()}
-function editSong(sg){editId=sg.id;pend=null;$('hf').value='';$('hfn').textContent='Archivo actual: '+sg.name;$('hti').value=sg.title;$('hco').value=sg.author||'';fillCats();$('hca').value=sg.cat;$('hca').onchange();$('hh').textContent='Editar canción';$('hadd').textContent='Guardar cambios';$('hcan').hidden=false;$('hmsg').textContent='';$('hcfgd').scrollTop=0}
+function editSong(sg){editId=sg.id;pend=null;$('hf').value='';$('hfn').textContent='Archivo actual: '+sg.name;$('hti').value=sg.title;$('hco').value=sg.author||'';fillCats();$('hca').value=sg.cat;$('hca').onchange();$('hh').textContent='Editar canción';$('hadd').textContent='Guardar cambios';$('hcan').hidden=false;$('hmsg').textContent='';$('hcfgd').querySelector('.tpw').scrollTop=0}
 $('hcan').onclick=()=>{endEdit();$('hmsg').textContent=''};
 $('hadd').onclick=async()=>{const old=editId?songs.find(x=>x.id==editId):null;if(!pend&&!old)return $('hmsg').textContent='Elige primero un archivo.';
 let cat=$('hca').value,catName=$('hca').selectedOptions[0].textContent;if(cat=='__new'){catName=$('hnc').value.trim();if(!catName)return $('hmsg').textContent='Escribe el nombre de la categoría.';cat=slug(catName)}
-const src=pend||old,rec={id:old?old.id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),title:$('hti').value.trim()||src.title,author:$('hco').value.trim(),cat,catName,name:src.name,buf:src.buf,added:old?old.added:Date.now()};
-try{await DB.put(rec);try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch{}await loadSongs();const was=!!old;endEdit();$('hmsg').textContent=was?'Guardado ✓':'Añadida ✓';if(curCat&&!songs.some(x=>x.cat==curCat)){curCat=null;history.replaceState({v:'home'},'')}fillCats();fillList();renderHome()}
-catch(err){$('hmsg').textContent='No se pudo guardar: '+err.message}};
-
+const title=$('hti').value.trim()||(pend||old).title,author=$('hco').value.trim();
+const ok=await run(async()=>{if(old)await mutate(d=>{const i=d.songs.findIndex(x=>x.id==old.id);if(i>=0)d.songs[i]={...d.songs[i],title,author,cat,catName,...(pend?{name:pend.name,data:buf2b(pend.buf)}:{})}},'Editar '+title);
+else await mutate(d=>d.songs.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),title,author,cat,catName,name:pend.name,data:buf2b(pend.buf),added:Date.now()}),'Añadir '+title)},old?'Guardado ✓':'Añadida ✓');
+if(ok)endEdit()};
+$('hsync').onclick=async()=>{await pull();renderHome()};
+$('sok').onclick=async()=>{cfg.repo=$('sr').value.trim();cfg.token=$('stk').value.trim();cfg.ok=false;saveCfg();$('smsg').textContent='Comprobando…';
+try{if(cfg.token){if(!/^[\w.-]+\/[\w.-]+$/.test(cfg.repo))throw new Error('El repositorio debe ser usuario/repositorio');
+const r=await fetch('https://api.github.com/repos/'+cfg.repo,{headers:{Authorization:'Bearer '+cfg.token,Accept:'application/vnd.github+json'}});
+if(!r.ok)throw new Error(r.status==404?'repositorio o token incorrectos':r.status==401?'token no válido o caducado':'error '+r.status);
+const j=await r.json();if(!j.permissions||!j.permissions.push)throw new Error('el token no tiene permiso de escritura (Contents: Read and write)');cfg.ok=true;saveCfg()}
+await pull();renderHome();secState();$('smsg').textContent=cfg.ok?'Modo administrador activado ✓':'Repositorio guardado'}catch(err){saveCfg();$('smsg').textContent=String(err.message||err)}};
+$('sout').onclick=()=>{cfg.token='';cfg.ok=false;saveCfg();secState();fillList();$('smsg').textContent='Sesión de administrador cerrada'};
 let dip=null;addEventListener('beforeinstallprompt',e=>{e.preventDefault();dip=e;$('hin').hidden=false;stInst()});
 addEventListener('appinstalled',()=>{dip=null;$('hin').hidden=true;stInst()});
 $('hin').onclick=async()=>{if(!dip)return;dip.prompt();try{await dip.userChoice}catch{}dip=null;$('hin').hidden=true;stInst()};
-function stInst(){const inst=matchMedia('(display-mode: fullscreen)').matches||matchMedia('(display-mode: standalone)').matches||navigator.standalone,h=[];
-h.push(location.protocol=='https:'||location.hostname=='localhost'?'https ✓':'⚠ hay que abrirla por https');h.push('serviceWorker'in navigator?'service worker ✓':'⚠ sin service worker');
-h.push(inst?'ya está instalada':dip?'lista para instalar':'Chrome aún no la ofrece: ⋮ › Instalar app (si no sale, ⋮ › Añadir a pantalla de inicio)');$('hist').textContent=h.join(' · ')}
-stInst();
+function stInst(){const inst=matchMedia('(display-mode: fullscreen)').matches||matchMedia('(display-mode: standalone)').matches||navigator.standalone,x=[];
+x.push(location.protocol=='https:'||location.hostname=='localhost'?'https ✓':'⚠ hay que abrirla por https');x.push('serviceWorker'in navigator?'service worker ✓':'⚠ sin service worker');
+x.push(inst?'ya está instalada':dip?'lista para instalar':'Chrome aún no la ofrece: ⋮ › Instalar app (si no sale, ⋮ › Añadir a pantalla de inicio)');$('hist').textContent=x.join(' · ')}
 document.querySelectorAll('.ver').forEach(e=>e.textContent='SightKeys · versión '+VER);
-history.replaceState({v:'home'},'');loadSongs().then(renderHome);
+history.replaceState({v:'home'},'');
+(async()=>{try{CONF=await(await fetch('config.json',{cache:'no-store'})).json()}catch{}await loadSongs();renderHome();if(await pull())renderHome()})();
 addEventListener('resize',size);try{new ResizeObserver(size).observe($('pw'))}catch{}size();chkFont();initMidi();loop();
 </script></body></html>
