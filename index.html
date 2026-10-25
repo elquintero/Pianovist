@@ -102,6 +102,11 @@ dialog .dh{display:flex;align-items:center;justify-content:space-between;gap:12p
 #pw #lpB{width:50px;height:50px;border-radius:50%}#lpB svg{width:26px;height:26px}#lpB .xx,#lpB.x .lo{display:none}#lpB.x .xx{display:block}
 #pw .lph{width:34px;height:52px;border-radius:10px}.lph svg{width:28px;height:28px}
 @media (max-height:520px){#lpB{width:44px;height:44px}.lph{width:32px;height:46px}}
+*{-webkit-tap-highlight-color:transparent}
+#app,#home{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+#app input,#app select,#home input,#home select{-webkit-user-select:auto;user-select:auto}
+#pw,#cv,#kv{touch-action:none}
+button{outline:0}button:focus-visible{outline:2px solid var(--ac)}
 </style></head><body class="home">
 <div id="rot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></svg><div>Gira el teléfono<br><small style="color:#9a9a9a">El player se usa en horizontal</small></div></div>
 <div id="app">
@@ -170,7 +175,7 @@ dialog .dh{display:flex;align-items:center;justify-content:space-between;gap:12p
 </div>
 </dialog>
 <script>
-const VER='1.0.5';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
+const VER='1.0.6';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,ctlT=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
 let song=null,mode='idle',pos=0,bpm=80,t0=0,sp0=0,nb=0,ni=0,ac,fontOK=false,W=600,wrong=0,hits=0,miss=0,sel=null,BD=[];
 const pressed=new Set(),voices={};
@@ -464,6 +469,7 @@ const snap=()=>{if(song&&mode=='idle'){const T=song.T;pos=T.reduce((a,t)=>Math.a
 cv.onpointerup=cv.onpointercancel=()=>{ctlT=performance.now()+2500;fl=null;if(dr&&song&&mode=='idle'){const q=dr.s,n=performance.now(),a=q.find(v=>n-v[0]<=90)||q.at(-1),b=q.at(-1),dt=Math.max(1,b[0]-a[0]),v=(b[1]-a[1])/dt/Z;if(n-b[0]<80&&Math.abs(v)>.25)fl={x:XT(pos),v:-v,t:n};else snap()}dr=null};
 $('p0').onclick=()=>{if(song){seek(0);if(mode=='idle')pos=0}};$('p1').onclick=()=>{if(song){const e=song.T.at(-1);seek(e);if(mode=='idle')pos=e}};
 
+document.addEventListener('contextmenu',e=>{if(e.target.closest&&e.target.closest('#app,#home')&&!/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))e.preventDefault()});
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>0));
 let fsOut=0,pickT=0;const inFs=()=>document.fullscreenElement||matchMedia('(display-mode: fullscreen)').matches;
 const WIN=/Windows/i.test(navigator.userAgent)||(navigator.userAgentData&&navigator.userAgentData.platform=='Windows');

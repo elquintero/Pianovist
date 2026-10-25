@@ -1,6 +1,8 @@
-# Lectura a primera vista (piano)
+# SightKeys
 
-App web de una sola página (`index.html`) para practicar lectura a primera vista con un teclado MIDI.
+Versión 1.0.6
+
+App web de una sola página (`index.html`) para practicar lectura a primera vista de piano con un teclado MIDI, al estilo Flowkey.
 
 ## Funciones
 - Carga de canciones en **MusicXML** (`.musicxml`, `.xml`, `.mxl`) y MIDI (`.mid`) desde ⚙ Ajustes.
@@ -20,10 +22,10 @@ Colócala en **`fonts/Bravura.otf`** (fuente completa de https://github.com/stei
 
 ## Instalar en Android (PWA)
 1. Publica el repositorio con GitHub Pages (ver abajo).
-2. Abre la URL `https://TU_USUARIO.github.io/lectura-piano/` en **Chrome para Android**.
+2. Abre la URL `https://elquintero.github.io/SightKeys/` en **Chrome para Android**.
 3. Menú ⋮ → **Instalar aplicación** (o «Añadir a la pantalla de inicio»).
 4. Conecta el teclado por **USB (adaptador OTG)** antes de abrir la app y acepta el permiso MIDI.
-Tras la primera carga funciona sin conexión. Si cambias la app, sube la versión de caché (`V` en `sw.js`, siempre con el prefijo `lectura-piano-`).
+Tras la primera carga funciona sin conexión. Si cambias la app, sube la versión de caché (`V` en `sw.js`, siempre con el prefijo `sightkeys-`).
 
 ## Uso en local
 Abre `index.html` en Chrome o Edge. Para servirla con un servidor local:
@@ -39,5 +41,19 @@ y entra en http://localhost:8000
 
 ## Subir a GitHub
     ./iniciar-git.sh
-    git remote add origin https://github.com/TU_USUARIO/lectura-piano.git
+    git remote add origin https://github.com/elquintero/SightKeys.git
     git push -u origin main
+
+## Biblioteca compartida (GitHub)
+
+Las canciones se guardan en `songs.json` en la raíz del repositorio (el repositorio por defecto está en `config.json`). Todos los dispositivos leen ese archivo; solo el administrador, que es quien tiene el token, puede añadir, editar o borrar canciones.
+
+1. En GitHub crea un token *fine-grained* con acceso solo a este repositorio y permiso **Contents: Read and write**.
+2. En la app: ⚙ › **Seguridad** › escribe `usuario/repositorio` y el token › *Guardar y comprobar*.
+3. En ⚙ › **Gestión de biblioteca** ya puedes añadir canciones (`.mxl`, `.musicxml`, `.mid`) y asignarles categoría.
+
+El token se guarda solo en el dispositivo del administrador (no se sube a ningún sitio).
+
+
+## Repetir una sección
+En el player, el botón de bucle sobre la línea del selector abre la selección del compás actual. Las flechas ‹ › se arrastran: el borde sigue al dedo o al ratón píxel a píxel (no solo por compases): hacia fuera amplía la sección y hacia dentro la reduce. Con una selección activa, ▶ empieza al principio de la sección y al llegar al final vuelve a empezar. La ✕ la cierra.
