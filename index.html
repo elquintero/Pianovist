@@ -99,8 +99,8 @@ dialog .dh{display:flex;align-items:center;justify-content:space-between;gap:12p
 @media (max-width:640px){#cfg .cols{grid-template-columns:1fr}}
 #pw #lpB,#pw .lph{position:absolute;display:none;z-index:3;transform:translate(-50%,-50%);touch-action:none;place-items:center;padding:0;background:#fff;color:#f08a10;border:1.5px solid #cfcfcf;cursor:pointer;box-shadow:0 1px 4px #0003}
 #pw #lpB{width:50px;height:50px;border-radius:50%}#lpB svg{width:26px;height:26px}#lpB .xx,#lpB.x .lo{display:none}#lpB.x .xx{display:block}
-#pw .lph{width:32px;height:50px;border-radius:9px}.lph svg{width:22px;height:22px}
-@media (max-height:520px){#lpB{width:44px;height:44px}.lph{width:30px;height:44px}}
+#pw .lph{width:66px;height:46px;border-radius:12px;grid-auto-flow:column;gap:2px}.lph svg{width:28px;height:28px}
+@media (max-height:520px){#lpB{width:44px;height:44px}.lph{width:62px;height:42px}}
 </style></head><body class="home">
 <div id="rot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></svg><div>Gira el teléfono<br><small style="color:#9a9a9a">El player se usa en horizontal</small></div></div>
 <div id="app">
@@ -117,8 +117,8 @@ dialog .dh{display:flex;align-items:center;justify-content:space-between;gap:12p
 <button id="hR" class="hb" aria-label="Mano derecha" aria-pressed="false" title="Mano derecha"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="7.2" y="4.2" width="2.7" height="9" rx="1.35"/><rect x="10.2" y="2.4" width="2.7" height="10.6" rx="1.35"/><rect x="13.2" y="3.2" width="2.7" height="9.8" rx="1.35"/><rect x="16.2" y="5.4" width="2.6" height="8" rx="1.3"/><path d="M7.2 11v3.2L4.6 11.4a1.5 1.5 0 0 0-2.1 2.1l4.3 5.5A5 5 0 0 0 10.7 21H14a4.8 4.8 0 0 0 4.8-4.8V12H7.2z"/></svg></button>
 </div>
 <button id="lpB" aria-label="Seleccionar sección para repetir" title="Repetir una sección"><svg class="lo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a3 3 0 0 1 3-3h15"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a3 3 0 0 1-3 3H3"/></svg><svg class="xx" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-<button id="lpL" class="lph" aria-label="Ampliar a la izquierda"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
-<button id="lpR" class="lph" aria-label="Ampliar a la derecha"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+<button id="lpL" class="lph" aria-label="Ajustar inicio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+<button id="lpR" class="lph" aria-label="Ajustar final"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
 <div id="st"></div></div>
 <canvas id="kv"></canvas>
 <div id="pgw"><button id="p0" aria-label="Ir al principio" title="Principio"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2.2v14H6zM19 5v14L9.5 12z"/></svg></button><input id="pg" type="range" min="0" max="1000" value="0" aria-label="Posición en la canción"><button id="p1" aria-label="Ir al final" title="Final"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.8 5H18v14h-2.2zM5 5l9.5 7L5 19z"/></svg></button></div>
@@ -169,7 +169,7 @@ dialog .dh{display:flex;align-items:center;justify-content:space-between;gap:12p
 </div>
 </dialog>
 <script>
-const VER='1.0.2';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
+const VER='1.0.3';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,ctlT=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
 let song=null,mode='idle',pos=0,bpm=80,t0=0,sp0=0,nb=0,ni=0,ac,fontOK=false,W=600,wrong=0,hits=0,miss=0,sel=null,BD=[];
 const pressed=new Set(),voices={};
@@ -420,17 +420,19 @@ function lpPos(e,x,y,v){const k=e.id,t=v?`${Math.round(x)},${Math.round(y)}`:'x'
 function lpUI(run){if(!song||BD.length<2||document.body.classList.contains('home')){lpPos(lpB,0,0,0);lpPos(lpL,0,0,0);lpPos(lpR,0,0,0);return}
 const y=(Y[0]+Y[1])/2*Z,wp=$('pw').clientWidth,lo_=HDR*Z;lpB.classList.toggle('x',!!sel);
 if(!sel){lpPos(lpB,CX*Z,y,!run);lpPos(lpL,0,0,0);lpPos(lpR,0,0,0);return}
-const x0=bx(sel.a)*Z,x1=bx(sel.b)*Z;
-lpPos(lpL,x0,y,!run&&x0>=lo_&&x0<=wp);lpPos(lpR,x1,y,!run&&x1>=lo_&&x1<=wp);
-const a=Math.max(x0,lo_),b=Math.min(x1,wp);lpPos(lpB,(a+b)/2,y,!run&&b-a>70)}
+const x0=bx(sel.a)*Z,x1=bx(sel.b)*Z,cl=x=>Math.min(Math.max(x,lo_+20),wp-20);
+lpPos(lpL,cl(x0),y,!run);lpPos(lpR,cl(x1),y,!run);
+const a=Math.max(x0,lo_),b=Math.min(x1,wp);lpPos(lpB,b>a?(a+b)/2:CX*Z,y,!run)}
 lpB.onclick=()=>{if(!song||BD.length<2)return;if(sel){sel=null;return}
 let i=0;while(i<BD.length-1&&BD[i+1]<=pos+.001)i++;if(i>=BD.length-1)i=BD.length-2;sel={a:i,b:i+1};
 if(mode=='idle'){seek(BD[i]);pos=BD[i]}}
-function hdrag(el,side){el.onpointerdown=e=>{e.preventDefault();el.setPointerCapture(e.pointerId)};
-el.onpointermove=e=>{if(!el.hasPointerCapture(e.pointerId)||!sel)return;const px=(e.clientX-$('pw').getBoundingClientRect().left)/Z;let k=0,d=1e9;
-for(let i=0;i<BD.length;i++){const dd=Math.abs(bx(i)-px);if(dd<d){d=dd;k=i}}
+function hdrag(el,side){let d0=null;
+el.onpointerdown=e=>{e.preventDefault();el.setPointerCapture(e.pointerId);d0={x:e.clientX,k:side?sel.b:sel.a,bx:bx(side?sel.b:sel.a),mv:0}};
+el.onpointermove=e=>{if(!d0||!sel)return;const dx=(e.clientX-d0.x)/Z;d0.mv=Math.max(d0.mv,Math.abs(e.clientX-d0.x));if(d0.mv<8)return;let k=d0.k;const sg=dx>0?1:-1;
+while(k+sg>=0&&k+sg<BD.length){const dn=Math.abs(bx(k+sg)-bx(k));if((dx-(bx(k)-d0.bx))*sg>=.3*dn)k+=sg;else break}
 if(side==0)sel.a=Math.max(0,Math.min(sel.b-1,k));else sel.b=Math.min(BD.length-1,Math.max(sel.a+1,k))};
-el.onpointerup=el.onpointercancel=()=>{}}
+el.onpointerup=e=>{if(d0&&sel&&d0.mv<8){if(side==0)sel.a=Math.max(0,sel.a-1);else sel.b=Math.min(BD.length-1,sel.b+1)}d0=null};
+el.onpointercancel=()=>{d0=null}}
 hdrag(lpL,0);hdrag(lpR,1);
 function loop(){if(document.body.classList.contains('home')){requestAnimationFrame(loop);return}
 if(fl){const n=performance.now(),dt=Math.min(50,n-fl.t);fl.t=n;if(!song||mode!='idle'||dr)fl=null;else{fl.x+=fl.v*dt;fl.v*=Math.exp(-dt/330);const q=invX(fl.x);seek(q);if(q<=-song.bm||q>=song.end||Math.abs(fl.v)<.03){fl=null;snap()}}}if(song){
