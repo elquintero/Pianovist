@@ -10,7 +10,7 @@
 <link rel="icon" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/icon-192.png">
 <style>
 :root{--bg:#f6f5f1;--pn:#fff;--ac:#e8820c;--tx:#1d1d1b;--bt:#ecebe5;--bh:#dcdad1;--pa:#fbf9f3;--at:#fff;--mut:#85847c}
-:root[data-t=negro]{--bg:#000;--pn:#0b0b0c;--ac:#1b84c4;--tx:#e6e6e6;--bt:#1c1c1f;--bh:#2b2b30;--pa:#08080a;--at:#fff;--mut:#9a9a9a}
+:root[data-t=negro]{--bg:#000;--pn:#0b0b0c;--ac:#e8820c;--tx:#e6e6e6;--bt:#1c1c1f;--bh:#2b2b30;--pa:#08080a;--at:#fff;--mut:#9a9a9a}
 *{box-sizing:border-box}html,body{height:100%}
 body{margin:0;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);background:var(--bg);color:var(--tx);font:15px system-ui,sans-serif;display:flex;flex-direction:column;height:100vh;height:100dvh;overflow:hidden;overscroll-behavior:none;user-select:none;-webkit-user-select:none}
 label,button,select{font:inherit}
@@ -177,6 +177,23 @@ button{outline:0}button:focus-visible{outline:2px solid var(--ac)}
 :root:not([data-t=negro]) #hcfgd input[type=text],:root:not([data-t=negro]) #hcfgd input[type=password],:root:not([data-t=negro]) #hcfgd select{border-color:#dcdad1}
 :root:not([data-t=negro]) .tabs button.on{color:#1d1d1b}
 :root:not([data-t=negro]) button.p{color:#fff}
+/* ===== Minimalista ===== */
+:root:root:root #home .hc{border-radius:3px;box-shadow:none;border:1px solid var(--hln);min-height:72px;padding:10px 16px 10px 12px;transition:border-color .15s}
+:root:root:root #home .hc:hover{background:var(--hcard);border-color:var(--ac)}
+:root:root:root #home .hc:active{transform:none}
+:root:root:root #home .hc .tl{background:none!important;width:44px;height:44px;border-radius:0}
+:root:root:root #home .hc .tl svg{width:26px;height:26px}
+:root:root:root #home .hc .tl svg path{fill:var(--htx);opacity:.8}
+:root:root:root #home .hc .tx b{font-size:19px}
+:root:root:root #home .hc .n{background:none;padding:0;border-radius:0;font-size:13px}
+:root:root:root #home #hw .ht{font-size:40px}
+:root:root:root #home #hw .ht::after{display:none}
+:root:root:root #home .sbox{border-radius:3px;background:var(--hcard);border:1px solid var(--hln)}
+:root:root:root #home #nav{background:var(--hcard);border-top:1px solid var(--hln);border-right-color:var(--hln)}
+:root:root:root #home #nav button{border-radius:0;background:none;color:var(--hmut);font-weight:400}
+:root:root:root #home #nav button.on{background:none;color:var(--ac);font-weight:500;box-shadow:inset 0 2px 0 var(--ac)}
+@media (min-width:860px) and (hover:hover){:root:root:root #home #nav button.on{box-shadow:inset 2px 0 0 var(--ac)}}
+dialog{border-radius:4px}dialog button,dialog select,dialog .btn{border-radius:3px}
 /* ===== Variante en blanco (pantalla de inicio) ===== */
 :root:not([data-t=negro]) #home{--hbg:#f6f5f1;--hcard:#fff;--hcardh:#fff;--htx:#1d1d1b;--hmut:#85847c;--hln:#dedbd2}
 :root:not([data-t=negro]) #hw .ht,:root:not([data-t=negro]) .sh{color:#1d1d1b}
@@ -216,7 +233,7 @@ button{outline:0}button:focus-visible{outline:2px solid var(--ac)}
 <div class="tpw">
 <div class="tp" id="t-gen">
 <h3>SightKeys</h3><p><small class="ver"></small></p>
-<h3>Estilo de la app</h3><p><label>Tema <select id="th2"><option value="clasico">Blanco</option><option value="negro">Negro y azul</option></select></label></p>
+<h3>Estilo de la app</h3><p><label>Tema <select id="th2"><option value="clasico">Blanco</option><option value="negro">Oscuro</option></select></label></p>
 <h3>Instalación</h3><p><button id="hin" class="p" hidden>Instalar app</button> <small id="hist"></small></p>
 <h3>Biblioteca compartida</h3><p><button id="hsync">Sincronizar ahora</button> <small id="hsy"></small></p>
 </div>
@@ -253,7 +270,7 @@ button{outline:0}button:focus-visible{outline:2px solid var(--ac)}
 <p><small id="ps"></small></p></section>
 <section><h3>Pantalla</h3>
 <p><label>Tamaño <input id="zm" type="range" min="70" max="250" step="10" value="140"> <b id="zv">140%</b></label></p>
-<p><label>Estilo <select id="th"><option value="clasico">Blanco</option><option value="negro">Negro y azul</option></select></label></p></section>
+<p><label>Estilo <select id="th"><option value="clasico">Blanco</option><option value="negro">Oscuro</option></select></label></p></section>
 </div>
 </dialog>
 <script>
@@ -268,7 +285,7 @@ function noteCol(n){const o=n.par||n;return isSel(o)?C.ink:C.gr}
 let glowSet=new Set();const mc=m=>PCA[m%12]?'#1fa7a0':'#f08a10';
 const say=h=>$('st').innerHTML=h;
 const TH={clasico:{ln:'#222',ink:'#0a0a0a',gr:'#aaa',kw:'#fff',kb:'#222',kl:'#999',bar:'#e6e3da',cur:'#e8820c',hr:'#f5a04a',ac:'#e8820c',ex:'#f5a04a',ex2:'#c26a00',pa:'#fbf9f3'},
-negro:{ln:'#7d7d85',ink:'#e6e6e6',gr:'#55555c',kw:'#d6d6da',kb:'#101012',kl:'#444',bar:'#000',cur:'#1b84c4',hr:'#5bb8e8',ac:'#1b84c4',ex:'#5bb8e8',ex2:'#2f86b8',pa:'#08080a'}};let C=TH.clasico;
+negro:{ln:'#7d7d85',ink:'#e6e6e6',gr:'#55555c',kw:'#d6d6da',kb:'#101012',kl:'#444',bar:'#000',cur:'#e8820c',hr:'#f5a04a',ac:'#e8820c',ex:'#f5a04a',ex2:'#c26a00',pa:'#08080a'}};let C=TH.clasico;
 /* ---------- fuente ---------- */
 async function chkFont(){await document.fonts.load('40px Bravura','\uE050\uE062\uE0A4\uE262\uE080').then(l=>fontOK=l.length>0,()=>0);if(!fontOK)say('No encuentro <b>fonts/Bravura.otf</b>.')}
 function theme(t){C=TH[t]||TH.clasico;document.documentElement.dataset.t=t;$('th').value=t;if($('th2'))$('th2').value=t;const mt=document.querySelector('meta[name=theme-color]');if(mt)mt.content=t=='negro'?'#000000':'#f6f5f1';try{localStorage.lp=t}catch{}}
