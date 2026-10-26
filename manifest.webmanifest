@@ -3,8 +3,8 @@
   "name": "SightKeys",
   "short_name": "SightKeys",
   "description": "SightKeys: practica lectura a primera vista de piano con tu teclado MIDI",
-  "start_url": "/SightKeys/",
-  "scope": "/SightKeys/",
+  "start_url": "./",
+  "scope": "./",
   "display": "fullscreen",
   "orientation": "any",
   "background_color": "#000000",
@@ -33,12 +33,6 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
-    },
-    {
-      "src": "icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
     }
   ],
   "display_override": [

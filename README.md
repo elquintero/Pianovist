@@ -1,6 +1,6 @@
 # SightKeys
 
-Versión 1.0.7
+Versión 1.0.8
 
 App web de una sola página (`index.html`) para practicar lectura a primera vista de piano con un teclado MIDI, al estilo Flowkey.
 
@@ -57,3 +57,6 @@ El token se guarda solo en el dispositivo del administrador (no se sube a ningú
 
 ## Repetir una sección
 En el player, el botón de bucle sobre la línea del selector abre la selección del compás actual. Las flechas ‹ › se arrastran: el borde sigue al dedo o al ratón píxel a píxel (no solo por compases): hacia fuera amplía la sección y hacia dentro la reduce. Con una selección activa, ▶ empieza al principio de la sección y al llegar al final vuelve a empezar. La ✕ la cierra.
+
+## Navegación (1.0.8)
+PC: barra lateral con Inicio (Continúa tocando), Canciones, Buscar y Ajustes. Móvil: barra inferior con las mismas pantallas y Ajustes arriba a la derecha.

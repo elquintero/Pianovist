@@ -108,6 +108,26 @@ dialog .dh{display:flex;align-items:center;justify-content:space-between;gap:12p
 #app input,#app select,#home input,#home select{-webkit-user-select:auto;user-select:auto}
 #pw,#cv,#kv{touch-action:none}
 button{outline:0}button:focus-visible{outline:2px solid var(--ac)}
+#home{flex-direction:column}
+#hmain{flex:1;min-height:0;display:flex;flex-direction:column;min-width:0}
+#htop{background:#141414;height:52px}#htt{display:none}#htop #hcg{grid-column:3}
+#nav{flex:none;order:2;display:flex;justify-content:space-around;align-items:stretch;background:#0c0c0c;border-top:1px solid #222;height:64px}
+#nav button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;color:#9a9a9a;font-size:12px;border-radius:0;padding:4px}
+@media (hover:hover){#nav button:hover{background:#161616}}#nav button:active{background:none}#nav button svg{width:26px;height:26px}#nav button.on{color:var(--ac)}#nav .sp,#nav .ng{display:none}
+#hw .ht{font-size:26px;font-weight:500;margin:4px 2px 6px;letter-spacing:.02em}
+#hw .emp{white-space:pre-line}
+.sh{text-align:center;font-weight:600;font-size:15px;margin:18px 0 6px}
+.sbox{display:flex;align-items:center;gap:8px;border-bottom:1.5px solid #666;padding:8px 2px;color:#bbb;margin:0 auto 12px;width:100%;max-width:420px}
+.sbox svg{width:20px;height:20px;flex:none}.sbox input{flex:1;min-width:0;background:none;border:0;outline:0;color:var(--tx);font-size:16px;padding:0}
+.sres{display:flex;flex-direction:column;gap:12px}
+@media (min-width:860px) and (hover:hover){
+#home{flex-direction:row}
+#nav{order:0;flex-direction:column;justify-content:flex-start;gap:6px;width:76px;height:auto;border-top:0;border-right:1px solid #1d1d1d;padding:14px 0}
+#nav button{flex:none;height:62px;font-size:11px}#nav .sp{display:block;flex:1}#nav .ng{display:flex;height:50px}
+#htop #hcg{display:none}body:not(.incat) #htop{display:none}
+#hl{padding:20px 28px 28px}#hl>.w{max-width:620px;margin:0}
+#hw .ht{font-size:24px}
+}
 </style></head><body class="home">
 <div id="rot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></svg><div>Gira el teléfono<br><small style="color:#9a9a9a">El player se usa en horizontal</small></div></div>
 <div id="app">
@@ -130,7 +150,7 @@ button{outline:0}button:focus-visible{outline:2px solid var(--ac)}
 <canvas id="kv"></canvas>
 <div id="pgw"><button id="p0" aria-label="Ir al principio" title="Principio"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2.2v14H6zM19 5v14L9.5 12z"/></svg></button><input id="pg" type="range" min="0" max="1000" value="0" aria-label="Posición en la canción"><button id="p1" aria-label="Ir al final" title="Final"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.8 5H18v14h-2.2zM5 5l9.5 7L5 19z"/></svg></button></div>
 </div>
-<div id="home"><header id="htop"><button id="hback" hidden aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><div id="htt">SightKeys</div><button id="hcg" aria-label="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></header><main id="hl"><div class="w" id="hw"></div></main></div>
+<div id="home"><nav id="nav"><button data-v="inicio" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 11.2 12 4l8.5 7.2"/><path d="M5.5 9.8V20h13V9.8"/><path d="M10 20v-5.5h4V20"/></svg><span>Inicio</span></button><button data-v="songs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg><span>Canciones</span></button><button data-v="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg><span>Buscar</span></button><i class="sp"></i><button id="hcg2" class="ng" aria-label="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></nav><div id="hmain"><header id="htop"><button id="hback" hidden aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><div id="htt"></div><button id="hcg" aria-label="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></header><main id="hl"><div class="w" id="hw"></div></main></div></div>
 <dialog id="hcfgd"><div class="dh"><h2>Ajustes</h2><button class="p" id="hcl">Cerrar</button></div>
 <div class="tabs" id="htabs"><button data-t="gen" class="on">General</button><button data-t="lib">Gestión de biblioteca</button><button data-t="sec">Seguridad</button></div>
 <div class="tpw">
@@ -176,7 +196,7 @@ button{outline:0}button:focus-visible{outline:2px solid var(--ac)}
 </div>
 </dialog>
 <script>
-const VER='1.0.7';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
+const VER='1.0.8';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,ctlT=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
 let song=null,mode='idle',pos=0,bpm=80,t0=0,sp0=0,nb=0,ni=0,ac,fontOK=false,W=600,wrong=0,hits=0,miss=0,sel=null,BD=[];
 const pressed=new Set(),voices={};
@@ -553,17 +573,32 @@ const chev=()=>{const ns='http://www.w3.org/2000/svg',s=document.createElementNS
 const tint=(c,a)=>{const n=parseInt(c.slice(1),16);return`rgba(${n>>16},${n>>8&255},${n&255},${a})`};
 async function loadSongs(){try{songs=await DB.all()}catch{songs=[]}songs.sort((a,b)=>a.title.localeCompare(b.title,'es'))}
 function cats(){const m=new Map();for(const s of songs){if(!m.has(s.cat))m.set(s.cat,{...catInfo(s.cat,s.catName),n:0});m.get(s.cat).n++}return[...m.values()].sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'))}
-function renderHome(){const w=$('hw');w.textContent='';const ci=curCat?catInfo(curCat,(songs.find(s=>s.cat==curCat)||{}).catName):null;
-$('htt').textContent=ci?ci.nombre:'SightKeys';$('hback').hidden=!ci;
-if(!songs.length){const e=h('div','emp');e.append('Aún no hay canciones.',document.createElement('br'),'Si eres el administrador, añádelas en ⚙ › Gestión de biblioteca.');w.append(e);return}
-if(!ci){w.append(h('div','hint','Elige una categoría'));for(const c of cats()){const b=h('button','hc'),tl=h('span','tl'),tx=h('span','tx');tl.style.background=tint(c.col,.16);tl.append(svgIcon(c.ic,c.col));tx.append(h('b',0,c.nombre));if(c.desc)tx.append(h('small',0,c.desc));b.append(tl,tx,h('span','n',String(c.n)),chev());b.onclick=()=>{curCat=c.id;history.pushState({v:'cat',id:c.id},'');renderHome();$('hl').scrollTop=0};w.append(b)}return}
-w.append(h('div','hint','Elige una canción para tocarla'));for(const s of songs.filter(x=>x.cat==curCat)){const b=h('button','hc'),tl=h('span','tl'),tx=h('span','tx');tl.style.background=tint(ci.col,.16);tl.append(svgIcon('nota',ci.col));tx.append(h('b',0,s.title));if(s.author)tx.append(h('small',0,s.author));b.append(tl,tx,chev());b.onclick=()=>playSong(s);w.append(b)}}
+let view='inicio',sq='';
+const REC=()=>{try{return JSON.parse(localStorage.sk_recent||'[]')}catch{return[]}};
+const pushRec=id=>{try{localStorage.sk_recent=JSON.stringify([id,...REC().filter(x=>x!=id)].slice(0,12))}catch{}};
+const norm=t=>String(t||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+function songCard(s,withCat){const ci=catInfo(s.cat,s.catName),b=h('button','hc'),tl=h('span','tl'),tx=h('span','tx');tl.style.background=tint(ci.col,.16);tl.append(svgIcon('nota',ci.col));tx.append(h('b',0,s.title));const sub=[s.author,withCat?ci.nombre:''].filter(Boolean).join(' · ');if(sub)tx.append(h('small',0,sub));b.append(tl,tx,chev());b.onclick=()=>playSong(s);return b}
+function catCard(c){const b=h('button','hc'),tl=h('span','tl'),tx=h('span','tx');tl.style.background=tint(c.col,.16);tl.append(svgIcon(c.ic,c.col));tx.append(h('b',0,c.nombre));if(c.desc)tx.append(h('small',0,c.desc));b.append(tl,tx,h('span','n',String(c.n)),chev());b.onclick=()=>{view='songs';curCat=c.id;history.pushState({v:'cat',id:c.id},'');renderHome();$('hl').scrollTop=0};return b}
+function renderHome(){const w=$('hw');w.textContent='';document.querySelectorAll('#nav [data-v]').forEach(b=>b.classList.toggle('on',b.dataset.v==view));
+const ci=view=='songs'&&curCat?catInfo(curCat,(songs.find(s=>s.cat==curCat)||{}).catName):null;document.body.classList.toggle('incat',!!ci);$('hback').hidden=!ci;
+const hd=t=>w.append(h('h1','ht',t));
+if(view=='search'){w.append(h('div','sh','Busca canciones, artistas o categorías'));const bx=h('label','sbox'),inp=document.createElement('input'),res=h('div','sres');
+bx.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>';inp.type='text';inp.placeholder='Buscar';inp.value=sq;inp.autocomplete='off';inp.setAttribute('aria-label','Buscar');bx.append(inp);w.append(bx,res);
+const upd=()=>{res.textContent='';const q=norm(sq).trim();if(!q)return;const cs=cats().filter(c=>norm(c.nombre).includes(q)),ss=songs.filter(x=>norm(x.title+' '+(x.author||'')+' '+catInfo(x.cat,x.catName).nombre).includes(q));
+if(!cs.length&&!ss.length){res.append(h('div','emp','Sin resultados'));return}cs.forEach(c=>res.append(catCard(c)));ss.forEach(x=>res.append(songCard(x,1)))};
+inp.oninput=e=>{sq=e.target.value;upd()};upd();return}
+if(!songs.length){hd(view=='inicio'?'Continúa tocando':'Biblioteca de Canciones');const e=h('div','emp');e.append('Aún no hay canciones.',document.createElement('br'),'Si eres el administrador, añádelas en ⚙ › Gestión de biblioteca.');w.append(e);return}
+if(view=='inicio'){hd('Continúa tocando');const l=REC().map(id=>songs.find(s=>s.id==id)).filter(Boolean);if(!l.length){w.append(h('div','emp','Aún no has tocado ninguna canción.\nElige una en Canciones o búscala.'));return}l.forEach(x=>w.append(songCard(x,1)));return}
+if(!ci){hd('Biblioteca de Canciones');w.append(h('div','hint','Elige una categoría'));cats().forEach(c=>w.append(catCard(c)));return}
+hd(ci.nombre);w.append(h('div','hint','Elige una canción para tocarla'));songs.filter(x=>x.cat==curCat).forEach(x=>w.append(songCard(x)))}
+document.querySelectorAll('#nav [data-v]').forEach(b=>b.onclick=()=>{view=b.dataset.v;curCat=null;history.replaceState({v:'home',view},'');renderHome();$('hl').scrollTop=0});
+$('hcg2').onclick=()=>$('hcg').click();
 function lockL(){try{screen.orientation.lock('landscape').catch(()=>0)}catch{}}
 function showHome(){try{screen.orientation.unlock()}catch{}if(document.fullscreenElement)try{document.exitFullscreen()}catch{}stop();document.body.classList.add('home');renderHome()}
-async function playSong(s){goFs();try{const sg=await parseFile(s.name,s.buf);setSong(sg,s.title);if(s.author){song.composer=s.author;$('cmp').textContent=s.author}document.body.classList.remove('home');history.pushState({v:'play'},'');lockL();size();setTimeout(size,60)}catch(err){alert('No se pudo abrir la canción: '+err.message)}}
+async function playSong(s){goFs();try{const sg=await parseFile(s.name,s.buf);setSong(sg,s.title);if(s.author){song.composer=s.author;$('cmp').textContent=s.author}pushRec(s.id);document.body.classList.remove('home');history.pushState({v:'play'},'');lockL();size();setTimeout(size,60)}catch(err){alert('No se pudo abrir la canción: '+err.message)}}
 $('hback').onclick=()=>history.back();$('bk').onclick=()=>history.back();
 addEventListener('popstate',e=>{const st=e.state||{v:'home'};if(st.v=='play'&&!song)return history.go(-1);if(st.v=='play'){document.body.classList.remove('home');lockL();size();return}
-curCat=st.v=='cat'?st.id:null;showHome()});
+curCat=st.v=='cat'?st.id:null;if(st.v=='cat')view='songs';else if(st.view)view=st.view;showHome()});
 /* ajustes de la pantalla previa */
 let pend=null,editId=null;
 function showTab(t){document.querySelectorAll('#htabs button').forEach(b=>b.classList.toggle('on',b.dataset.t==t));document.querySelectorAll('.tp').forEach(p=>p.hidden=p.id!=='t-'+t);if(t=='lib')libState();if(t=='sec')secState();if(t=='gen')stInst()}
