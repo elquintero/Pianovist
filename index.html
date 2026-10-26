@@ -9,8 +9,8 @@
 <link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#000000">
 <link rel="icon" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/icon-192.png">
 <style>
-:root{--bg:#000;--pn:#111;--ac:#e8820c;--tx:#f2f2f2;--bt:#262626;--bh:#3a3a3a;--pa:#fbf9f3;--at:#fff;--mut:#9a9a9a}
-:root[data-t=negro]{--bg:#000;--pn:#0b0b0c;--ac:#1b84c4;--tx:#e6e6e6;--bt:#1c1c1f;--bh:#2b2b30;--pa:#08080a;--at:#fff}
+:root{--bg:#f6f5f1;--pn:#fff;--ac:#e8820c;--tx:#1d1d1b;--bt:#ecebe5;--bh:#dcdad1;--pa:#fbf9f3;--at:#fff;--mut:#85847c}
+:root[data-t=negro]{--bg:#000;--pn:#0b0b0c;--ac:#1b84c4;--tx:#e6e6e6;--bt:#1c1c1f;--bh:#2b2b30;--pa:#08080a;--at:#fff;--mut:#9a9a9a}
 *{box-sizing:border-box}html,body{height:100%}
 body{margin:0;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);background:var(--bg);color:var(--tx);font:15px system-ui,sans-serif;display:flex;flex-direction:column;height:100vh;height:100dvh;overflow:hidden;overscroll-behavior:none;user-select:none;-webkit-user-select:none}
 label,button,select{font:inherit}
@@ -161,6 +161,33 @@ button{outline:0}button:focus-visible{outline:2px solid var(--ac)}
 #nav button{flex:none;height:62px}
 #hw .ht{font-size:44px}
 }
+/* ===== Tema Blanco: toda la app (reproductor, ajustes, diálogos) ===== */
+:root:not([data-t=negro]) #top{background:#fff;border-bottom:1px solid #e6e3da}
+:root:not([data-t=negro]) #mw select{color:#1d1d1b}:root:not([data-t=negro]) #mw select option{background:#fff;color:#1d1d1b}
+:root:not([data-t=negro]) #tmp,:root:not([data-t=negro]) #tmp b{color:#1d1d1b}
+:root:not([data-t=negro]) #ttl{background:#f0eee8}:root:not([data-t=negro]) #ttl small{color:#85847c}:root:not([data-t=negro]) #ttl b{color:#1d1d1b}
+:root:not([data-t=negro]) #cg,:root:not([data-t=negro]) #bk{color:#1d1d1b}:root:not([data-t=negro]) #cg:hover{background:#0000000f}
+:root:not([data-t=negro]) #tm{background:#fff}
+:root:not([data-t=negro]) #pw{border-bottom:3px solid #e6e3da}
+:root:not([data-t=negro]) #kv{background:#e6e3da}
+:root:not([data-t=negro]) dialog{border-color:#dedbd2;box-shadow:0 12px 40px #0003}
+:root:not([data-t=negro]) dialog::backdrop{background:#0006}
+:root:not([data-t=negro]) #hsl li{background:#f3f1ea}
+:root:not([data-t=negro]) .tip{background:#f3f1ea;color:#5d5c55}
+:root:not([data-t=negro]) #hcfgd input[type=text],:root:not([data-t=negro]) #hcfgd input[type=password],:root:not([data-t=negro]) #hcfgd select{border-color:#dcdad1}
+:root:not([data-t=negro]) .tabs button.on{color:#1d1d1b}
+:root:not([data-t=negro]) button.p{color:#fff}
+/* ===== Variante en blanco (pantalla de inicio) ===== */
+:root:not([data-t=negro]) #home{--hbg:#f6f5f1;--hcard:#fff;--hcardh:#fff;--htx:#1d1d1b;--hmut:#85847c;--hln:#dedbd2}
+:root:not([data-t=negro]) #hw .ht,:root:not([data-t=negro]) .sh{color:#1d1d1b}
+:root:not([data-t=negro]) #hl .hint,:root:not([data-t=negro]) #hl .emp{color:#85847c}
+:root:not([data-t=negro]) #htop button{color:#1d1d1b}:root:not([data-t=negro]) #htop button:hover{background:#0000000f}
+:root:not([data-t=negro]) .hc{border-color:#ebe8df;box-shadow:0 4px 16px #00000012}
+:root:not([data-t=negro]) .hc:hover{border-color:var(--ac)}
+:root:not([data-t=negro]) #nav{background:#fff;border-top:1px solid #e6e3da;border-right-color:#e6e3da}
+:root:not([data-t=negro]) #nav button{color:#85847c}
+:root:not([data-t=negro]) #nav button.on{color:#fff}
+@media (hover:hover){:root:not([data-t=negro]) #nav button:not(.on):hover{background:#0000000a}}
 </style></head><body class="home">
 <div id="rot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></svg><div>Gira el teléfono<br><small style="color:#9a9a9a">El player se usa en horizontal</small></div></div>
 <div id="app">
@@ -189,6 +216,7 @@ button{outline:0}button:focus-visible{outline:2px solid var(--ac)}
 <div class="tpw">
 <div class="tp" id="t-gen">
 <h3>SightKeys</h3><p><small class="ver"></small></p>
+<h3>Estilo de la app</h3><p><label>Tema <select id="th2"><option value="clasico">Blanco</option><option value="negro">Negro y azul</option></select></label></p>
 <h3>Instalación</h3><p><button id="hin" class="p" hidden>Instalar app</button> <small id="hist"></small></p>
 <h3>Biblioteca compartida</h3><p><button id="hsync">Sincronizar ahora</button> <small id="hsy"></small></p>
 </div>
@@ -225,7 +253,7 @@ button{outline:0}button:focus-visible{outline:2px solid var(--ac)}
 <p><small id="ps"></small></p></section>
 <section><h3>Pantalla</h3>
 <p><label>Tamaño <input id="zm" type="range" min="70" max="250" step="10" value="140"> <b id="zv">140%</b></label></p>
-<p><label>Estilo <select id="th"><option value="clasico">Clásico</option><option value="negro">Negro y azul</option></select></label></p></section>
+<p><label>Estilo <select id="th"><option value="clasico">Blanco</option><option value="negro">Negro y azul</option></select></label></p></section>
 </div>
 </dialog>
 <script>
@@ -239,11 +267,11 @@ function doneN(n){const o=n.par||n;if(o.st=='hit')return true;if(o.st=='miss'||!
 function noteCol(n){const o=n.par||n;return isSel(o)?C.ink:C.gr}
 let glowSet=new Set();const mc=m=>PCA[m%12]?'#1fa7a0':'#f08a10';
 const say=h=>$('st').innerHTML=h;
-const TH={clasico:{ln:'#222',ink:'#0a0a0a',gr:'#aaa',kw:'#fff',kb:'#222',kl:'#999',cur:'#e8820c',hr:'#f5a04a',ac:'#e8820c',ex:'#f5a04a',ex2:'#c26a00',pa:'#fbf9f3'},
-negro:{ln:'#7d7d85',ink:'#e6e6e6',gr:'#55555c',kw:'#d6d6da',kb:'#101012',kl:'#444',cur:'#1b84c4',hr:'#5bb8e8',ac:'#1b84c4',ex:'#5bb8e8',ex2:'#2f86b8',pa:'#08080a'}};let C=TH.clasico;
+const TH={clasico:{ln:'#222',ink:'#0a0a0a',gr:'#aaa',kw:'#fff',kb:'#222',kl:'#999',bar:'#e6e3da',cur:'#e8820c',hr:'#f5a04a',ac:'#e8820c',ex:'#f5a04a',ex2:'#c26a00',pa:'#fbf9f3'},
+negro:{ln:'#7d7d85',ink:'#e6e6e6',gr:'#55555c',kw:'#d6d6da',kb:'#101012',kl:'#444',bar:'#000',cur:'#1b84c4',hr:'#5bb8e8',ac:'#1b84c4',ex:'#5bb8e8',ex2:'#2f86b8',pa:'#08080a'}};let C=TH.clasico;
 /* ---------- fuente ---------- */
 async function chkFont(){await document.fonts.load('40px Bravura','\uE050\uE062\uE0A4\uE262\uE080').then(l=>fontOK=l.length>0,()=>0);if(!fontOK)say('No encuentro <b>fonts/Bravura.otf</b>.')}
-function theme(t){C=TH[t]||TH.clasico;document.documentElement.dataset.t=t;$('th').value=t;try{localStorage.lp=t}catch{}}
+function theme(t){C=TH[t]||TH.clasico;document.documentElement.dataset.t=t;$('th').value=t;if($('th2'))$('th2').value=t;const mt=document.querySelector('meta[name=theme-color]');if(mt)mt.content=t=='negro'?'#000000':'#f6f5f1';try{localStorage.lp=t}catch{}}
 /* ---------- audio ---------- */
 function AC(){if(!ac){ac=new AudioContext();mg=ac.createGain();mg.gain.value=vol*2;const cp=ac.createDynamicsCompressor();mg.connect(cp);cp.connect(ac.destination)}}
 function A(){AC();if(ac.state!='running')ac.resume();if(!A.d){A.d=1;pPre(rng(48,84))}}
@@ -471,7 +499,7 @@ function keys(exp,hear){const k=kc,w=KW/52,kh=KH-8;k.setTransform(devicePixelRat
 const khm=new Map();glowSet.forEach(n=>khm.set(n.midi,n.hand));
 wk.forEach((m,i)=>{k.fillStyle=khm.has(m)?mc(m):pressed.has(m)?C.ac:C.kw;k.fillRect(i*w,0,w,kh);k.fillStyle=C.kl;k.fillRect(i*w,0,1,kh)});
 for(let m=21;m<=108;m++)if(PCA[m%12]){const i=wk.indexOf(m-1);k.fillStyle=khm.has(m)?mc(m):pressed.has(m)?C.ac:C.kb;k.fillRect((i+1)*w-w*.3,0,w*.6,kh*.62)}
-k.fillStyle='#000';k.fillRect(0,kh,KW,8)}
+k.fillStyle=C.bar;k.fillRect(0,kh,KW,8)}
 /* ---------- selección de sección (bucle) ---------- */
 const selHas=()=>song.ev.some(n=>live(n)&&isSel(n)&&n.t>=sel.a-.0001&&n.t<sel.b-.0001);
 function bx(i){const b=BD[i],kb=Math.round(b*1000)/1000;return CX+XT(b)-xp-16-(song.WW[kb]||0)-(song.ccT.has(kb)?26:0)}
@@ -507,7 +535,7 @@ function size(){if(document.body.classList.contains('home'))return;const pw=$('p
 if(kv.style.height!=KH+'px')kv.style.height=KH+'px';const kw=Math.round(KW*dp),kh=Math.round(KH*dp);if(kv.width!=kw||kv.height!=kh){kv.width=kw;kv.height=kh}
 W=pw.clientWidth;H=pw.clientHeight;const tr=$('ctl').offsetHeight+(vh<520?8:16);Z=Math.max(.35,Math.min(Zu,(H-tr)/(24*S)));SH=H/Z;const t0_=Math.max(tr/Z+3*S,(SH-16*S)*.42);Y[0]=t0_+4*S;Y[1]=t0_+16*S;
 const cw=Math.round(W*dp),ch=Math.round(H*dp);if(cv.width!=cw||cv.height!=ch){cv.width=cw;cv.height=ch}}
-$('cg').onclick=()=>$('cfg').showModal();$('cc').onclick=()=>$('cfg').close();$('th').onchange=e=>theme(e.target.value);
+$('cg').onclick=()=>$('cfg').showModal();$('cc').onclick=()=>$('cfg').close();$('th').onchange=e=>theme(e.target.value);$('th2').onchange=e=>theme(e.target.value);
 try{theme(localStorage.lp||'clasico')}catch{theme('clasico')}
 const sv=(k,v)=>{try{localStorage[k]=v}catch{}};
 $('vl').oninput=e=>{vol=e.target.value/100;$('vv').textContent=e.target.value+'%';if(mg)mg.gain.value=vol*2;sv('lpv',e.target.value)};
