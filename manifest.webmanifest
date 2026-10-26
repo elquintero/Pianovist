@@ -7,7 +7,7 @@
   "scope": "/SightKeys/",
   "display": "fullscreen",
   "orientation": "any",
-  "background_color": "#000000",
+  "background_color": "#F6F5F1",
   "theme_color": "#F6F5F1",
   "icons": [
     {
