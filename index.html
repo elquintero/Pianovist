@@ -201,6 +201,19 @@ dialog p>button:not(.p):hover,dialog #hsl button:hover,dialog .btn:hover{backgro
 :root[data-f=sans] #hw .ht{font-weight:300;letter-spacing:-.02em}
 :root[data-f=sans] .hc .tx b{font-weight:500;font-size:17px}
 :root[data-f=sans] .sh{font-weight:300}
+/* 1.1.1: línea superior en Windows, nombre más a la izquierda y móvil más compacto */
+:root{--wl:#c9c6bb}:root[data-t=negro]{--wl:#3a3a40}
+html.win::before{content:"";position:fixed;top:0;left:0;right:0;height:1px;background:var(--wl);z-index:60;pointer-events:none}
+@media (min-width:860px) and (hover:hover){#nav{width:72px}#hl{padding-left:14px}}
+@media not all and (min-width:860px) and (hover:hover){
+#home{position:relative}
+#htop{position:absolute;top:2px;right:6px;z-index:3;height:44px;width:44px;padding:0;display:block;background:none}
+#hl{padding:10px 18px 18px}
+#hw .ht{font-size:30px;margin:0 0 6px;padding-right:48px;line-height:1.15}
+.sh{padding-right:48px;margin-top:8px}
+.hc{min-height:58px;padding:9px 2px}
+#nav{height:56px}
+}
 </style></head><body class="home">
 <div id="rot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></svg><div>Gira el teléfono<br><small style="color:#9a9a9a">El player se usa en horizontal</small></div></div>
 <div id="app">
@@ -272,7 +285,7 @@ dialog p>button:not(.p):hover,dialog #hsl button:hover,dialog .btn:hover{backgro
 </div>
 </dialog>
 <script>
-const VER='1.1.0';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
+const VER='1.1.1';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,ctlT=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
 let song=null,mode='idle',pos=0,bpm=80,t0=0,sp0=0,nb=0,ni=0,ac,fontOK=false,W=600,wrong=0,hits=0,miss=0,sel=null,BD=[];
 const pressed=new Set(),voices={};
@@ -574,7 +587,7 @@ for(const el of[cv,kv]){el.addEventListener('touchstart',e=>e.preventDefault(),{
 document.addEventListener('contextmenu',e=>{if(e.target.closest&&e.target.closest('#app,#home')&&!/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))e.preventDefault()});
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>0));
 let fsOut=0,pickT=0;const inFs=()=>document.fullscreenElement||matchMedia('(display-mode: fullscreen)').matches;
-const WIN=/Windows/i.test(navigator.userAgent)||(navigator.userAgentData&&navigator.userAgentData.platform=='Windows');
+const WIN=/Windows/i.test(navigator.userAgent)||(navigator.userAgentData&&navigator.userAgentData.platform=='Windows');if(WIN)document.documentElement.classList.add('win');
 const goFs=()=>{if(WIN)return;try{const d=document.documentElement;if(!inFs()&&d.requestFullscreen)d.requestFullscreen({navigationUI:'hide'}).catch(()=>{})}catch{}};
 document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement&&!(document.hidden||Date.now()-pickT<90000))fsOut=1});
 for(const id of['mode','oth','met','ci']){const e=$(id),ck=e.type=='checkbox';try{const v=localStorage['lp_'+id];if(v!=null){if(ck)e.checked=v=='1';else e.value=v}}catch{}e.onchange=()=>sv('lp_'+id,ck?(e.checked?1:0):e.value)}
