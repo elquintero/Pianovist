@@ -276,23 +276,23 @@ body:not(.home){background:var(--bg)}
 #st{left:18px;top:12px;max-width:60%;max-height:48px}
 #pw #lpB,#pw .lph{border:0;background:#fff;color:var(--ac);box-shadow:0 2px 10px rgba(0,0,0,.16)}
 #pw #lpB{width:44px;height:44px}
-#dock{flex:none;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);grid-template-areas:"pg pg pg" ". ct tp";align-items:center;row-gap:8px;padding:12px 20px 14px;background:var(--bg)}
+#dock{flex:none;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);grid-template-areas:"pg pg pg" ". ct tp";align-items:center;row-gap:4px;padding:8px 20px 12px;background:var(--bg);position:relative;z-index:2;box-shadow:0 5px 14px rgba(0,0,0,.09)}
 #pgw{grid-area:pg;display:flex;align-items:flex-start;gap:8px;margin:0;padding:0;height:auto;background:none;border:0}
-#pgw button{width:34px;height:34px;color:var(--tx)}#pgw button:hover{background:rgba(128,128,128,.14)}#pgw button svg{width:20px;height:20px}
+#pgw button{width:28px;height:28px;color:var(--mut)}#pgw button:hover{background:rgba(128,128,128,.14)}#pgw button svg{width:22px;height:22px}
 #pgm{flex:1;min-width:0;display:flex;flex-direction:column}
-#pg{height:34px;margin:0;background:linear-gradient(var(--ac),var(--ac)) left center/calc(9px + (100% - 18px) * var(--p,0)) 3px no-repeat,linear-gradient(var(--trk),var(--trk)) center/100% 2px no-repeat}
-#pg::-webkit-slider-runnable-track{height:34px}#pg::-moz-range-track{height:34px}
-#pg::-webkit-slider-thumb{width:18px;height:18px;margin-top:8px;background:var(--ac);box-shadow:0 1px 5px rgba(232,130,12,.45)}
-#pg::-moz-range-thumb{width:18px;height:18px;background:var(--ac);box-shadow:0 1px 5px rgba(232,130,12,.45)}
+#pg{height:26px;margin:0;background:linear-gradient(var(--ac),var(--ac)) left center/calc(8px + (100% - 16px) * var(--p,0)) 3px no-repeat,linear-gradient(var(--trk),var(--trk)) center/100% 2px no-repeat}
+#pg::-webkit-slider-runnable-track{height:26px}#pg::-moz-range-track{height:26px}
+#pg::-webkit-slider-thumb{width:16px;height:16px;margin-top:5px;background:var(--ac);box-shadow:0 1px 5px rgba(232,130,12,.45)}
+#pg::-moz-range-thumb{width:16px;height:16px;background:var(--ac);box-shadow:0 1px 5px rgba(232,130,12,.45)}
 #pgw.run #pg::-webkit-slider-thumb{opacity:1}#pgw.run #pg::-moz-range-thumb{opacity:1}
-#pgt{display:flex;justify-content:space-between;margin-top:-6px;font-size:13px;color:var(--mut);font-variant-numeric:tabular-nums}
+#pgt{display:flex;justify-content:space-between;margin-top:-4px;font-size:13px;color:var(--mut);font-variant-numeric:tabular-nums}
 #ctl{grid-area:ct;position:static;transform:none;display:flex;align-items:center;gap:24px;padding:0;border-radius:0;background:none}
 .hb{width:56px;height:56px;border:0;background:var(--bt);color:var(--tx);box-shadow:0 1px 2px rgba(0,0,0,.14),0 4px 10px rgba(0,0,0,.06)}
 .hb:hover{background:var(--bh)}.hb svg{width:30px;height:30px}
 .hb.on,.hb.on:hover{background:#fde6cb;color:var(--tx);box-shadow:inset 0 0 0 1.5px #f0b070}
 :root[data-t=negro] .hb.on,:root[data-t=negro] .hb.on:hover{background:#3a2610;box-shadow:inset 0 0 0 1.5px var(--ac)}
 #pb{width:76px;height:76px;border:0;box-shadow:0 8px 20px rgba(232,130,12,.35)}#pb svg{width:34px;height:34px}
-#tpb{grid-area:tp;justify-self:end;display:flex;align-items:center;gap:3px;padding:8px 4px;background:none;border-radius:8px;color:var(--mut);font-size:17px;font-variant-numeric:tabular-nums}
+#tpb{grid-area:tp;justify-self:end;display:flex;align-items:center;gap:3px;padding:8px 4px;background:none;border-radius:8px;color:var(--mut);font-size:15px;font-variant-numeric:tabular-nums;align-self:end}
 #tpb:hover{background:rgba(128,128,128,.12)}#tpb .qn{width:9px;height:15px}
 #kv{margin:0;width:100%;background:var(--bg);box-shadow:0 -1px 0 var(--ln)}
 @media (max-height:520px){
@@ -300,10 +300,10 @@ body:not(.home){background:var(--bg)}
 #ttl b{font-size:17px}#ttl small{font-size:11px}
 #mw .kbi{width:22px;height:22px}#dot{left:21px;top:2px}#mw select{font-size:12px}
 #pw{margin:0 8px;border-radius:14px}
-#dock{grid-template-columns:minmax(0,1fr) auto auto;grid-template-areas:"pg ct tp";column-gap:14px;row-gap:0;padding:4px 12px 6px}
-#pgw button{width:30px;height:30px}#pg,#pg::-webkit-slider-runnable-track,#pg::-moz-range-track{height:30px}#pg::-webkit-slider-thumb{margin-top:6px}
-#ctl{gap:12px}.hb{width:40px;height:40px}.hb svg{width:22px;height:22px}#pb{width:48px;height:48px;box-shadow:0 4px 12px rgba(232,130,12,.35)}#pb svg{width:24px;height:24px}
-#tpb{font-size:14px;padding:6px 2px}#pgt{font-size:12px;margin-top:-8px}
+#dock{row-gap:2px;padding:4px 14px 6px}
+#pgw button{width:24px;height:24px}#pg,#pg::-webkit-slider-runnable-track,#pg::-moz-range-track{height:22px}#pg::-webkit-slider-thumb{margin-top:3px}
+#ctl{gap:14px}.hb{width:38px;height:38px}.hb svg{width:21px;height:21px}#pb{width:46px;height:46px}#pb svg{width:22px;height:22px}
+#tpb{font-size:13px;padding:4px 2px}#pgt{font-size:11.5px;margin-top:-5px}
 #pw #lpB{width:38px;height:38px}
 }
 /* 1.1.12: botones planos, sin brillos */
@@ -316,7 +316,7 @@ body:not(.home){background:var(--bg)}
 #pw #lpB,#pw .lph{border:1.5px solid #cfcfcf;box-shadow:none}
 #pg::-webkit-slider-thumb,#pg::-moz-range-thumb{box-shadow:none}
 #kv{box-shadow:none}
-@media (max-height:520px){.hb{width:40px;height:40px}#pb,#pb:hover{width:48px;height:48px;box-shadow:none}}
+@media (max-height:520px){.hb{width:38px;height:38px}#pb,#pb:hover{width:46px;height:46px;box-shadow:none}}
 </style></head><body class="home">
 <div id="rot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></svg><div>Gira el teléfono<br><small style="color:#9a9a9a">El player se usa en horizontal</small></div></div>
 <div id="app">
@@ -332,7 +332,7 @@ body:not(.home){background:var(--bg)}
 <button id="lpR" class="lph" aria-label="Ajustar final"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
 <div id="st"></div></div>
 <div id="dock">
-<div id="pgw"><button id="p0" aria-label="Ir al principio" title="Principio"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2.2v14H6zM19 5v14L9.5 12z"/></svg></button><div id="pgm"><input id="pg" type="range" min="0" max="1000" value="0" aria-label="Posición en la canción"><div id="pgt"><span id="t0">0:00</span><span id="t1">0:00</span></div></div><button id="p1" aria-label="Ir al final" title="Final"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.8 5H18v14h-2.2zM5 5l9.5 7L5 19z"/></svg></button></div>
+<div id="pgw"><button id="p0" aria-label="Ir al principio" title="Principio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M17 5.5v13L7 12z"/></svg></button><div id="pgm"><input id="pg" type="range" min="0" max="1000" value="0" aria-label="Posición en la canción"><div id="pgt"><span id="t0">0:00</span><span id="t1">0:00</span></div></div><button id="p1" aria-label="Ir al final" title="Final"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M7 5.5v13L17 12z"/></svg></button></div>
 <div id="ctl">
 <button id="hL" class="hb l" aria-label="Mano izquierda" aria-pressed="false" title="Mano izquierda"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="7.2" y="4.2" width="2.7" height="9" rx="1.35"/><rect x="10.2" y="2.4" width="2.7" height="10.6" rx="1.35"/><rect x="13.2" y="3.2" width="2.7" height="9.8" rx="1.35"/><rect x="16.2" y="5.4" width="2.6" height="8" rx="1.3"/><path d="M7.2 11v3.2L4.6 11.4a1.5 1.5 0 0 0-2.1 2.1l4.3 5.5A5 5 0 0 0 10.7 21H14a4.8 4.8 0 0 0 4.8-4.8V12H7.2z"/></svg></button>
 <button id="pb" aria-label="Reproducir o practicar" title="Reproducir / practicar"><svg class="pl" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg><svg class="st" viewBox="0 0 24 24" fill="currentColor"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/></svg></button>
@@ -392,7 +392,7 @@ body:not(.home){background:var(--bg)}
 </div>
 </dialog>
 <script>
-const VER='1.1.12';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
+const VER='1.1.13';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,ctlT=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
 let song=null,mode='idle',pos=0,bpm=80,t0=0,sp0=0,nb=0,ni=0,ac,fontOK=false,W=600,wrong=0,hits=0,miss=0,sel=null,BD=[];
 const pressed=new Set(),voices={};
@@ -637,17 +637,15 @@ if(fontOK){c.fillStyle=C.ink;c.font=`${4*S}px Bravura`;for(const r of[0,1]){cons
 const fa=song.fifths,{tx,bw}=sigLay(song);for(let r=0;r<2;r++)for(let i=0;i<Math.abs(fa);i++){const cl=song.clef0[r?'L':'R'],ar=(fa>0?TS:TF)[cl.sign=='F'?1:0];let ps_=ar[i];if(cl.sign=='C')while(ps_<cl.bt+2)ps_+=7;G(fa>0?GL.s:GL.b,KX+i*kAdv(fa),yOf(r,ps_,cl.bt))}
 const sy=symOf(song.ts),num=(v,x,y)=>{x+=(bw-tsW(v)*S)/2;String(v).split('').forEach(ch=>{G(String.fromCodePoint(0xE080+ +ch),x,y);x+=TSA[+ch]*S})};
 for(let r=0;r<2;r++){if(sy)G(sy=='common'?'\uE08A':'\uE08B',tx,Y[r]-2*S);else{num(song.ts[0],tx,Y[r]-3*S);num(song.ts[1],tx,Y[r]-S)}}}
-{const y0=Y[0]-7*S,y1=Y[1]+3*S,gb=c.createLinearGradient(CX-22,0,CX+22,0);gb.addColorStop(0,'rgba(232,130,12,0)');gb.addColorStop(.5,'rgba(232,130,12,.17)');gb.addColorStop(1,'rgba(232,130,12,0)');c.fillStyle=gb;c.fillRect(CX-22,y0,44,y1-y0);c.strokeStyle=C.cur;c.lineWidth=1.5;c.beginPath();c.moveTo(CX,y0);c.lineTo(CX,y1);c.stroke();c.lineWidth=1}
+{const y0=Y[0]-7*S,y1=Y[1]+3*S,gb=c.createLinearGradient(CX-16,0,CX+16,0);gb.addColorStop(0,'rgba(120,120,120,0)');gb.addColorStop(.3,'rgba(120,120,120,.2)');gb.addColorStop(.7,'rgba(120,120,120,.2)');gb.addColorStop(1,'rgba(120,120,120,0)');c.fillStyle=gb;c.fillRect(CX-16,0,32,SH);c.strokeStyle=C.cur;c.lineWidth=1.5;c.beginPath();c.moveTo(CX,y0);c.lineTo(CX,y1);c.stroke();c.lineWidth=1}
 c.restore();W=Wr;keys(exp,hear)}else{c.restore();W=Wr;keys(new Set(),new Map())}
 if(!song){c.save();c.scale(Z,Z);c.fillStyle='#777';c.font='16px system-ui';c.textAlign='left';c.fillText('Aquí aparecerá la partitura',HDR,Y[0]-4*S-14);c.restore()}}
-function keys(exp,hear){const k=kc,P=9,kw=KW-2*P,w=kw/52,ky=P,kh=KH-8-P;k.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);k.clearRect(0,0,KW,KH);const wk=[];for(let m=21;m<=108;m++)if(!PCA[m%12])wk.push(m);
+function keys(exp,hear){const k=kc,w=KW/52,kh=KH-8;k.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);k.clearRect(0,0,KW,KH);const wk=[];for(let m=21;m<=108;m++)if(!PCA[m%12])wk.push(m);
 const khm=new Map();glowSet.forEach(n=>khm.set(n.midi,n.hand));
-const rb=(x,y,bw,bh,r)=>{k.beginPath();k.moveTo(x,y);k.lineTo(x+bw,y);k.lineTo(x+bw,y+bh-r);k.arcTo(x+bw,y+bh,x+bw-r,y+bh,r);k.lineTo(x+r,y+bh);k.arcTo(x,y+bh,x,y+bh-r,r);k.closePath();k.fill()};
-const pr=(x,y,bw,bh,r)=>{k.beginPath();k.moveTo(x+r,y);k.arcTo(x+bw,y,x+bw,y+bh,r);k.arcTo(x+bw,y+bh,x,y+bh,r);k.arcTo(x,y+bh,x,y,r);k.arcTo(x,y,x+bw,y,r);k.closePath();k.fill()};
-k.fillStyle=C.kp;pr(3,3,KW-6,KH-6,12);
-const og=k.createLinearGradient(0,ky,0,ky+kh);og.addColorStop(0,'#f6a458');og.addColorStop(1,'#fbc693');
-wk.forEach((m,i)=>{k.fillStyle=khm.has(m)||pressed.has(m)?og:C.kw;rb(P+i*w+.8,ky,w-1.6,kh,Math.min(4,w*.3))});
-for(let m=21;m<=108;m++)if(PCA[m%12]){const i=wk.indexOf(m-1);k.fillStyle=khm.has(m)||pressed.has(m)?'#f0820c':C.kb;rb(P+(i+1)*w-w*.3,ky,w*.6,kh*.62,Math.min(3.5,w*.25))}}
+const rb=(x,y,bw,bh,r)=>{k.beginPath();k.moveTo(x,y);k.lineTo(x+bw,y);k.lineTo(x+bw,y+bh-r);k.arcTo(x+bw,y+bh,x+bw-r,y+bh,r);k.lineTo(x+r,y+bh);k.arcTo(x,y+bh,x,y,r);k.closePath();k.fill()};
+const og=k.createLinearGradient(0,0,0,kh);og.addColorStop(0,'#f6a458');og.addColorStop(1,'#fbc693');
+wk.forEach((m,i)=>{k.fillStyle=khm.has(m)||pressed.has(m)?og:C.kw;rb(i*w+.6,0,w-1.2,kh,Math.min(3,w*.25))});
+for(let m=21;m<=108;m++)if(PCA[m%12]){const i=wk.indexOf(m-1);k.fillStyle=khm.has(m)||pressed.has(m)?'#f0820c':C.kb;rb((i+1)*w-w*.3,0,w*.6,kh*.62,Math.min(3.5,w*.25))}}
 /* ---------- selección de sección (bucle) ---------- */
 const selHas=()=>song.ev.some(n=>live(n)&&isSel(n)&&n.t>=sel.a-.0001&&n.t<sel.b-.0001);
 function bx(i){const b=BD[i],kb=Math.round(b*1000)/1000;return CX+XT(b)-xp-16-(song.WW[kb]||0)-(song.ccT.has(kb)?26:0)}
