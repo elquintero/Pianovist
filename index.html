@@ -256,14 +256,34 @@ dialog#hcfgd .tabs button{padding:12px 14px}
 dialog#hcfgd #hsl li{padding:14px 0}
 dialog#cfg{font-size:15px}dialog#cfg p{margin:14px 0}dialog#cfg h3{margin:16px 0 4px}
 }
+/* 1.1.11: cabecera del player minimalista */
+#top{height:64px;padding:0 14px 0 8px;gap:6px;background:var(--bg);border-bottom:0}
+#bk{grid-column:1;width:44px;height:44px;border-radius:50%;opacity:1;color:var(--tx)}
+#bk:hover{background:rgba(128,128,128,.14);opacity:1}#bk svg{width:24px;height:24px}
+#ttl{position:static;transform:none;grid-column:2;align-items:flex-start;text-align:left;padding:0;background:none;min-width:0;max-width:none}
+#ttl b{font-family:var(--ff);font-weight:400;font-size:24px;line-height:1.15;color:var(--tx)}
+#ttl small{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;text-transform:none;letter-spacing:0;font-size:13px;min-height:0;color:var(--mut)}
+#rt{grid-column:3;display:flex;align-items:center;gap:2px}
+#mw{position:relative;justify-self:auto;padding:6px 10px 6px 8px;gap:6px;border-radius:10px;color:var(--mut)}
+#mw:hover{background:rgba(128,128,128,.12)}
+#mw .kbi{width:26px;height:26px;flex:none;color:var(--tx)}
+#mw select{appearance:none;-webkit-appearance:none;width:auto;max-width:118px;padding:2px 0;border-radius:0;font-size:13px;color:var(--mut);background:transparent;text-overflow:ellipsis}
+#dot{position:absolute;left:25px;top:4px;width:9px;height:9px;border:2px solid var(--bg);box-sizing:content-box;background:#9a9a9a}
+#dot.on{background:#18d33a;box-shadow:none}
+#cg{color:var(--tx);padding:8px}
+@media (max-height:520px){
+#top{height:44px;padding:0 10px 0 4px}#bk{width:36px;height:36px}
+#ttl b{font-size:17px}#ttl small{font-size:11px}
+#mw .kbi{width:22px;height:22px}#dot{left:21px;top:2px}#mw select{font-size:12px}
+}
 </style></head><body class="home">
 <div id="rot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></svg><div>Gira el teléfono<br><small style="color:#9a9a9a">El player se usa en horizontal</small></div></div>
 <div id="app">
 <header id="top">
-<div id="lf"><button id="bk" aria-label="Volver a las categorías" title="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><label id="mw" title="Teclado MIDI"><i id="dot"></i><select id="mi"><option>Sin teclado</option></select></label>
-</div>
-<div id="ttl"><small id="cmp"></small><b id="tt">SightKeys</b></div>
-<button id="cg" aria-label="Ajustes"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
+<button id="bk" aria-label="Volver a las categorías" title="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+<div id="ttl"><b id="tt">SightKeys</b><small id="cmp"></small></div>
+<div id="rt"><label id="mw" title="Teclado MIDI"><svg class="kbi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M7.25 12v7M12 12v7M16.75 12v7"/><path d="M7.3 5v7M12 5v7M16.7 5v7" stroke-width="2.6"/></svg><i id="dot"></i><select id="mi"><option>Sin teclado</option></select></label>
+<button id="cg" aria-label="Ajustes"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button></div>
 </header>
 <div id="pw"><canvas id="cv"></canvas>
 <div id="ctl">
@@ -328,7 +348,7 @@ dialog#cfg{font-size:15px}dialog#cfg p{margin:14px 0}dialog#cfg h3{margin:16px 0
 </div>
 </dialog>
 <script>
-const VER='1.1.10';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
+const VER='1.1.11';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,ctlT=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
 let song=null,mode='idle',pos=0,bpm=80,t0=0,sp0=0,nb=0,ni=0,ac,fontOK=false,W=600,wrong=0,hits=0,miss=0,sel=null,BD=[];
 const pressed=new Set(),voices={};
