@@ -256,91 +256,27 @@ dialog#hcfgd .tabs button{padding:12px 14px}
 dialog#hcfgd #hsl li{padding:14px 0}
 dialog#cfg{font-size:15px}dialog#cfg p{margin:14px 0}dialog#cfg h3{margin:16px 0 4px}
 }
-/* ===== 1.1.11: player minimalista ===== */
-:root{--trk:#d8d5cb}:root[data-t=negro]{--trk:#44444a}
-body:not(.home){background:var(--bg)}
-#top{height:64px;padding:0 14px 0 8px;gap:6px;background:var(--bg);border-bottom:0}
-#bk{grid-column:1;width:44px;height:44px;border-radius:50%;opacity:1;color:var(--tx)}
-#bk:hover{background:rgba(128,128,128,.14);opacity:1}#bk svg{width:24px;height:24px}
-#ttl{position:static;transform:none;grid-column:2;align-items:flex-start;text-align:left;padding:0;background:none;min-width:0;max-width:none}
-#ttl b{font-family:var(--ff);font-weight:400;font-size:24px;line-height:1.15;color:var(--tx)}
-#ttl small{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;text-transform:none;letter-spacing:0;font-size:13px;min-height:0;color:var(--mut)}
-#rt{grid-column:3;display:flex;align-items:center;gap:2px}
-#mw{position:relative;justify-self:auto;padding:6px 10px 6px 8px;gap:6px;border-radius:10px;color:var(--mut)}
-#mw:hover{background:rgba(128,128,128,.12)}
-#mw .kbi{width:26px;height:26px;flex:none;color:var(--tx)}
-#mw select{appearance:none;-webkit-appearance:none;width:auto;max-width:118px;padding:2px 0;border-radius:0;font-size:13px;color:var(--mut);background:transparent;text-overflow:ellipsis}
-#dot{position:absolute;left:25px;top:4px;width:9px;height:9px;border:2px solid var(--bg);box-sizing:content-box;background:var(--trk)}
-#cg{color:var(--tx);padding:8px}
-#pw{margin:0 12px;border-radius:18px;border-bottom:0;background:var(--pa)}
-#st{left:18px;top:12px;max-width:60%;max-height:48px}
-#pw #lpB,#pw .lph{border:0;background:#fff;color:var(--ac);box-shadow:0 2px 10px rgba(0,0,0,.16)}
-#pw #lpB{width:44px;height:44px}
-#dock{flex:none;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);grid-template-areas:"pg pg pg" ". ct tp";align-items:center;row-gap:4px;padding:8px 20px 12px;background:var(--bg);position:relative;z-index:2;box-shadow:0 5px 14px rgba(0,0,0,.09)}
-#pgw{grid-area:pg;display:flex;align-items:flex-start;gap:8px;margin:0;padding:0;height:auto;background:none;border:0}
-#pgw button{width:28px;height:28px;color:var(--mut)}#pgw button:hover{background:rgba(128,128,128,.14)}#pgw button svg{width:22px;height:22px}
-#pgm{flex:1;min-width:0;display:flex;flex-direction:column}
-#pg{height:26px;margin:0;background:linear-gradient(var(--ac),var(--ac)) left center/calc(8px + (100% - 16px) * var(--p,0)) 3px no-repeat,linear-gradient(var(--trk),var(--trk)) center/100% 2px no-repeat}
-#pg::-webkit-slider-runnable-track{height:26px}#pg::-moz-range-track{height:26px}
-#pg::-webkit-slider-thumb{width:16px;height:16px;margin-top:5px;background:var(--ac);box-shadow:0 1px 5px rgba(232,130,12,.45)}
-#pg::-moz-range-thumb{width:16px;height:16px;background:var(--ac);box-shadow:0 1px 5px rgba(232,130,12,.45)}
-#pgw.run #pg::-webkit-slider-thumb{opacity:1}#pgw.run #pg::-moz-range-thumb{opacity:1}
-#pgt{display:flex;justify-content:space-between;margin-top:-4px;font-size:13px;color:var(--mut);font-variant-numeric:tabular-nums}
-#ctl{grid-area:ct;position:static;transform:none;display:flex;align-items:center;gap:24px;padding:0;border-radius:0;background:none}
-.hb{width:56px;height:56px;border:0;background:var(--bt);color:var(--tx);box-shadow:0 1px 2px rgba(0,0,0,.14),0 4px 10px rgba(0,0,0,.06)}
-.hb:hover{background:var(--bh)}.hb svg{width:30px;height:30px}
-.hb.on,.hb.on:hover{background:#fde6cb;color:var(--tx);box-shadow:inset 0 0 0 1.5px #f0b070}
-:root[data-t=negro] .hb.on,:root[data-t=negro] .hb.on:hover{background:#3a2610;box-shadow:inset 0 0 0 1.5px var(--ac)}
-#pb{width:76px;height:76px;border:0;box-shadow:0 8px 20px rgba(232,130,12,.35)}#pb svg{width:34px;height:34px}
-#tpb{grid-area:tp;justify-self:end;display:flex;align-items:center;gap:3px;padding:8px 4px;background:none;border-radius:8px;color:var(--mut);font-size:15px;font-variant-numeric:tabular-nums;align-self:end}
-#tpb:hover{background:rgba(128,128,128,.12)}#tpb .qn{width:9px;height:15px}
-#kv{margin:0;width:100%;background:var(--bg);box-shadow:0 -1px 0 var(--ln)}
-@media (max-height:520px){
-#top{height:44px;padding:0 10px 0 4px}#bk{width:36px;height:36px}
-#ttl b{font-size:17px}#ttl small{font-size:11px}
-#mw .kbi{width:22px;height:22px}#dot{left:21px;top:2px}#mw select{font-size:12px}
-#pw{margin:0 8px;border-radius:14px}
-#dock{row-gap:2px;padding:4px 14px 6px}
-#pgw button{width:24px;height:24px}#pg,#pg::-webkit-slider-runnable-track,#pg::-moz-range-track{height:22px}#pg::-webkit-slider-thumb{margin-top:3px}
-#ctl{gap:14px}.hb{width:38px;height:38px}.hb svg{width:21px;height:21px}#pb{width:46px;height:46px}#pb svg{width:22px;height:22px}
-#tpb{font-size:13px;padding:4px 2px}#pgt{font-size:11.5px;margin-top:-5px}
-#pw #lpB{width:38px;height:38px}
-}
-/* 1.1.12: botones planos, sin brillos */
-.hb{width:56px;height:56px;border:1.5px solid #c4c4c4;background:var(--pn);color:#6b6f76;box-shadow:none}
-.hb:hover{background:var(--bt)}
-.hb.on,.hb.on:hover{background:var(--ac);border-color:var(--ac);color:#fff;box-shadow:none}
-:root[data-t=negro] .hb{border-color:#44444a;color:#b5b5b5}
-:root[data-t=negro] .hb.on,:root[data-t=negro] .hb.on:hover{background:var(--ac);border-color:var(--ac);color:#fff;box-shadow:none}
-#pb,#pb:hover{width:76px;height:76px;border:0;box-shadow:none}
-#pw #lpB,#pw .lph{border:1.5px solid #cfcfcf;box-shadow:none}
-#pg::-webkit-slider-thumb,#pg::-moz-range-thumb{box-shadow:none}
-#kv{box-shadow:none}
-@media (max-height:520px){.hb{width:38px;height:38px}#pb,#pb:hover{width:46px;height:46px;box-shadow:none}}
 </style></head><body class="home">
 <div id="rot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></svg><div>Gira el teléfono<br><small style="color:#9a9a9a">El player se usa en horizontal</small></div></div>
 <div id="app">
 <header id="top">
-<button id="bk" aria-label="Volver a las categorías" title="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
-<div id="ttl"><b id="tt">SightKeys</b><small id="cmp"></small></div>
-<div id="rt"><label id="mw" title="Teclado MIDI"><svg class="kbi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M7.25 12v7M12 12v7M16.75 12v7"/><path d="M7.3 5v7M12 5v7M16.7 5v7" stroke-width="2.6"/></svg><i id="dot"></i><select id="mi"><option>Sin teclado</option></select></label>
-<button id="cg" aria-label="Ajustes"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button></div>
+<div id="lf"><button id="bk" aria-label="Volver a las categorías" title="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><label id="mw" title="Teclado MIDI"><i id="dot"></i><select id="mi"><option>Sin teclado</option></select></label>
+</div>
+<div id="ttl"><small id="cmp"></small><b id="tt">SightKeys</b></div>
+<button id="cg" aria-label="Ajustes"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
 </header>
 <div id="pw"><canvas id="cv"></canvas>
-<button id="lpB" aria-label="Seleccionar sección para repetir" title="Repetir una sección"><svg class="lo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a3 3 0 0 1 3-3h15"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a3 3 0 0 1-3 3H3"/></svg><svg class="xx" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-<button id="lpL" class="lph" aria-label="Ajustar inicio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
-<button id="lpR" class="lph" aria-label="Ajustar final"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
-<div id="st"></div></div>
-<div id="dock">
-<div id="pgw"><button id="p0" aria-label="Ir al principio" title="Principio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M17 5.5v13L7 12z"/></svg></button><div id="pgm"><input id="pg" type="range" min="0" max="1000" value="0" aria-label="Posición en la canción"><div id="pgt"><span id="t0">0:00</span><span id="t1">0:00</span></div></div><button id="p1" aria-label="Ir al final" title="Final"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M7 5.5v13L17 12z"/></svg></button></div>
 <div id="ctl">
 <button id="hL" class="hb l" aria-label="Mano izquierda" aria-pressed="false" title="Mano izquierda"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="7.2" y="4.2" width="2.7" height="9" rx="1.35"/><rect x="10.2" y="2.4" width="2.7" height="10.6" rx="1.35"/><rect x="13.2" y="3.2" width="2.7" height="9.8" rx="1.35"/><rect x="16.2" y="5.4" width="2.6" height="8" rx="1.3"/><path d="M7.2 11v3.2L4.6 11.4a1.5 1.5 0 0 0-2.1 2.1l4.3 5.5A5 5 0 0 0 10.7 21H14a4.8 4.8 0 0 0 4.8-4.8V12H7.2z"/></svg></button>
 <button id="pb" aria-label="Reproducir o practicar" title="Reproducir / practicar"><svg class="pl" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg><svg class="st" viewBox="0 0 24 24" fill="currentColor"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/></svg></button>
 <button id="hR" class="hb" aria-label="Mano derecha" aria-pressed="false" title="Mano derecha"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="7.2" y="4.2" width="2.7" height="9" rx="1.35"/><rect x="10.2" y="2.4" width="2.7" height="10.6" rx="1.35"/><rect x="13.2" y="3.2" width="2.7" height="9.8" rx="1.35"/><rect x="16.2" y="5.4" width="2.6" height="8" rx="1.3"/><path d="M7.2 11v3.2L4.6 11.4a1.5 1.5 0 0 0-2.1 2.1l4.3 5.5A5 5 0 0 0 10.7 21H14a4.8 4.8 0 0 0 4.8-4.8V12H7.2z"/></svg></button>
 </div>
-<button id="tpb" aria-label="Tempo (se ajusta en Ajustes)" title="Tempo: se ajusta en Ajustes"><svg class="qn" viewBox="0 0 12 20" aria-hidden="true"><ellipse cx="4.5" cy="16" rx="4.2" ry="3.2" transform="rotate(-20 4.5 16)" fill="currentColor"/><rect x="7.2" y="1" width="1.5" height="15.2" fill="currentColor"/></svg><span id="tv">= 80</span></button>
-</div>
+<button id="lpB" aria-label="Seleccionar sección para repetir" title="Repetir una sección"><svg class="lo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a3 3 0 0 1 3-3h15"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a3 3 0 0 1-3 3H3"/></svg><svg class="xx" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+<button id="lpL" class="lph" aria-label="Ajustar inicio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+<button id="lpR" class="lph" aria-label="Ajustar final"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+<div id="st"></div></div>
 <canvas id="kv"></canvas>
+<div id="pgw"><button id="p0" aria-label="Ir al principio" title="Principio"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2.2v14H6zM19 5v14L9.5 12z"/></svg></button><input id="pg" type="range" min="0" max="1000" value="0" aria-label="Posición en la canción"><button id="p1" aria-label="Ir al final" title="Final"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.8 5H18v14h-2.2zM5 5l9.5 7L5 19z"/></svg></button></div>
 </div>
 <div id="home"><nav id="nav"><button data-v="inicio" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 11.2 12 4l8.5 7.2"/><path d="M5.5 9.8V20h13V9.8"/><path d="M10 20v-5.5h4V20"/></svg><span>Inicio</span></button><button data-v="songs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg><span>Canciones</span></button><button data-v="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg><span>Buscar</span></button><i class="sp"></i><button id="hcg2" class="ng" aria-label="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></nav><div id="hmain"><header id="htop"><button id="hback" hidden aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><div id="htt"></div><button id="hcg" aria-label="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></header><main id="hl"><div class="w" id="hw"></div></main></div></div>
 <dialog id="hcfgd"><div class="dh"><button class="bkb" id="hbk" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><h2>Ajustes</h2><button class="p" id="hcl">Cerrar</button></div>
@@ -392,7 +328,7 @@ body:not(.home){background:var(--bg)}
 </div>
 </dialog>
 <script>
-const VER='1.1.13';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
+const VER='1.1.10';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,ctlT=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
 let song=null,mode='idle',pos=0,bpm=80,t0=0,sp0=0,nb=0,ni=0,ac,fontOK=false,W=600,wrong=0,hits=0,miss=0,sel=null,BD=[];
 const pressed=new Set(),voices={};
@@ -402,8 +338,8 @@ function doneN(n){const o=n.par||n;if(o.st=='hit')return true;if(o.st=='miss'||!
 function noteCol(n){const o=n.par||n;return isSel(o)?C.ink:C.gr}
 let glowSet=new Set();const mc=m=>PCA[m%12]?'#1fa7a0':'#f08a10';
 const say=h=>$('st').innerHTML=h;
-const TH={clasico:{ln:'#cdc9be',ink:'#0a0a0a',gr:'#aaa',kw:'#fff',kb:'#1d1d1b',kl:'#dcd8cd',kp:'#e9e7e0',bar:'#f6f5f1',cur:'#e8820c',hr:'#f5a04a',ac:'#e8820c',ex:'#f5a04a',ex2:'#c26a00',pa:'#fbf9f3'},
-negro:{ln:'#cdc9be',ink:'#0a0a0a',gr:'#aaa',kw:'#fff',kb:'#1d1d1b',kl:'#dcd8cd',kp:'#26262a',bar:'#000',cur:'#e8820c',hr:'#f5a04a',ac:'#e8820c',ex:'#f5a04a',ex2:'#c26a00',pa:'#fbf9f3'}};let C=TH.clasico;const paA=a=>{const h=C.pa;return 'rgba('+parseInt(h.slice(1,3),16)+','+parseInt(h.slice(3,5),16)+','+parseInt(h.slice(5,7),16)+','+a+')'};
+const TH={clasico:{ln:'#222',ink:'#0a0a0a',gr:'#aaa',kw:'#fff',kb:'#222',kl:'#999',bar:'#e6e3da',cur:'#e8820c',hr:'#f5a04a',ac:'#e8820c',ex:'#f5a04a',ex2:'#c26a00',pa:'#fbf9f3'},
+negro:{ln:'#222',ink:'#0a0a0a',gr:'#aaa',kw:'#fff',kb:'#222',kl:'#999',bar:'#000',cur:'#e8820c',hr:'#f5a04a',ac:'#e8820c',ex:'#f5a04a',ex2:'#c26a00',pa:'#fbf9f3'}};let C=TH.clasico;
 /* ---------- fuente ---------- */
 async function chkFont(){await document.fonts.load('40px Bravura','\uE050\uE062\uE0A4\uE262\uE080').then(l=>fontOK=l.length>0,()=>0);if(!fontOK)say('No encuentro <b>fonts/Bravura.otf</b>.')}
 function themeColor(t){const n=document.createElement('meta');n.name='theme-color';n.content=t=='negro'?'#000000':'#f6f5f1';const m=document.querySelector('meta[name=theme-color]');if(m)m.replaceWith(n);else document.head.append(n)}
@@ -530,10 +466,8 @@ else if(mode=='wait'&&!dr){const g=group(),n=g.find(x=>x.midi==m&&!x.st);if(n){n
 const group=()=>{const l=song.ev.filter(n=>live(n)&&!n.st&&isSel(n)&&n.t>=lo&&(!sel||n.t<sel.b-.0001));if(!l.length)return[];const t=l[0].t;return l.filter(n=>Math.abs(n.t-t)<.01)};
 const stat=()=>say('');
 /* ---------- transporte ---------- */
-function setBpm(){const nb_=+$('bpm').value;if(mode=='listen'||mode=='tempo'){sp0=pos;t0=ac.currentTime}bpm=nb_;$('bv').textContent=bpm;$('tv').textContent='= '+bpm}
-$('bpm').oninput=setBpm;$('tpb').onclick=()=>$('cfg').showModal();
-const fmtM=t=>{t=Math.max(0,Math.round(t));return Math.floor(t/60)+':'+String(t%60).padStart(2,'0')};let tmC='';
-function tmUI(){if(!song)return;const a=fmtM(Math.max(0,pos)*60/bpm),b=fmtM(song.end*60/bpm),k=a+'|'+b;if(k==tmC)return;tmC=k;$('t0').textContent=a;$('t1').textContent=b}
+function setBpm(){const nb_=+$('bpm').value;if(mode=='listen'||mode=='tempo'){sp0=pos;t0=ac.currentTime}bpm=nb_;$('bv').textContent=bpm}
+$('bpm').oninput=setBpm;
 function start(m,nc){if(!song)return say('Primero carga una canción.');A();const pp=Math.max(pos,fr),f0=sel?sel.a:pp>song.end-.5||pp<0?0:(song.T.find(t=>t>=pp-.05)??0);stop();lo=f0-.01;song.ev.forEach(n=>delete n.st);hits=wrong=miss=0;
 mode=m;if(m=='wait'){pos=f0;stat();return}
 const ci=nc?0:$('ci').value=='bm'?song.bm:+$('ci').value;fr=f0;ps=f0;sp0=f0-ci;pos=sp0;t0=ac.currentTime+(nc?.03:.1);nb=ci?sp0:Math.ceil(f0-.001);ni=Math.max(0,song.ev.findIndex(n=>n.t>=f0-.001));stat()}
@@ -552,7 +486,7 @@ const yOf=(r,p,bt)=>Y[r]-(p-(bt??BOT[r]))*S/2;
 function G(ch,x,y){c.textAlign='left';c.textBaseline='alphabetic';c.fillText(ch,x,y)}
 /* armadura y compás como en ReadNotes: signos justo tras la clave; cifras de Bravura centradas en la línea 4 (arriba) y 2 (abajo) */
 const TSA=[1.88,1.336,1.784,1.684,1.88,1.612,1.736,1.764,1.744,1.736],tsW=n=>String(n).split('').reduce((t,d)=>t+TSA[+d],0);
-const BR=17,KX=8+BR+3.5*S,kAdv=f=>f>0?1.15*S:S,symOf=ts=>ts.sy=='common'||ts.sy=='cut'?ts.sy:'';
+const KX=8+3.5*S,kAdv=f=>f>0?1.15*S:S,symOf=ts=>ts.sy=='common'||ts.sy=='cut'?ts.sy:'';
 function sigLay(sg){const fa=sg.fifths,kw=Math.abs(fa)*kAdv(fa),tx=KX+kw+(fa?.7*S:.2*S),bw=symOf(sg.ts)?1.7*S:Math.max(tsW(sg.ts[0]),tsW(sg.ts[1]))*S;return{tx,bw}}
 function setHdr(){const l=sigLay(song);HDR=Math.max(100,Math.ceil(l.tx+l.bw+6));CX=HDR+70}
 function XT(t){const T=song.T,XS=song.XS,n=T.length;if(t<=T[0])return XS[0]+(t-T[0])*PXB;if(t>=T[n-1])return XS[n-1]+(t-T[n-1])*PXB;
@@ -618,34 +552,28 @@ else if(tc!=null&&(mode=='listen'||mode=='tempo')&&pos>=ps-.001){const g=at(tc);
 if(mode=='tempo'){const e=song.ev.find(n=>live(n)&&!n.st&&isSel(n)&&n.t>pos-.3);if(e&&e.t<pos+.5)song.ev.forEach(n=>{if(live(n)&&!n.st&&isSel(n)&&Math.abs(n.t-e.t)<.002)glowSet.add(n)})}}
 c.save();c.beginPath();c.rect(HDR,0,W-HDR,SH);c.clip();
 if(sel){const x0=xe(sel.a),x1=xe(sel.b);c.fillStyle='rgba(120,120,120,.2)';c.fillRect(x0,0,x1-x0,SH)}
-c.strokeStyle=C.ink;c.lineWidth=1.3;song.bars.forEach((b,i)=>{const kb=Math.round(b*1000)/1000,x=CX+XT(b)-xp-16-(song.WW[kb]||0)-(song.ccT.has(kb)?26:0);if(x<HDR||x>W)return;c.beginPath();c.moveTo(x,Y[0]-4*S);c.lineTo(x,Y[1]);c.stroke();
-{c.fillStyle='#9a968b';c.font='500 12px system-ui,sans-serif';c.textAlign='left';c.textBaseline='alphabetic';c.fillText(i+1,x+6,Y[0]-4*S-8);c.font=fontOK?`${2.4*S}px Bravura`:'11px system-ui,sans-serif'}});
-c.lineWidth=1;if(song.grps.length)drawBeams();
+c.strokeStyle=C.ln;song.bars.forEach((b,i)=>{const kb=Math.round(b*1000)/1000,x=CX+XT(b)-xp-16-(song.WW[kb]||0)-(song.ccT.has(kb)?26:0);if(x<HDR||x>W)return;c.beginPath();c.moveTo(x,Y[0]-4*S);c.lineTo(x,Y[1]);c.stroke();
+if(i){c.fillStyle='#888';c.font='11px system-ui,sans-serif';c.textAlign='left';c.textBaseline='alphabetic';if(fontOK){c.font=`${2.4*S}px Bravura`;String(i+1).split('').forEach((d,k)=>G(String.fromCodePoint(0xE880+ +d),x+4+k*1.276*.6*S,Y[0]-4*S-5))}else c.fillText(i+1,x+4,Y[0]-4*S-5)}});
+if(song.grps.length)drawBeams();
 for(const n of song.ev){const x=CX+XT(n.t)-xp;if(x<HDR-20)continue;if(x>W+20)break;
 if(n.rest)drawRest(n,x,isSel(n)?C.ink:C.gr);else{const col=noteCol(n);const nc=isSel(n.par||n)?C.ink:C.gr;drawNote(n,x,col);if(n.tc)drawTie(n,x,nc);if(n.fm)drawFerm(n,x);if(n.arp)drawArp(n,x,nc)}}
 for(const cc of song.ccs){const x=CX+XT(cc.t)-xp-36-(song.WW[Math.round(cc.t*1000)/1000]||0);if(x>HDR-30&&x<W+10)drawCc(cc,x)}
 c.restore();
 c.fillStyle=C.pa;c.fillRect(0,0,HDR,SH);c.strokeStyle=C.ln;
 for(let r=0;r<2;r++)for(let l=0;l<5;l++){c.beginPath();c.moveTo(0,Y[r]-l*S);c.lineTo(HDR,Y[r]-l*S);c.stroke()}
-c.strokeStyle=C.ink;c.lineWidth=1.3;c.beginPath();c.moveTo(BR,Y[0]-4*S);c.lineTo(BR,Y[1]);c.stroke();c.lineWidth=1;
-{const tp=Y[0]-4*S,bt=Y[1],h=bt-tp,md=(tp+bt)/2,r=BR-3,l=2,q=(y)=>2*md-y;c.fillStyle=C.ink;c.beginPath();
-c.moveTo(r,tp);c.bezierCurveTo(r-9,tp+h*.03,l+6,tp+h*.1,l+5.5,md-h*.13);c.bezierCurveTo(l+5.5,md-h*.05,l+3,md-h*.03,l,md);
-c.bezierCurveTo(l+3,md+h*.03,l+5.5,md+h*.05,l+5.5,md+h*.13);c.bezierCurveTo(l+6,bt-h*.1,r-9,bt-h*.03,r,bt);
-c.bezierCurveTo(r-6,bt-h*.05,l+9,bt-h*.1,l+8.4,md+h*.13);c.bezierCurveTo(l+8.4,md+h*.06,l+6,md+h*.03,l+4.4,md);
-c.bezierCurveTo(l+6,md-h*.03,l+8.4,md-h*.06,l+8.4,md-h*.13);c.bezierCurveTo(l+9,tp+h*.1,r-6,tp+h*.05,r,tp);c.closePath();c.fill()}
-if(fontOK){c.fillStyle=C.ink;c.font=`${4*S}px Bravura`;for(const r of[0,1]){const cl=song.clef0[r?'L':'R'];G(cl.sign=='F'?GL.f:cl.sign=='C'?'\uE05C':GL.g,8+BR,Y[r]-(cl.line-1)*S)}
+c.beginPath();c.moveTo(1,Y[0]-4*S);c.lineTo(1,Y[1]);c.stroke();
+if(fontOK){c.fillStyle=C.ink;c.font=`${4*S}px Bravura`;for(const r of[0,1]){const cl=song.clef0[r?'L':'R'];G(cl.sign=='F'?GL.f:cl.sign=='C'?'\uE05C':GL.g,8,Y[r]-(cl.line-1)*S)}
 const fa=song.fifths,{tx,bw}=sigLay(song);for(let r=0;r<2;r++)for(let i=0;i<Math.abs(fa);i++){const cl=song.clef0[r?'L':'R'],ar=(fa>0?TS:TF)[cl.sign=='F'?1:0];let ps_=ar[i];if(cl.sign=='C')while(ps_<cl.bt+2)ps_+=7;G(fa>0?GL.s:GL.b,KX+i*kAdv(fa),yOf(r,ps_,cl.bt))}
 const sy=symOf(song.ts),num=(v,x,y)=>{x+=(bw-tsW(v)*S)/2;String(v).split('').forEach(ch=>{G(String.fromCodePoint(0xE080+ +ch),x,y);x+=TSA[+ch]*S})};
 for(let r=0;r<2;r++){if(sy)G(sy=='common'?'\uE08A':'\uE08B',tx,Y[r]-2*S);else{num(song.ts[0],tx,Y[r]-3*S);num(song.ts[1],tx,Y[r]-S)}}}
-{const y0=Y[0]-7*S,y1=Y[1]+3*S,gb=c.createLinearGradient(CX-16,0,CX+16,0);gb.addColorStop(0,'rgba(120,120,120,0)');gb.addColorStop(.3,'rgba(120,120,120,.2)');gb.addColorStop(.7,'rgba(120,120,120,.2)');gb.addColorStop(1,'rgba(120,120,120,0)');c.fillStyle=gb;c.fillRect(CX-16,0,32,SH);c.strokeStyle=C.cur;c.lineWidth=1.5;c.beginPath();c.moveTo(CX,y0);c.lineTo(CX,y1);c.stroke();c.lineWidth=1}
+c.fillStyle='rgba(120,120,120,.22)';c.fillRect(CX-10,0,20,SH);c.strokeStyle=C.cur;c.lineWidth=2;c.beginPath();c.moveTo(CX,Y[0]-6*S);c.lineTo(CX,Y[1]+S);c.stroke();
 c.restore();W=Wr;keys(exp,hear)}else{c.restore();W=Wr;keys(new Set(),new Map())}
 if(!song){c.save();c.scale(Z,Z);c.fillStyle='#777';c.font='16px system-ui';c.textAlign='left';c.fillText('Aquí aparecerá la partitura',HDR,Y[0]-4*S-14);c.restore()}}
 function keys(exp,hear){const k=kc,w=KW/52,kh=KH-8;k.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);k.clearRect(0,0,KW,KH);const wk=[];for(let m=21;m<=108;m++)if(!PCA[m%12])wk.push(m);
 const khm=new Map();glowSet.forEach(n=>khm.set(n.midi,n.hand));
-const rb=(x,y,bw,bh,r)=>{k.beginPath();k.moveTo(x,y);k.lineTo(x+bw,y);k.lineTo(x+bw,y+bh-r);k.arcTo(x+bw,y+bh,x+bw-r,y+bh,r);k.lineTo(x+r,y+bh);k.arcTo(x,y+bh,x,y,r);k.closePath();k.fill()};
-const og=k.createLinearGradient(0,0,0,kh);og.addColorStop(0,'#f6a458');og.addColorStop(1,'#fbc693');
-wk.forEach((m,i)=>{k.fillStyle=khm.has(m)||pressed.has(m)?og:C.kw;rb(i*w+.6,0,w-1.2,kh,Math.min(3,w*.25))});
-for(let m=21;m<=108;m++)if(PCA[m%12]){const i=wk.indexOf(m-1);k.fillStyle=khm.has(m)||pressed.has(m)?'#f0820c':C.kb;rb((i+1)*w-w*.3,0,w*.6,kh*.62,Math.min(3.5,w*.25))}}
+wk.forEach((m,i)=>{k.fillStyle=khm.has(m)?mc(m):pressed.has(m)?C.ac:C.kw;k.fillRect(i*w,0,w,kh);k.fillStyle=C.kl;k.fillRect(i*w,0,1,kh)});
+for(let m=21;m<=108;m++)if(PCA[m%12]){const i=wk.indexOf(m-1);k.fillStyle=khm.has(m)?mc(m):pressed.has(m)?C.ac:C.kb;k.fillRect((i+1)*w-w*.3,0,w*.6,kh*.62)}
+k.fillStyle=C.bar;k.fillRect(0,kh,KW,8)}
 /* ---------- selección de sección (bucle) ---------- */
 const selHas=()=>song.ev.some(n=>live(n)&&isSel(n)&&n.t>=sel.a-.0001&&n.t<sel.b-.0001);
 function bx(i){const b=BD[i],kb=Math.round(b*1000)/1000;return CX+XT(b)-xp-16-(song.WW[kb]||0)-(song.ccT.has(kb)?26:0)}
@@ -676,10 +604,10 @@ if(sel&&!pgd&&pos>=sel.b+(mode=='tempo'?.65:0)){if(selHas())start(mode,true);els
 if(mode=='tempo'){for(const n of song.ev){if(n.t>pos)break;if(live(n)&&!n.st&&isSel(n)&&n.t>=lo&&n.t+.6<pos){n.st='miss';miss++;stat()}}}
 if(pos>song.end+.5){mode=='tempo'?finish():(mode='idle')}}
 else if(mode=='wait'&&!dr){const g=group();if(g.length)pos+=(g[0].t-pos)*.15;else if(sel&&selHas())start('wait',true);else finish()}}
-if(song&&!pgd)$('pg').value=Math.round(1000*Math.max(0,Math.min(1,pos/song.end)));$('pg').style.setProperty('--p',$('pg').value/1000);const run=mode!='idle'&&mode!='';$('pb').classList.toggle('run',run);$('pgw').classList.toggle('run',run&&!pgd);tmUI();draw();lpUI(run);requestAnimationFrame(loop)}
-function size(){if(document.body.classList.contains('home'))return;const pw=$('pw'),dp=devicePixelRatio,vw=innerWidth,vh=innerHeight;KW=Math.max(100,$('app').clientWidth);KH=Math.round(Math.min(150,Math.max(50,KW/52*4.5),vh*(vh<520?.15:.2)))+8;
+if(song&&!pgd)$('pg').value=Math.round(1000*Math.max(0,Math.min(1,pos/song.end)));$('pg').style.setProperty('--p',$('pg').value/10+'%');const run=mode!='idle'&&mode!='';$('pb').classList.toggle('run',run);$('pgw').classList.toggle('run',run&&!pgd);$('ctl').classList.toggle('hide',run&&!dr&&performance.now()>ctlT);draw();lpUI(run);requestAnimationFrame(loop)}
+function size(){if(document.body.classList.contains('home'))return;const pw=$('pw'),dp=devicePixelRatio,vw=innerWidth,vh=innerHeight;KW=Math.max(100,vw-12);KH=Math.round(Math.min(150,Math.max(50,KW/52*4.5),vh*(vh<520?.15:.2)))+8;
 if(kv.style.height!=KH+'px')kv.style.height=KH+'px';const kw=Math.round(KW*dp),kh=Math.round(KH*dp);if(kv.width!=kw||kv.height!=kh){kv.width=kw;kv.height=kh}
-W=pw.clientWidth;H=pw.clientHeight;const tr=vh<520?8:14;Z=Math.max(.35,Math.min(Zu,(H-tr)/(24*S)));SH=H/Z;const t0_=Math.max(tr/Z+3*S,(SH-16*S)*.42);Y[0]=t0_+4*S;Y[1]=t0_+16*S;
+W=pw.clientWidth;H=pw.clientHeight;const tr=$('ctl').offsetHeight+(vh<520?8:16);Z=Math.max(.35,Math.min(Zu,(H-tr)/(24*S)));SH=H/Z;const t0_=Math.max(tr/Z+3*S,(SH-16*S)*.42);Y[0]=t0_+4*S;Y[1]=t0_+16*S;
 const cw=Math.round(W*dp),ch=Math.round(H*dp);if(cv.width!=cw||cv.height!=ch){cv.width=cw;cv.height=ch}}
 $('cg').onclick=()=>$('cfg').showModal();$('cc').onclick=$('pbk').onclick=()=>$('cfg').close();$('th').onchange=e=>theme(e.target.value);$('th2').onchange=e=>theme(e.target.value);
 try{theme(localStorage.lp||'clasico')}catch{theme('clasico')}
