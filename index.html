@@ -359,7 +359,7 @@ dialog#cfg{font-size:15px}dialog#cfg p{margin:14px 0}dialog#cfg h3{margin:16px 0
 </div>
 </dialog>
 <script>
-const VER='1.1.14';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
+const VER='1.1.15';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,ctlT=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
 let brM=null;let song=null,mode='idle',pos=0,bpm=80,t0=0,sp0=0,nb=0,ni=0,ac,fontOK=false,W=600,wrong=0,hits=0,miss=0,sel=null,BD=[];
 const pressed=new Set(),voices={};
@@ -679,7 +679,7 @@ if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWor
 let fsOut=0,pickT=0;const inFs=()=>document.fullscreenElement||matchMedia('(display-mode: fullscreen)').matches;
 const WIN=/Windows/i.test(navigator.userAgent)||(navigator.userAgentData&&navigator.userAgentData.platform=='Windows');if(WIN)document.documentElement.classList.add('win');addEventListener('wheel',e=>{if(e.ctrlKey)e.preventDefault()},{passive:false});document.addEventListener('touchmove',e=>{if(e.touches.length>1)e.preventDefault()},{passive:false});for(const ev of['gesturestart','gesturechange','gestureend'])addEventListener(ev,e=>e.preventDefault());
 const goFs=()=>{if(WIN)return;try{const d=document.documentElement;if(!inFs()&&d.requestFullscreen)d.requestFullscreen({navigationUI:'hide'}).catch(()=>{})}catch{}};
-document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement&&!(document.hidden||Date.now()-pickT<90000))fsOut=1});
+document.addEventListener('fullscreenchange',()=>{if(document.fullscreenElement)return;const away=document.hidden||Date.now()-pickT<90000;if(away)return;fsOut=1;/* el botón atrás del móvil sale primero de pantalla completa: en el player se trata como «atrás» y vuelve a la pantalla anterior */if(!document.body.classList.contains('home')&&history.state&&history.state.v=='play')history.back()});
 for(const id of['mode','oth','met','ci']){const e=$(id),ck=e.type=='checkbox';try{const v=localStorage['lp_'+id];if(v!=null){if(ck)e.checked=v=='1';else e.value=v}}catch{}e.onchange=()=>sv('lp_'+id,ck?(e.checked?1:0):e.value)}
 try{const h=localStorage.lph||'00';for(const[i,x]of['L','R'].entries())if(h[i]=='1')$('h'+x).onclick()}catch{}
 
