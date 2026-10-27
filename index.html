@@ -242,6 +242,20 @@ dialog#hcfgd,dialog#cfg{width:100vw;height:100vh;height:100dvh;max-width:100vw;m
 dialog#cfg{overflow:auto;font-size:14px}
 dialog#cfg .dh{position:sticky;top:0}
 }
+/* 1.1.9: ajustes en móvil con flecha atrás y más aire */
+.bkb{display:none}
+@media (max-width:700px),(max-height:520px){
+dialog#hcfgd .dh,dialog#cfg .dh{justify-content:flex-start;gap:6px;padding:0 0 10px}
+dialog#hcfgd .dh h2,dialog#cfg .dh h2{font-size:22px;flex:1}
+dialog#hcfgd .dh>button.p,dialog#cfg .dh>button.p{display:none}
+.bkb{display:grid;place-items:center;order:-1;width:40px;height:40px;margin-left:-8px;padding:0;border:0;background:none;color:var(--tx);border-radius:50%}.bkb svg{width:26px;height:26px}
+dialog#hcfgd h3,dialog#cfg h3{margin:24px 0 8px}
+dialog#hcfgd p,dialog#cfg p{margin:16px 0}
+dialog#hcfgd .fg{gap:18px}
+dialog#hcfgd .tabs button{padding:12px 14px}
+dialog#hcfgd #hsl li{padding:14px 0}
+dialog#cfg{font-size:15px}dialog#cfg p{margin:14px 0}dialog#cfg h3{margin:16px 0 4px}
+}
 </style></head><body class="home">
 <div id="rot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></svg><div>Gira el teléfono<br><small style="color:#9a9a9a">El player se usa en horizontal</small></div></div>
 <div id="app">
@@ -265,7 +279,7 @@ dialog#cfg .dh{position:sticky;top:0}
 <div id="pgw"><button id="p0" aria-label="Ir al principio" title="Principio"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2.2v14H6zM19 5v14L9.5 12z"/></svg></button><input id="pg" type="range" min="0" max="1000" value="0" aria-label="Posición en la canción"><button id="p1" aria-label="Ir al final" title="Final"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.8 5H18v14h-2.2zM5 5l9.5 7L5 19z"/></svg></button></div>
 </div>
 <div id="home"><nav id="nav"><button data-v="inicio" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 11.2 12 4l8.5 7.2"/><path d="M5.5 9.8V20h13V9.8"/><path d="M10 20v-5.5h4V20"/></svg><span>Inicio</span></button><button data-v="songs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg><span>Canciones</span></button><button data-v="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg><span>Buscar</span></button><i class="sp"></i><button id="hcg2" class="ng" aria-label="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></nav><div id="hmain"><header id="htop"><button id="hback" hidden aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><div id="htt"></div><button id="hcg" aria-label="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></header><main id="hl"><div class="w" id="hw"></div></main></div></div>
-<dialog id="hcfgd"><div class="dh"><h2>Ajustes</h2><button class="p" id="hcl">Cerrar</button></div>
+<dialog id="hcfgd"><div class="dh"><button class="bkb" id="hbk" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><h2>Ajustes</h2><button class="p" id="hcl">Cerrar</button></div>
 <div class="tabs" id="htabs"><button data-t="gen" class="on">General</button><button data-t="lib">Gestión de biblioteca</button><button data-t="sec">Seguridad</button></div>
 <div class="tpw">
 <div class="tp" id="t-gen">
@@ -285,7 +299,7 @@ dialog#cfg .dh{position:sticky;top:0}
 <div class="fg"><label>Categoría<select id="hca"></select></label><label id="hnp" hidden>Nombre de la nueva categoría<input id="hnc" type="text" autocomplete="off"></label></div>
 <p><button class="p" id="hadd">Añadir canción</button> <button id="hcan" hidden>Cancelar</button> <small id="hmsg"></small></p>
 </div>
-<h3>Canciones</h3><ul id="hsl"></ul>
+<h3>Canciones <span id="hst"></span></h3><ul id="hsl"></ul>
 </div>
 <div class="tp" id="t-sec" hidden>
 <p class="tip">Solo hay un administrador: quien tenga el token de GitHub. El token se guarda únicamente en este dispositivo. Las canciones se guardan en <b>songs.json</b> del repositorio y las ven todos los dispositivos.</p>
@@ -295,7 +309,7 @@ dialog#cfg .dh{position:sticky;top:0}
 </div>
 </div>
 </dialog>
-<dialog id="cfg"><div class="dh"><h2>Ajustes</h2><button class="p" id="cc">Cerrar</button></div>
+<dialog id="cfg"><div class="dh"><button class="bkb" id="pbk" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><h2>Ajustes</h2><button class="p" id="cc">Cerrar</button></div>
 <div class="cols">
 <section><h3>Práctica</h3>
 <p><label>Modo <select id="mode"><option value="wait" selected>Esperar mis notas</option><option value="tempo">Con tempo</option></select></label></p>
@@ -314,7 +328,7 @@ dialog#cfg .dh{position:sticky;top:0}
 </div>
 </dialog>
 <script>
-const VER='1.1.8';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
+const VER='1.1.9';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,ctlT=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
 let song=null,mode='idle',pos=0,bpm=80,t0=0,sp0=0,nb=0,ni=0,ac,fontOK=false,W=600,wrong=0,hits=0,miss=0,sel=null,BD=[];
 const pressed=new Set(),voices={};
@@ -443,7 +457,7 @@ m.onstatechange=fill;$('mi').onchange=sel;fill()},err=>{midiBusy=0;if(err&&err.n
 say('No se pudo activar MIDI ('+(err&&err.name||'error')+'). Toca el selector de teclado para volver a intentarlo. '+(err&&err.name=='InvalidStateError'?'Chrome no logra abrir el sistema MIDI del móvil: cierra otras apps o navegadores que usen el teclado (por ejemplo Brave), desconecta y vuelve a conectar el cable y reabre Chrome.':'Si Chrome lo tiene bloqueado: ⋮ › Ajustes › Ajustes de sitios › Dispositivos MIDI.'))})}
 $('mw').addEventListener('click',e=>{if(!midiOk){e.preventDefault();e.stopPropagation();initMidi()}},true);
 addEventListener('pointerdown',()=>{if(!midiOk)initMidi()},{capture:true});
-function onmsg(e){const[s,a,b]=e.data,k=s&240;if(k==144&&b>0)down(a,b/127);else if(k==128||k==144)up(a)}
+function onmsg(e){stMark();const[s,a,b]=e.data,k=s&240;if(k==144&&b>0)down(a,b/127);else if(k==128||k==144)up(a)}
 function up(m){pressed.delete(m);voices[m]&&voices[m](ac.currentTime);delete voices[m]}
 function down(m,v){A();pressed.add(m);if(voices[m])voices[m](ac.currentTime);voices[m]=tone(m,ac.currentTime,0,v);if(!song)return;
 if(mode=='tempo'){let b=null;for(const n of song.ev)if(live(n)&&!n.st&&n.midi==m&&isSel(n)&&Math.abs(n.t-pos)<.6&&(!b||Math.abs(n.t-pos)<Math.abs(b.t-pos)))b=n;
@@ -595,7 +609,7 @@ function size(){if(document.body.classList.contains('home'))return;const pw=$('p
 if(kv.style.height!=KH+'px')kv.style.height=KH+'px';const kw=Math.round(KW*dp),kh=Math.round(KH*dp);if(kv.width!=kw||kv.height!=kh){kv.width=kw;kv.height=kh}
 W=pw.clientWidth;H=pw.clientHeight;const tr=$('ctl').offsetHeight+(vh<520?8:16);Z=Math.max(.35,Math.min(Zu,(H-tr)/(24*S)));SH=H/Z;const t0_=Math.max(tr/Z+3*S,(SH-16*S)*.42);Y[0]=t0_+4*S;Y[1]=t0_+16*S;
 const cw=Math.round(W*dp),ch=Math.round(H*dp);if(cv.width!=cw||cv.height!=ch){cv.width=cw;cv.height=ch}}
-$('cg').onclick=()=>$('cfg').showModal();$('cc').onclick=()=>$('cfg').close();$('th').onchange=e=>theme(e.target.value);$('th2').onchange=e=>theme(e.target.value);
+$('cg').onclick=()=>$('cfg').showModal();$('cc').onclick=$('pbk').onclick=()=>$('cfg').close();$('th').onchange=e=>theme(e.target.value);$('th2').onchange=e=>theme(e.target.value);
 try{theme(localStorage.lp||'clasico')}catch{theme('clasico')}
 $('fn').onchange=$('fn2').onchange=e=>fontSet(e.target.value);try{fontSet(localStorage.lpf||'serif')}catch{fontSet('serif')}
 {const ic=$('ico'),ap=()=>{if(ic.checked)document.documentElement.dataset.ic='color';else delete document.documentElement.dataset.ic;try{localStorage.lpc=ic.checked?'1':'0'}catch{}};try{ic.checked=localStorage.lpc=='1'}catch{}ic.onchange=ap}
@@ -658,7 +672,7 @@ function resolveIcon(c) {
   return "nota";
 }
 
-const DEFC={clasica:['Clásica','Música clásica o relacionada con la misma.'],infantil:['Infantil','Canciones sencillas para empezar.'],navidad:['Navidad','Villancicos y canciones de fiesta.'],ejercicios:['Ejercicios','Escalas y arpegios para practicar.'],tradicional:['Tradicional','Melodías populares de siempre.'],pop:['Pop',''],disney:['Disney',''],cine:['Cine y series',''],anime:['Anime',''],jazz:['Jazz y blues',''],videojuegos:['Videojuegos',''],otras:['Otras','']};
+const DEFC={clasica:['Clásica','Música clásica o relacionada con la misma.'],infantil:['Infantil','Canciones sencillas para empezar.'],navidad:['Navidad','Villancicos y canciones de fiesta.'],ejercicios:['Ejercicios','Escalas y arpegios para practicar.'],tradicional:['Tradicional','Melodías populares de siempre.'],pop:['Pop','Éxitos y canciones actuales.'],disney:['Disney','Bandas sonoras de las películas de Disney.'],cine:['Cine y series','Bandas sonoras de películas y series.'],anime:['Anime','Música de series y películas de anime.'],jazz:['Jazz y blues','Estándares de jazz y blues.'],videojuegos:['Videojuegos','Melodías de videojuegos clásicos y actuales.'],otras:['Otras','Canciones que no encajan en otra categoría.']};
 const slug=t=>t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'otras';
 const DB=(()=>{let p;const op=()=>p||(p=new Promise((res,rej)=>{const r=indexedDB.open('sightkeys',1);r.onupgradeneeded=()=>r.result.createObjectStore('songs',{keyPath:'id'});r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}));
 const tx=async(m,f)=>{const d=await op();return new Promise((res,rej)=>{const t=d.transaction('songs',m),q=f(t.objectStore('songs'));t.oncomplete=()=>res(q&&q.result);t.onerror=()=>rej(t.error)})};
@@ -690,7 +704,7 @@ if(res.status==409||res.status==422)continue;if(res.status==401||res.status==403
 sha=(await res.json()).content.sha;await applyRemote(doc);return}
 throw new Error('Conflicto al guardar: vuelve a intentarlo')}
 const h=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
-const catInfo=(id,name)=>{const d=DEFC[id],nombre=d?d[0]:(name||id),ic=resolveIcon({icono:id,id,nombre});return{id,nombre,desc:d?d[1]:'',ic,col:CAT_COL[ic]||'#e8820c'}};
+const catInfo=(id,name)=>{const d=DEFC[id],nombre=d?d[0]:(name||id),ic=resolveIcon({icono:id,id,nombre});return{id,nombre,desc:d?d[1]:'Canciones de '+nombre,ic,col:CAT_COL[ic]||'#e8820c'}};
 const svgIcon=(ic,col)=>{const ip=ICON_PATHS[ic]||ICON_PATHS.nota,b=ip[1],ns='http://www.w3.org/2000/svg',s=document.createElementNS(ns,'svg'),pa=document.createElementNS(ns,'path');s.setAttribute('viewBox',b.join(' '));pa.setAttribute('d',ip[0]);pa.setAttribute('fill',col);s.appendChild(pa);return s};
 const chev=()=>{const ns='http://www.w3.org/2000/svg',s=document.createElementNS(ns,'svg'),pa=document.createElementNS(ns,'path');s.setAttribute('class','cv');s.setAttribute('viewBox','0 0 24 24');s.setAttribute('fill','none');s.setAttribute('stroke','currentColor');s.setAttribute('stroke-width','2.4');s.setAttribute('stroke-linecap','round');s.setAttribute('stroke-linejoin','round');pa.setAttribute('d','M9 5l7 7-7 7');s.appendChild(pa);return s};
 const tint=(c,a)=>{const n=parseInt(c.slice(1),16);return`rgba(${n>>16},${n>>8&255},${n&255},${a})`};
@@ -726,8 +740,19 @@ const cl=songs.filter(x=>x.cat==curCat);hd(ci.nombre,1);w.append(h('div','hint',
 document.querySelectorAll('#nav [data-v]').forEach(b=>b.onclick=()=>{view=b.dataset.v;curCat=null;history.replaceState({v:'home',view},'');renderHome();$('hl').scrollTop=0});
 $('hcg2').onclick=()=>$('hcg').click();
 function lockL(){try{screen.orientation.lock('landscape').catch(()=>0)}catch{}}
-function showHome(){try{screen.orientation.unlock()}catch{}if(document.fullscreenElement)try{document.exitFullscreen()}catch{}stop();document.body.classList.add('home');renderHome()}
-async function playSong(s){goFs();try{const sg=await parseFile(s.name,s.buf);setSong(sg,s.title);if(s.author){song.composer=s.author;$('cmp').textContent=s.author}pushRec(s.id);document.body.classList.remove('home');history.pushState({v:'play'},'');lockL();size();setTimeout(size,60)}catch(err){alert('No se pudo abrir la canción: '+err.message)}}
+/* tiempo de estudio por canción (se guarda en este dispositivo) */
+const stRead=()=>{try{return JSON.parse(localStorage.sk_study||'{}')}catch{return{}}};
+const fmtT=sec=>{const m=Math.floor(sec/60),hh=Math.floor(m/60),mm=m%60;return hh?hh+' h '+String(mm).padStart(2,'0')+' min':m+' min'};
+let stud=null,lastAct=0,stPend=0;const stAcc={};
+function stFlush(){if(!stud||!stPend)return;const d=stRead();d[stud]=(d[stud]||0)+stPend;stPend=0;try{localStorage.sk_study=JSON.stringify(d)}catch{}}
+const stMark=()=>{lastAct=performance.now()};
+for(const ev of['pointerdown','keydown'])addEventListener(ev,stMark,true);
+setInterval(()=>{if(!stud||document.hidden||document.body.classList.contains('home'))return;
+if(!((mode!='idle'&&mode!='')||performance.now()-lastAct<30000))return;
+const a=stAcc[stud]=(stAcc[stud]||0)+1;if(a==60)stPend+=60;else if(a>60)stPend++;if(stPend&&(a==60||a%5==0))stFlush()},1000);
+addEventListener('pagehide',stFlush);document.addEventListener('visibilitychange',()=>{if(document.hidden)stFlush()});
+function showHome(){stFlush();stud=null;try{screen.orientation.unlock()}catch{}if(document.fullscreenElement)try{document.exitFullscreen()}catch{}stop();document.body.classList.add('home');renderHome()}
+async function playSong(s){goFs();try{const sg=await parseFile(s.name,s.buf);setSong(sg,s.title);if(s.author){song.composer=s.author;$('cmp').textContent=s.author}pushRec(s.id);stFlush();stud=s.id;stMark();document.body.classList.remove('home');history.pushState({v:'play'},'');lockL();size();setTimeout(size,60)}catch(err){alert('No se pudo abrir la canción: '+err.message)}}
 $('hback').onclick=()=>history.back();$('bk').onclick=()=>history.back();
 addEventListener('popstate',e=>{const st=e.state||{v:'home'};if(st.v=='play'&&!song)return history.go(-1);if(st.v=='play'){document.body.classList.remove('home');lockL();size();return}
 curCat=st.v=='cat'?st.id:null;if(st.v=='cat')view='songs';else if(st.view)view=st.view;showHome()});
@@ -741,13 +766,13 @@ function fillCats(){const sel=$('hca'),keep=sel.value,seen=new Set(Object.keys(D
 for(const s of songs)if(!seen.has(s.cat)){seen.add(s.cat);const o=h('option',0,s.catName||s.cat);o.value=s.cat;sel.append(o)}
 const o=h('option',0,'Nueva categoría…');o.value='__new';sel.append(o);if(keep&&[...sel.options].some(x=>x.value==keep))sel.value=keep;$('hnp').hidden=sel.value!='__new'}
 async function run(fn,ok){$('hmsg').textContent='Guardando…';try{await fn();$('hmsg').textContent=ok||'';if(curCat&&!songs.some(x=>x.cat==curCat)){curCat=null;history.replaceState({v:'home'},'')}fillCats();fillList();renderHome();return true}catch(err){$('hmsg').textContent=String(err.message||err);return false}}
-function fillList(){const u=$('hsl');u.textContent='';if(!songs.length){u.append(h('small',0,'La biblioteca está vacía.'));return}const adm=isAdmin();
-for(const s of songs){const loc=s.src!='gh',li=h('li'),sp=h('span');sp.append(s.title);sp.append(h('small',0,(s.author?s.author+' · ':'')+catInfo(s.cat,s.catName).nombre+(loc?' · solo en este dispositivo':'')));li.append(sp);
+function fillList(){const u=$('hsl');u.textContent='';if(!songs.length){u.append(h('small',0,'La biblioteca está vacía.'));$('hst').textContent='';return}const adm=isAdmin(),std=stRead();{const tot=songs.reduce((a,x)=>a+(std[x.id]||0),0);$('hst').textContent=tot>=60?'· estudio total: '+fmtT(tot):''}
+for(const s of songs){const loc=s.src!='gh',li=h('li'),sp=h('span');sp.append(s.title);sp.append(h('small',0,(s.author?s.author+' · ':'')+catInfo(s.cat,s.catName).nombre+(loc?' · solo en este dispositivo':'')+(std[s.id]>=60?' · estudio: '+fmtT(std[s.id]):'')));li.append(sp);
 if(adm&&!loc){const eb=h('button',0,'Editar');eb.onclick=()=>editSong(s);li.append(eb)}
 if(adm&&loc){const ub=h('button',0,'Subir a GitHub');ub.onclick=()=>run(async()=>{await mutate(d=>d.songs.push(toRemote(s)),'Subir '+s.title);await DB.del(s.id);await loadSongs()},'Subida ✓');li.append(ub)}
 if(adm||loc){const b=h('button',0,'Borrar');b.onclick=()=>{if(!confirm('¿Borrar «'+s.title+'»?'))return;run(async()=>{if(loc){await DB.del(s.id);await loadSongs()}else await mutate(d=>{d.songs=d.songs.filter(x=>x.id!=s.id)},'Borrar '+s.title)},'Borrada ✓')};li.append(b)}
 u.append(li)}}
-$('hcg').onclick=()=>{endEdit();$('hmsg').textContent='';showTab('gen');$('hcfgd').showModal()};$('hcl').onclick=()=>$('hcfgd').close();
+$('hcg').onclick=()=>{endEdit();$('hmsg').textContent='';showTab('gen');$('hcfgd').showModal()};$('hcl').onclick=$('hbk').onclick=()=>$('hcfgd').close();
 $('hca').onchange=()=>{$('hnp').hidden=$('hca').value!='__new'};
 $('hf').onchange=async e=>{const f=e.target.files[0];pend=null;$('hmsg').textContent='';if(!f){$('hfn').textContent='Ningún archivo';return}
 try{const buf=await f.arrayBuffer(),sg=await parseFile(f.name,buf.slice(0));pend={name:f.name,buf,title:sg.title,author:sg.composer||''};$('hfn').textContent=f.name;$('hti').value=sg.title;$('hco').value=pend.author}
