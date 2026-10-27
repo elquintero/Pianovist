@@ -280,13 +280,13 @@ dialog#cfg{font-size:15px}dialog#cfg p{margin:14px 0}dialog#cfg h3{margin:16px 0
 #pgw{align-items:flex-start;gap:8px;margin:0 6px;padding:6px 14px 8px;height:auto;background:var(--bg);border:0}
 #pgw button{width:28px;height:28px;color:var(--mut)}#pgw button:hover{background:rgba(128,128,128,.14)}#pgw button svg{width:22px;height:22px}
 #pgm{flex:1;min-width:0;display:flex;flex-direction:column}
-#pg{flex:none;width:100%;height:26px;margin:0;background:linear-gradient(var(--ac),var(--ac)) left center/calc(8px + (100% - 16px) * var(--p,0)) 3px no-repeat,linear-gradient(#d8d5cb,#d8d5cb) center/100% 2px no-repeat}
-:root[data-t=negro] #pg{background:linear-gradient(var(--ac),var(--ac)) left center/calc(8px + (100% - 16px) * var(--p,0)) 3px no-repeat,linear-gradient(#44444a,#44444a) center/100% 2px no-repeat}
+#pg{flex:none;width:100%;height:26px;margin:0;background:linear-gradient(var(--ac),var(--ac)) left center/calc(10px + (100% - 20px) * var(--p,0)) 3px no-repeat,linear-gradient(#d3d0c6,#d3d0c6) center/100% 3px no-repeat;border-radius:2px}
+:root[data-t=negro] #pg{background:linear-gradient(var(--ac),var(--ac)) left center/calc(10px + (100% - 20px) * var(--p,0)) 3px no-repeat,linear-gradient(#44444a,#44444a) center/100% 3px no-repeat}
 #pg::-webkit-slider-runnable-track{height:26px}#pg::-moz-range-track{height:26px}
-#pg::-webkit-slider-thumb{width:16px;height:16px;margin-top:5px;background:var(--ac);box-shadow:none}
-#pg::-moz-range-thumb{width:16px;height:16px;background:var(--ac);box-shadow:none}
+#pg::-webkit-slider-thumb{box-sizing:border-box;width:20px;height:20px;margin-top:3px;background:var(--ac);border:3px solid var(--bg);box-shadow:0 1px 4px rgba(0,0,0,.28)}
+#pg::-moz-range-thumb{box-sizing:border-box;width:20px;height:20px;background:var(--ac);border:3px solid var(--bg);box-shadow:0 1px 4px rgba(0,0,0,.28)}
 #pgw.run #pg::-webkit-slider-thumb{opacity:1}#pgw.run #pg::-moz-range-thumb{opacity:1}
-#pgt{display:flex;justify-content:space-between;margin-top:-4px;font-size:13px;color:var(--mut);font-variant-numeric:tabular-nums}
+#pgt{display:flex;justify-content:space-between;margin-top:-3px;font-size:12.5px;letter-spacing:.02em;color:var(--mut);font-variant-numeric:tabular-nums}
 </style></head><body class="home">
 <div id="rot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></svg><div>Gira el teléfono<br><small style="color:#9a9a9a">El player se usa en horizontal</small></div></div>
 <div id="app">
@@ -359,7 +359,7 @@ dialog#cfg{font-size:15px}dialog#cfg p{margin:14px 0}dialog#cfg h3{margin:16px 0
 </div>
 </dialog>
 <script>
-const VER='1.1.13';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
+const VER='1.1.14';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,ctlT=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
 let brM=null;let song=null,mode='idle',pos=0,bpm=80,t0=0,sp0=0,nb=0,ni=0,ac,fontOK=false,W=600,wrong=0,hits=0,miss=0,sel=null,BD=[];
 const pressed=new Set(),voices={};
@@ -604,11 +604,22 @@ for(let r=0;r<2;r++){if(sy)G(sy=='common'?'\uE08A':'\uE08B',tx,Y[r]-2*S);else{nu
 c.fillStyle='rgba(120,120,120,.22)';c.fillRect(CX-10,0,20,SH);c.strokeStyle=C.cur;c.lineWidth=2;c.beginPath();c.moveTo(CX,Y[0]-6*S);c.lineTo(CX,Y[1]+S);c.stroke();
 c.restore();W=Wr;keys(exp,hear)}else{c.restore();W=Wr;keys(new Set(),new Map())}
 if(!song){c.save();c.scale(Z,Z);c.fillStyle='#777';c.font='16px system-ui';c.textAlign='left';c.fillText('Aquí aparecerá la partitura',HDR,Y[0]-4*S-14);c.restore()}}
-function keys(exp,hear){const k=kc,w=KW/52,kh=KH-8;k.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);k.clearRect(0,0,KW,KH);const wk=[];for(let m=21;m<=108;m++)if(!PCA[m%12])wk.push(m);
+function keys(exp,hear){const k=kc,w=KW/52,R=5,kh=KH-8,ky=R,kk=kh-R;k.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);k.clearRect(0,0,KW,KH);const wk=[];for(let m=21;m<=108;m++)if(!PCA[m%12])wk.push(m);
 const khm=new Map();glowSet.forEach(n=>khm.set(n.midi,n.hand));
-wk.forEach((m,i)=>{k.fillStyle=khm.has(m)?mc(m):pressed.has(m)?C.ac:C.kw;k.fillRect(i*w,0,w,kh);k.fillStyle=C.kl;k.fillRect(i*w,0,1,kh)});
-for(let m=21;m<=108;m++)if(PCA[m%12]){const i=wk.indexOf(m-1);k.fillStyle=khm.has(m)?mc(m):pressed.has(m)?C.ac:C.kb;k.fillRect((i+1)*w-w*.3,0,w*.6,kh*.62)}
-k.fillStyle=C.bar;k.fillRect(0,kh,KW,8)}
+const rb=(x,y,bw,bh,r)=>{k.beginPath();k.moveTo(x,y);k.lineTo(x+bw,y);k.lineTo(x+bw,y+bh-r);k.arcTo(x+bw,y+bh,x+bw-r,y+bh,r);k.lineTo(x+r,y+bh);k.arcTo(x,y+bh,x,y,r);k.closePath()};
+const col=m=>khm.has(m)?mc(m):C.ac;
+k.fillStyle='#c9c6bc';k.fillRect(0,ky,KW,kk);
+const wg=k.createLinearGradient(0,ky,0,ky+kk);wg.addColorStop(0,C.kw);wg.addColorStop(1,'#ecebe6');
+const gl=k.createLinearGradient(0,ky,0,ky+kk);gl.addColorStop(0,'rgba(255,255,255,.38)');gl.addColorStop(1,'rgba(255,255,255,0)');
+const rr=Math.min(4,w*.3);
+wk.forEach((m,i)=>{const on=khm.has(m)||pressed.has(m);rb(i*w+.5,ky,w-1,kk,rr);k.fillStyle=on?col(m):wg;k.fill();if(on){k.fillStyle=gl;k.fill()}});
+const bw=w*.6,bh=kk*.62,bg2=k.createLinearGradient(0,ky,0,ky+bh);bg2.addColorStop(0,'#3d3d40');bg2.addColorStop(1,'#111112');
+for(let m=21;m<=108;m++)if(PCA[m%12]){const i=wk.indexOf(m-1),on=khm.has(m)||pressed.has(m),x=(i+1)*w-bw/2;
+k.save();k.shadowColor='rgba(0,0,0,.32)';k.shadowBlur=4;k.shadowOffsetY=2;rb(x,ky,bw,bh,3);k.fillStyle=on?col(m):bg2;k.fill();k.restore();
+if(on){rb(x,ky,bw,bh,3);k.fillStyle=gl;k.fill()}else{k.fillStyle='rgba(255,255,255,.13)';k.fillRect(x+bw*.14,ky+1,bw*.16,bh-9)}}
+const fr=k.createLinearGradient(0,0,0,R);fr.addColorStop(0,'#3d3c3f');fr.addColorStop(1,'#242326');k.fillStyle=fr;k.fillRect(0,0,KW,R);
+const sh=k.createLinearGradient(0,R,0,R+12);sh.addColorStop(0,'rgba(0,0,0,.18)');sh.addColorStop(1,'rgba(0,0,0,0)');k.fillStyle=sh;k.fillRect(0,R,KW,12);
+k.fillStyle='#cfccc2';k.fillRect(0,kh,KW,1);k.fillStyle=C.bar;k.fillRect(0,kh+1,KW,7)}
 /* ---------- selección de sección (bucle) ---------- */
 const selHas=()=>song.ev.some(n=>live(n)&&isSel(n)&&n.t>=sel.a-.0001&&n.t<sel.b-.0001);
 function bx(i){const b=BD[i],kb=Math.round(b*1000)/1000;return CX+XT(b)-xp-16-(song.WW[kb]||0)-(song.ccT.has(kb)?26:0)}
