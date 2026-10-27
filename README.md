@@ -1,6 +1,6 @@
 # SightKeys
 
-Versión 1.0.8
+Versión 1.1.9
 
 App web de una sola página (`index.html`) para practicar lectura a primera vista de piano con un teclado MIDI, al estilo Flowkey.
 
@@ -60,3 +60,33 @@ En el player, el botón de bucle sobre la línea del selector abre la selección
 
 ## Navegación (1.0.8)
 PC: barra lateral con Inicio (Continúa tocando), Canciones, Buscar y Ajustes. Móvil: barra inferior con las mismas pantallas y Ajustes arriba a la derecha.
+
+## 1.1.0
+Tema Blanco / Barra negra (el player es igual y solo cambia la barra superior), tipografía clásica o moderna (Ajustes › General), filas sin cajas, ajustes del player escalados en pantallas grandes, icono de piano de cola, barra de estado del color de la app (manifest `standalone`; hay que reinstalar la app en Android para que se actualice).
+
+## 1.1.1
+Línea superior en Windows, título más a la izquierda en PC y inicio más compacto en móvil (ajustes en la misma fila que el título).
+
+## 1.1.2
+En una categoría, la flecha ‹ va junto al título (sin barra superior) y el título del móvil es algo mayor.
+
+## 1.1.3
+Márgenes estándar: títulos más bajos en PC/Windows y engranaje alineado con el título en móvil.
+
+## 1.1.4
+Quitado el margen superior duplicado en móvil (la zona segura ya la añade el body).
+
+## 1.1.5
+Inicio con saludo, última canción destacada con botón Continuar, recientes y sugerencia del día.
+
+## 1.1.6
+Iconos de categorías y canciones en su color, resumen en Biblioteca, sugerencias en Buscar (categorías y añadidas recientemente) y zoom táctil desactivado.
+
+## 1.1.7
+Opción "Iconos con color" (Ajustes › General, desactivada por defecto) y zoom táctil bloqueado en todas las pantallas.
+
+## 1.1.8
+La barra lateral se activa por tamaño (900 x 520 px o más), también en tablets; en móvil los ajustes ocupan toda la pantalla.
+
+## 1.1.9
+Tiempo de estudio por canción (se cuenta desde el primer minuto y se guarda en este dispositivo; se ve en Ajustes › Gestión de biblioteca), descripciones en todas las categorías y ajustes de móvil con flecha atrás y más separación.
