@@ -359,7 +359,7 @@ dialog#cfg{font-size:15px}dialog#cfg p{margin:14px 0}dialog#cfg h3{margin:16px 0
 </div>
 </dialog>
 <script>
-const VER='1.1.15';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
+const VER='1.1.16';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,ctlT=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
 let brM=null;let song=null,mode='idle',pos=0,bpm=80,t0=0,sp0=0,nb=0,ni=0,ac,fontOK=false,W=600,wrong=0,hits=0,miss=0,sel=null,BD=[];
 const pressed=new Set(),voices={};
@@ -509,6 +509,7 @@ $('pb').onclick=()=>{if(mode!='idle'&&mode!=''){const pr=mode!='listen'&&(hs.L||
 for(const h of['L','R'])$('h'+h).onclick=()=>{hs[h]^=1;$('h'+h).classList.toggle('on',!!hs[h]);$('h'+h).setAttribute('aria-pressed',!!hs[h]);sv('lph',hs.L+''+hs.R)};
 $('pg').oninput=e=>{if(!song)return;pgd=1;seek(e.target.value/1000*song.end)};$('pg').onchange=()=>{pgd=0;if(song&&mode=='idle'){const T=song.T;pos=T.reduce((a,t)=>Math.abs(t-pos)<Math.abs(a-pos)?t:a,T[0])}};
 function finish(){mode='idle';say('')}
+function rewind(){stop();const z=sel?sel.a:0;seek(z);pos=z}
 setInterval(()=>{if(mode!='listen'&&mode!='tempo')return;const lim=ac.currentTime+.2,tb=b=>t0+(b-sp0)*60/bpm;
 while(tb(nb)<lim){if(sel&&nb>=sel.b-.0001)break;if(nb<ps-.001){click(tb(nb),Math.abs(nb-sp0)<.001);nb++;if(nb>=ps-.001)nb=Math.ceil(ps-.001)}
 else{if($('met').checked)click(tb(nb),nb%song.bm==0);nb++}}
@@ -648,8 +649,8 @@ if(fl){const n=performance.now(),dt=Math.min(50,n-fl.t);fl.t=n;if(!song||mode!='
 if(mode=='listen'||mode=='tempo'){pos=sp0+(ac.currentTime-t0)*bpm/60;
 if(sel&&!pgd&&pos>=sel.b+(mode=='tempo'?.65:0)){if(selHas())start(mode,true);else finish()}
 if(mode=='tempo'){for(const n of song.ev){if(n.t>pos)break;if(live(n)&&!n.st&&isSel(n)&&n.t>=lo&&n.t+.6<pos){n.st='miss';miss++;stat()}}}
-if(pos>song.end+.5){mode=='tempo'?finish():(mode='idle')}}
-else if(mode=='wait'&&!dr){const g=group();if(g.length)pos+=(g[0].t-pos)*.15;else if(sel&&selHas())start('wait',true);else finish()}}
+if(pos>song.end+.5){mode=='tempo'?finish():(mode='idle');rewind()}}
+else if(mode=='wait'&&!dr){const g=group();if(g.length)pos+=(g[0].t-pos)*.15;else if(sel&&selHas())start('wait',true);else{finish();rewind()}}}
 if(song&&!pgd)$('pg').value=Math.round(1000*Math.max(0,Math.min(1,pos/song.end)));$('pg').style.setProperty('--p',$('pg').value/1000);const run=mode!='idle'&&mode!='';$('pb').classList.toggle('run',run);$('pgw').classList.toggle('run',run&&!pgd);$('ctl').classList.toggle('hide',run&&!dr&&performance.now()>ctlT);tmUI();draw();lpUI(run);requestAnimationFrame(loop)}
 function size(){if(document.body.classList.contains('home'))return;const pw=$('pw'),dp=devicePixelRatio,vw=innerWidth,vh=innerHeight;KW=Math.max(100,vw-12);KH=Math.round(Math.min(150,Math.max(50,KW/52*4.5),vh*(vh<520?.15:.2)))+8;
 if(kv.style.height!=KH+'px')kv.style.height=KH+'px';const kw=Math.round(KW*dp),kh=Math.round(KH*dp);if(kv.width!=kw||kv.height!=kh){kv.width=kw;kv.height=kh}
