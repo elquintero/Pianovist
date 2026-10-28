@@ -308,6 +308,17 @@ body.nopg #pgw,body.nopg:not(.home) #pgw{display:none}
 /* 1.1.23: margen para el borde naranja de foco en Ajustes (no se recorta) */
 #hcfgd .tpw{padding:5px 8px 8px;margin:0 -8px}
 #hcfgd select:focus-visible,#hcfgd input:focus-visible,#hcfgd textarea:focus-visible,#cfg select:focus-visible,#cfg input:focus-visible{outline-offset:2px}
+/* 1.1.24: barras y casillas con relleno blanco */
+:root{--trk2:#d3d0c6}:root[data-t=negro]{--trk2:#44444a}
+dialog input[type=range]{-webkit-appearance:none;appearance:none;height:22px;margin:0;padding:0;cursor:pointer;background:linear-gradient(var(--ac),var(--ac)) left center/calc(9px + (100% - 18px) * var(--f,0)) 3px no-repeat,linear-gradient(var(--trk2),var(--trk2)) center/100% 3px no-repeat;border-radius:2px}
+dialog input[type=range]::-webkit-slider-runnable-track{height:22px;background:transparent}
+dialog input[type=range]::-moz-range-track{height:22px;background:transparent}
+dialog input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;box-sizing:border-box;width:18px;height:18px;margin-top:2px;border-radius:50%;background:#fff;border:2px solid var(--ac)}
+dialog input[type=range]::-moz-range-thumb{box-sizing:border-box;width:18px;height:18px;border-radius:50%;background:#fff;border:2px solid var(--ac)}
+dialog input[type=checkbox]{-webkit-appearance:none;appearance:none;flex:none;width:18px;height:18px;margin:0 8px 0 0;border:2px solid #c9c6bb;border-radius:5px;background:#fff;display:inline-grid;place-items:center;vertical-align:-4px;cursor:pointer}
+dialog input[type=checkbox]:checked{border-color:var(--ac)}
+dialog input[type=checkbox]:checked::after{content:"";width:5px;height:9px;margin-top:-2px;border:solid var(--ac);border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+#cfg input[type=checkbox]{margin-right:0}
 </style></head><body class="home"><div id="sa" aria-hidden="true" style="position:fixed;left:0;top:0;width:0;height:0;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)"></div>
 <div id="rot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></svg><div>Gira el teléfono<br><small style="color:#9a9a9a">El player se usa en horizontal</small></div></div>
 <div id="app">
@@ -381,7 +392,7 @@ body.nopg #pgw,body.nopg:not(.home) #pgw{display:none}
 </div>
 </dialog>
 <script>
-const VER='1.1.23';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
+const VER='1.1.24';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,ctlT=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
 let brM=null;let song=null,mode='idle',pos=0,bpm=80,t0=0,sp0=0,nb=0,ni=0,ac,fontOK=false,W=600,wrong=0,hits=0,miss=0,sel=null,BD=[];
 const pressed=new Set(),voices={};
@@ -707,6 +718,10 @@ for(const id of['mode','oth','met','ci']){const e=$(id),ck=e.type=='checkbox';tr
 {const c=$('pgb'),ap=()=>document.body.classList.toggle('nopg',!c.checked);try{const v=localStorage.lp_pgb;if(v!=null)c.checked=v=='1'}catch{}c.onchange=()=>{sv('lp_pgb',c.checked?1:0);ap()};ap()}
 try{const h=localStorage.lph||'00';for(const[i,x]of['L','R'].entries())if(h[i]=='1')$('h'+x).onclick()}catch{}
 
+/* 1.1.24: relleno naranja de las barras de los ajustes */
+function rangeFill(){document.querySelectorAll('dialog input[type=range]').forEach(r=>{const a=+r.min||0,b=+r.max||100;r.style.setProperty('--f',Math.max(0,Math.min(1,(r.value-a)/(b-a))))})}
+document.addEventListener('input',e=>{if(e.target.matches&&e.target.matches('dialog input[type=range]'))rangeFill()});
+{const sm=HTMLDialogElement.prototype.showModal;HTMLDialogElement.prototype.showModal=function(){sm.call(this);rangeFill()}}
 /* ===================== PANTALLA PREVIA: CATEGORÍAS Y CANCIONES ===================== */
 const ICON_PATHS = {
   pop: ["M224 160C224 107 267 64 320 64C370.3 64 411.6 102.7 415.7 152L360 152C346.7 152 336 162.7 336 176C336 189.3 346.7 200 360 200L416 200L416 248L360 248C346.7 248 336 258.7 336 272C336 285.3 346.7 296 360 296L415.7 296C411.6 345.3 370.4 384 320 384C267 384 224 341 224 288L224 160zM152 224C165.3 224 176 234.7 176 248L176 288C176 367.5 240.5 432 320 432C399.5 432 464 367.5 464 288L464 248C464 234.7 474.7 224 488 224C501.3 224 512 234.7 512 248L512 288C512 385.9 438.7 466.7 344 478.5L344 528L392 528C405.3 528 416 538.7 416 552C416 565.3 405.3 576 392 576L248 576C234.7 576 224 565.3 224 552C224 538.7 234.7 528 248 528L296 528L296 478.5C201.3 466.7 128 385.9 128 288L128 248C128 234.7 138.7 224 152 224z", [128, 64, 384, 512]],
