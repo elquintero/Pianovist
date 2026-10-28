@@ -5,7 +5,7 @@
 <link rel="preload" href="fonts/Bravura.otf" as="font" type="font/otf" crossorigin>
 <style>@font-face{font-family:Bravura;src:url("fonts/Bravura.otf") format("opentype"),url("Fonts/Bravura.otf") format("opentype")}@media (max-width:640px),(max-height:520px){#cg{padding:4px}#cg svg{width:22px;height:22px}}
 </style>
-<title>SightKeys</title>
+<title>Pianovist</title>
 <link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#f6f5f1">
 <script>try{var _t=localStorage.lp||"clasico",_d=document.documentElement;_d.dataset.t=_t;_d.dataset.f=localStorage.lpf||"serif";if(localStorage.lpc=="1")_d.dataset.ic="color";document.querySelector("meta[name=theme-color]").content=_t=="negro"?"#000000":"#f6f5f1"}catch(e){}</script>
 <link rel="icon" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/icon-192.png">
@@ -324,7 +324,7 @@ dialog input[type=checkbox]:checked::after{content:"";width:5px;height:9px;margi
 <div id="app">
 <header id="top">
 <button id="bk" aria-label="Volver a las categorías" title="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
-<div id="ttl"><b id="tt">SightKeys</b><small id="cmp"></small></div>
+<div id="ttl"><b id="tt">Pianovist</b><small id="cmp"></small></div>
 <div id="rt"><label id="mw" title="Teclado MIDI"><svg class="kbi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M7.25 12v7M12 12v7M16.75 12v7"/><path d="M7.3 5v7M12 5v7M16.7 5v7" stroke-width="2.6"/></svg><i id="dot"></i><select id="mi"><option>Sin teclado</option></select></label>
 <button id="cg" aria-label="Ajustes"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button></div>
 </header>
@@ -346,7 +346,7 @@ dialog input[type=checkbox]:checked::after{content:"";width:5px;height:9px;margi
 <div class="tabs" id="htabs"><button data-t="gen" class="on">General</button><button data-t="lib">Gestión de biblioteca</button><button data-t="sec">Seguridad</button></div>
 <div class="tpw">
 <div class="tp" id="t-gen">
-<h3>SightKeys</h3><p><small class="ver"></small></p>
+<h3>Pianovist</h3><p><small class="ver"></small></p>
 <h3>Estilo de la app</h3><p><label>Tema <select id="th2"><option value="clasico">Blanco</option><option value="negro">Oscuro</option></select></label></p>
 <p><label>Fuente <select id="fn"><option value="serif">Clásica</option><option value="sans">Moderna</option></select></label></p>
 <p><label><input type="checkbox" id="ico"> Iconos con color</label></p>
@@ -392,7 +392,7 @@ dialog input[type=checkbox]:checked::after{content:"";width:5px;height:9px;margi
 </div>
 </dialog>
 <script>
-const VER='1.1.24';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
+const VER='1.1.25';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,ctlT=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
 let brM=null;let song=null,mode='idle',pos=0,bpm=80,t0=0,sp0=0,nb=0,ni=0,ac,fontOK=false,W=600,wrong=0,hits=0,miss=0,sel=null,BD=[];
 const pressed=new Set(),voices={};
@@ -783,7 +783,7 @@ if(!ok){setSync('Sin conexión con GitHub: se muestra la copia guardada en este 
 await applyRemote(doc);setSync('Sincronizado '+new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}));return true}
 async function mutate(fn,msg){if(!isAdmin())throw new Error('Solo el administrador puede modificar la biblioteca');
 for(let k=0;k<2;k++){const r=await fetchRemote();sha=r.sha;const doc=r.doc&&Array.isArray(r.doc.songs)?r.doc:{version:1,songs:[]};fn(doc);doc.updated=new Date().toISOString();
-const body={message:msg||'SightKeys '+doc.updated,content:btoa(unescape(encodeURIComponent(JSON.stringify(doc))))};if(sha)body.sha=sha;
+const body={message:msg||'Pianovist '+doc.updated,content:btoa(unescape(encodeURIComponent(JSON.stringify(doc))))};if(sha)body.sha=sha;
 const res=await fetch(api(),{method:'PUT',headers:hdr(false),body:JSON.stringify(body)});
 if(res.status==409||res.status==422)continue;if(res.status==401||res.status==403)throw new Error('El token no tiene permiso de escritura o ha caducado');if(!res.ok)throw new Error('GitHub respondió '+res.status);
 sha=(await res.json()).content.sha;await applyRemote(doc);return}
@@ -885,7 +885,7 @@ $('hin').onclick=async()=>{if(!dip)return;dip.prompt();try{await dip.userChoice}
 function stInst(){const inst=matchMedia('(display-mode: fullscreen)').matches||matchMedia('(display-mode: standalone)').matches||navigator.standalone,x=[];
 x.push(location.protocol=='https:'||location.hostname=='localhost'?'https ✓':'⚠ hay que abrirla por https');x.push('serviceWorker'in navigator?'service worker ✓':'⚠ sin service worker');
 x.push(inst?'ya está instalada':dip?'lista para instalar':'Chrome aún no la ofrece: ⋮ › Instalar app (si no sale, ⋮ › Añadir a pantalla de inicio)');$('hist').textContent=x.join(' · ')}
-document.querySelectorAll('.ver').forEach(e=>e.textContent='SightKeys · versión '+VER);
+document.querySelectorAll('.ver').forEach(e=>e.textContent='Pianovist · versión '+VER);
 history.replaceState({v:'home'},'');
 (async()=>{try{CONF=await(await fetch('config.json',{cache:'no-store'})).json()}catch{}await loadSongs();renderHome();if(await pull())renderHome()})();
 addEventListener('resize',size);try{new ResizeObserver(size).observe($('pw'))}catch{}size();chkFont();initMidi();loop();

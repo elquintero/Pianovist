@@ -1,6 +1,6 @@
-# SightKeys
+# Pianovist
 
-Versión 1.1.9
+Versión 1.1.25
 
 App web de una sola página (`index.html`) para practicar lectura a primera vista de piano con un teclado MIDI, al estilo Flowkey.
 
@@ -25,7 +25,7 @@ Colócala en **`fonts/Bravura.otf`** (fuente completa de https://github.com/stei
 2. Abre la URL `https://elquintero.github.io/SightKeys/` en **Chrome para Android**.
 3. Menú ⋮ → **Instalar aplicación** (o «Añadir a la pantalla de inicio»).
 4. Conecta el teclado por **USB (adaptador OTG)** antes de abrir la app y acepta el permiso MIDI.
-Tras la primera carga funciona sin conexión. Si cambias la app, sube la versión de caché (`V` en `sw.js`, siempre con el prefijo `sightkeys-`).
+Tras la primera carga funciona sin conexión. Si cambias la app, sube la versión de caché (`V` en `sw.js`, siempre con el prefijo `pianovist-`).
 
 ## Uso en local
 Abre `index.html` en Chrome o Edge. Para servirla con un servidor local:

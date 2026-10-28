@@ -1,8 +1,8 @@
 {
   "id": "lectura-piano-primera-vista",
-  "name": "SightKeys",
-  "short_name": "SightKeys",
-  "description": "SightKeys: practica lectura a primera vista de piano con tu teclado MIDI",
+  "name": "Pianovist",
+  "short_name": "Pianovist",
+  "description": "Pianovist: practica lectura a primera vista de piano con tu teclado MIDI",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
