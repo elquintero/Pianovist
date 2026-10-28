@@ -1,6 +1,6 @@
-const V='pianovist-1.2.1',SND='lectura-piano-sound2',F=['./','index.html','manifest.webmanifest','icons/icon-192.png','icons/icon-512.png','icons/icon-maskable-192.png','icons/icon-maskable-512.png','fonts/Bravura.otf'];
+const V='pianovist-1.2.3',SND='pianovist-sound2',F=['./','index.html','manifest.webmanifest','icons/icon-192.png','icons/icon-512.png','icons/icon-maskable-192.png','icons/icon-maskable-512.png','fonts/Bravura.otf'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(V).then(c=>Promise.all(F.map(u=>c.add(u).catch(()=>0)))).then(()=>self.skipWaiting())));
-self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>(x.startsWith('lectura-piano-')&&x!=SND)||x.startsWith('sightkeys-')||(x.startsWith('pianovist-')&&x!=V)).map(x=>caches.delete(x)))).then(()=>clients.claim())));
+self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x.startsWith('lectura-piano-')||x.startsWith('sightkeys-')||(x.startsWith('pianovist-')&&x!=V&&x!=SND)).map(x=>caches.delete(x)))).then(()=>clients.claim())));
 self.addEventListener('fetch',e=>{if(e.request.method!='GET')return;const u=new URL(e.request.url);if(u.origin!=location.origin)return;/* GitHub API y otros dominios: sin caché del service worker */
 if(/\/songs\/./i.test(u.pathname))return;/* archivos de canciones: sin caché del service worker (ya se guardan en el dispositivo) */
 if(/\/(songs|config)\.json$/i.test(u.pathname)){e.respondWith(fetch(e.request).catch(()=>caches.match(e.request)));return}

@@ -7,7 +7,7 @@
 </style>
 <title>Pianovist</title>
 <link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#f6f5f1">
-<script>try{var _t=localStorage.lp||"clasico",_d=document.documentElement;_d.dataset.t=_t;_d.dataset.f=localStorage.lpf||"serif";if(localStorage.lpc=="1")_d.dataset.ic="color";document.querySelector("meta[name=theme-color]").content=_t=="negro"?"#000000":"#f6f5f1"}catch(e){}</script>
+<script>try{for(var k of['cfg','recent','study'])if(localStorage['pv_'+k]==null&&localStorage['sk_'+k]!=null)localStorage['pv_'+k]=localStorage['sk_'+k]}catch(e){}try{var _t=localStorage.lp||"clasico",_d=document.documentElement;_d.dataset.t=_t;_d.dataset.f=localStorage.lpf||"serif";if(localStorage.lpc=="1")_d.dataset.ic="color";document.querySelector("meta[name=theme-color]").content=_t=="negro"?"#000000":"#f6f5f1"}catch(e){}</script>
 <link rel="icon" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/icon-192.png">
 <style>
 :root{--bg:#f6f5f1;--pn:#fff;--ac:#e8820c;--tx:#1d1d1b;--bt:#ecebe5;--bh:#dcdad1;--pa:#fbf9f3;--at:#fff;--mut:#85847c;--ln:#e3e0d7;--top:#f6f5f1;--topx:#1d1d1b;--ttlbg:#ebe9e1;--bar:#e6e3da;--ff:Georgia,"Playfair Display","Times New Roman",serif}
@@ -392,7 +392,7 @@ dialog input[type=checkbox]:checked::after{content:"";width:5px;height:9px;margi
 </div>
 </dialog>
 <script>
-const VER='1.2.1';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
+const VER='1.2.3';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,ctlT=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
 let brM=null;let song=null,mode='idle',pos=0,bpm=80,t0=0,sp0=0,nb=0,ni=0,ac,fontOK=false,W=600,wrong=0,hits=0,miss=0,sel=null,BD=[];
 const pressed=new Set(),voices={};
@@ -566,7 +566,7 @@ while(ni<song.ev.length&&tb(song.ev[ni].t)<lim&&!(sel&&song.ev[ni].t>=sel.b-.000
 const GL={g:'\uE050',f:'\uE062',b:'\uE260',n:'\uE261',s:'\uE262',w:'\uE0A2',h:'\uE0A3',q:'\uE0A4'};
 const yOf=(r,p,bt)=>Y[r]-(p-(bt??BOT[r]))*S/2;
 function G(ch,x,y){c.textAlign='left';c.textBaseline='alphabetic';c.fillText(ch,x,y)}
-/* armadura y compás como en ReadNotes: signos justo tras la clave; cifras de Bravura centradas en la línea 4 (arriba) y 2 (abajo) */
+/* armadura y compás como en partitura impresa: signos justo tras la clave; cifras de Bravura centradas en la línea 4 (arriba) y 2 (abajo) */
 const TSA=[1.88,1.336,1.784,1.684,1.88,1.612,1.736,1.764,1.744,1.736],tsW=n=>String(n).split('').reduce((t,d)=>t+TSA[+d],0);
 let BR=18,KX=8+BR+3.5*S,IL=0;const kAdv=f=>f>0?1.15*S:S,symOf=ts=>ts.sy=='common'||ts.sy=='cut'?ts.sy:'';
 function sigLay(sg){const fa=sg.fifths,kw=Math.abs(fa)*kAdv(fa),tx=KX+kw+(fa?.7*S:.2*S),bw=symOf(sg.ts)?1.7*S:Math.max(tsW(sg.ts[0]),tsW(sg.ts[1]))*S;return{tx,bw}}
@@ -774,13 +774,13 @@ function resolveIcon(c) {
 
 const DEFC={clasica:['Clásica','Música clásica o relacionada con la misma.'],infantil:['Infantil','Canciones sencillas para empezar.'],navidad:['Navidad','Villancicos y canciones de fiesta.'],ejercicios:['Ejercicios','Escalas y arpegios para practicar.'],tradicional:['Tradicional','Melodías populares de siempre.'],pop:['Pop','Éxitos y canciones actuales.'],disney:['Disney','Bandas sonoras de las películas de Disney.'],cine:['Cine y series','Bandas sonoras de películas y series.'],anime:['Anime','Música de series y películas de anime.'],jazz:['Jazz y blues','Estándares de jazz y blues.'],videojuegos:['Videojuegos','Melodías de videojuegos clásicos y actuales.'],otras:['Otras','Canciones que no encajan en otra categoría.']};
 const slug=t=>t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'otras';
-const DB=(()=>{let p;const op=()=>p||(p=new Promise((res,rej)=>{const r=indexedDB.open('sightkeys',1);r.onupgradeneeded=()=>r.result.createObjectStore('songs',{keyPath:'id'});r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}));
+const DB=(()=>{let p;const op=()=>p||(p=new Promise((res,rej)=>{const r=indexedDB.open('pianovist',1);r.onupgradeneeded=()=>r.result.createObjectStore('songs',{keyPath:'id'});r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}));
 const tx=async(m,f)=>{const d=await op();return new Promise((res,rej)=>{const t=d.transaction('songs',m),q=f(t.objectStore('songs'));t.oncomplete=()=>res(q&&q.result);t.onerror=()=>rej(t.error)})};
 return{all:()=>tx('readonly',s=>s.getAll()),put:r=>tx('readwrite',s=>s.put(r)),del:id=>tx('readwrite',s=>s.delete(id))}})();
 let songs=[],curCat=null,cfg={},CONF={repo:''},sha=null;const LS=localStorage;
-try{cfg=JSON.parse(LS.getItem('sk_cfg')||'{}')}catch{}
+try{cfg=JSON.parse(LS.getItem('pv_cfg')||'{}')}catch{}
 if(/\/SightKeys$/i.test(cfg.repo||''))cfg.repo=cfg.repo.replace(/SightKeys$/i,'Pianovist');
-const saveCfg=()=>{try{LS.setItem('sk_cfg',JSON.stringify(cfg))}catch{}};
+const saveCfg=()=>{try{LS.setItem('pv_cfg',JSON.stringify(cfg))}catch{}};
 const REPO=()=>(cfg.repo||CONF.repo||'').trim(),isAdmin=()=>!!(cfg.token&&cfg.ok&&REPO());
 const api=()=>`https://api.github.com/repos/${REPO()}/contents/songs.json`;
 const hdr=raw=>{const x={Accept:raw?'application/vnd.github.raw+json':'application/vnd.github+json'};if(cfg.token)x.Authorization='Bearer '+cfg.token;return x};
@@ -823,8 +823,8 @@ const tint=(c,a)=>{const n=parseInt(c.slice(1),16);return`rgba(${n>>16},${n>>8&2
 async function loadSongs(){try{songs=await DB.all()}catch{songs=[]}songs.sort((a,b)=>a.title.localeCompare(b.title,'es'))}
 function cats(){const m=new Map();for(const s of songs){if(!m.has(s.cat))m.set(s.cat,{...catInfo(s.cat,s.catName),n:0});m.get(s.cat).n++}return[...m.values()].sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'))}
 let view='inicio',sq='';
-const REC=()=>{try{return JSON.parse(localStorage.sk_recent||'[]')}catch{return[]}};
-const pushRec=id=>{try{localStorage.sk_recent=JSON.stringify([id,...REC().filter(x=>x!=id)].slice(0,12))}catch{}};
+const REC=()=>{try{return JSON.parse(localStorage.pv_recent||'[]')}catch{return[]}};
+const pushRec=id=>{try{localStorage.pv_recent=JSON.stringify([id,...REC().filter(x=>x!=id)].slice(0,12))}catch{}};
 const norm=t=>String(t||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
 function songCard(s,withCat){const ci=catInfo(s.cat,s.catName),b=h('button','hc'),tl=h('span','tl'),tx=h('span','tx');tl.style.background=tint(ci.col,.16);tl.classList.add('col');tl.style.setProperty('--cc',ci.col);tl.append(svgIcon('nota',ci.col));tx.append(h('b',0,s.title));const sub=[s.author,withCat?ci.nombre:''].filter(Boolean).join(' · ');if(sub)tx.append(h('small',0,sub));b.append(tl,tx,chev());b.onclick=()=>playSong(s);return b}
 function catCard(c){const b=h('button','hc'),tl=h('span','tl'),tx=h('span','tx');tl.style.background=tint(c.col,.16);tl.classList.add('col');tl.style.setProperty('--cc',c.col);tl.append(svgIcon(c.ic,c.col));tx.append(h('b',0,c.nombre));if(c.desc)tx.append(h('small',0,c.desc));b.append(tl,tx,h('span','n',String(c.n)),chev());b.onclick=()=>{view='songs';curCat=c.id;history.pushState({v:'cat',id:c.id},'');renderHome();$('hl').scrollTop=0};return b}
@@ -853,10 +853,10 @@ document.querySelectorAll('#nav [data-v]').forEach(b=>b.onclick=()=>{view=b.data
 $('hcg2').onclick=()=>$('hcg').click();
 function lockL(){try{screen.orientation.lock('landscape').catch(()=>0)}catch{}}
 /* tiempo de estudio por canción (se guarda en este dispositivo) */
-const stRead=()=>{try{return JSON.parse(localStorage.sk_study||'{}')}catch{return{}}};
+const stRead=()=>{try{return JSON.parse(localStorage.pv_study||'{}')}catch{return{}}};
 const fmtT=sec=>{const m=Math.floor(sec/60),hh=Math.floor(m/60),mm=m%60;return hh?hh+' h '+String(mm).padStart(2,'0')+' min':m+' min'};
 let stud=null,lastAct=0,stPend=0;const stAcc={};
-function stFlush(){if(!stud||!stPend)return;const d=stRead();d[stud]=(d[stud]||0)+stPend;stPend=0;try{localStorage.sk_study=JSON.stringify(d)}catch{}}
+function stFlush(){if(!stud||!stPend)return;const d=stRead();d[stud]=(d[stud]||0)+stPend;stPend=0;try{localStorage.pv_study=JSON.stringify(d)}catch{}}
 const stMark=()=>{lastAct=performance.now()};
 for(const ev of['pointerdown','keydown'])addEventListener(ev,stMark,true);
 setInterval(()=>{if(!stud||document.hidden||document.body.classList.contains('home'))return;
