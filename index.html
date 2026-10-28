@@ -366,7 +366,7 @@ dialog input[type=checkbox]:checked::after{content:"";width:5px;height:9px;margi
 </div>
 <div class="tp" id="t-sec" hidden>
 <p class="tip">Solo hay un administrador: quien tenga el token de GitHub. El token se guarda únicamente en este dispositivo. Las canciones se guardan en <b>songs.json</b> del repositorio y las ven todos los dispositivos.</p>
-<div class="fg"><label>Repositorio (usuario/repositorio)<input id="sr" type="text" autocomplete="off" placeholder="elquintero/SightKeys"></label>
+<div class="fg"><label>Repositorio (usuario/repositorio)<input id="sr" type="text" autocomplete="off" placeholder="elquintero/Pianovist"></label>
 <label>Token fine-grained (Contents: lectura y escritura)<input id="stk" type="password" autocomplete="off"></label></div>
 <p><button class="p" id="sok">Guardar y comprobar</button> <button id="sout" hidden>Cerrar sesión de administrador</button> <small id="smsg"></small></p>
 </div>
@@ -392,7 +392,7 @@ dialog input[type=checkbox]:checked::after{content:"";width:5px;height:9px;margi
 </div>
 </dialog>
 <script>
-const VER='1.1.25';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
+const VER='1.2.1';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,ctlT=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
 let brM=null;let song=null,mode='idle',pos=0,bpm=80,t0=0,sp0=0,nb=0,ni=0,ac,fontOK=false,W=600,wrong=0,hits=0,miss=0,sel=null,BD=[];
 const pressed=new Set(),voices={};
@@ -506,6 +506,21 @@ const ds=lo+30+v.getUint16(lo+26,true)+v.getUint16(lo+28,true),raw=u.subarray(ds
 if(!cm)return new TextDecoder().decode(raw);
 return await new Response(new Blob([raw]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).text()}
 throw Error('El .mxl no contiene MusicXML')}
+/* .musicxml/.xml → .mxl (zip con deflate): mismo contenido, 10 veces menos peso */
+const CRCT=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
+const crc32=u=>{let c=0xFFFFFFFF;for(let i=0;i<u.length;i++)c=CRCT[(c^u[i])&255]^(c>>>8);return(c^0xFFFFFFFF)>>>0};
+async function toMxl(name,buf){if(typeof CompressionStream=='undefined')return null;
+const enc=new TextEncoder(),base=name.replace(/\.[^.]+$/,''),inner=base+'.musicxml',xml=new Uint8Array(buf);
+const def=await new Uint8Array(await new Response(new Blob([xml]).stream().pipeThrough(new CompressionStream('deflate-raw'))).arrayBuffer());
+const cont=enc.encode('<?xml version="1.0" encoding="UTF-8"?>\n<container><rootfiles><rootfile full-path="'+inner.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')+'"/></rootfiles></container>');
+const ents=[{n:'META-INF/container.xml',raw:cont,data:cont,m:0},{n:inner,raw:xml,data:def,m:8}],parts=[],cen=[];let off=0;
+for(const e of ents){const nb=enc.encode(e.n),crc=crc32(e.raw),h=new DataView(new ArrayBuffer(30));
+h.setUint32(0,0x04034b50,true);h.setUint16(4,20,true);h.setUint16(6,0x0800,true);h.setUint16(8,e.m,true);h.setUint16(10,0,true);h.setUint16(12,0x21,true);h.setUint32(14,crc,true);h.setUint32(18,e.data.length,true);h.setUint32(22,e.raw.length,true);h.setUint16(26,nb.length,true);h.setUint16(28,0,true);
+const c=new DataView(new ArrayBuffer(46));c.setUint32(0,0x02014b50,true);c.setUint16(4,20,true);c.setUint16(6,20,true);c.setUint16(8,0x0800,true);c.setUint16(10,e.m,true);c.setUint16(12,0,true);c.setUint16(14,0x21,true);c.setUint32(16,crc,true);c.setUint32(20,e.data.length,true);c.setUint32(24,e.raw.length,true);c.setUint16(28,nb.length,true);c.setUint32(42,off,true);
+parts.push(new Uint8Array(h.buffer),nb,e.data);cen.push(new Uint8Array(c.buffer),nb);off+=30+nb.length+e.data.length}
+const cl=cen.reduce((a,x)=>a+x.length,0),end=new DataView(new ArrayBuffer(22));end.setUint32(0,0x06054b50,true);end.setUint16(8,ents.length,true);end.setUint16(10,ents.length,true);end.setUint32(12,cl,true);end.setUint32(16,off,true);
+const out=await new Response(new Blob([...parts,...cen,new Uint8Array(end.buffer)])).arrayBuffer();return out.byteLength<buf.byteLength?{name:base+'.mxl',buf:out}:null}
+const fmtKB=n=>n>=1048576?(n/1048576).toFixed(1)+' MB':Math.max(1,Math.round(n/1024))+' KB';
 async function parseFile(name,buf){const x=name.toLowerCase().split('.').pop();
 const sg=x=='mxl'?parseXML(await unzip(buf)):/^mid/.test(x)?parseMID(buf):parseXML(new TextDecoder().decode(buf));
 sg.title=sg.title||name.replace(/\.[^.]+$/,'');return sg}
@@ -764,23 +779,35 @@ const tx=async(m,f)=>{const d=await op();return new Promise((res,rej)=>{const t=
 return{all:()=>tx('readonly',s=>s.getAll()),put:r=>tx('readwrite',s=>s.put(r)),del:id=>tx('readwrite',s=>s.delete(id))}})();
 let songs=[],curCat=null,cfg={},CONF={repo:''},sha=null;const LS=localStorage;
 try{cfg=JSON.parse(LS.getItem('sk_cfg')||'{}')}catch{}
+if(/\/SightKeys$/i.test(cfg.repo||''))cfg.repo=cfg.repo.replace(/SightKeys$/i,'Pianovist');
 const saveCfg=()=>{try{LS.setItem('sk_cfg',JSON.stringify(cfg))}catch{}};
 const REPO=()=>(cfg.repo||CONF.repo||'').trim(),isAdmin=()=>!!(cfg.token&&cfg.ok&&REPO());
 const api=()=>`https://api.github.com/repos/${REPO()}/contents/songs.json`;
 const hdr=raw=>{const x={Accept:raw?'application/vnd.github.raw+json':'application/vnd.github+json'};if(cfg.token)x.Authorization='Bearer '+cfg.token;return x};
 const b2buf=b=>{const t=atob(b),u=new Uint8Array(t.length);for(let i=0;i<t.length;i++)u[i]=t.charCodeAt(i);return u.buffer};
 const buf2b=buf=>{const u=new Uint8Array(buf);let t='';for(let i=0;i<u.length;i+=0x8000)t+=String.fromCharCode.apply(null,u.subarray(i,i+0x8000));return btoa(t)};
-const toRemote=s=>({id:s.id,title:s.title,author:s.author||'',cat:s.cat,catName:s.catName||'',name:s.name,data:buf2b(s.buf),added:s.added||Date.now()});
+const extOf=n=>((String(n).match(/\.([A-Za-z0-9]+)$/)||[])[1]||'bin').toLowerCase(),newId=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6),fileFor=(id,name)=>'songs/'+id+'-'+Date.now().toString(36)+'.'+extOf(name);
+const ghUrl=p=>`https://api.github.com/repos/${REPO()}/contents/${p}`;
 const setSync=(m,err)=>{const e=$('hsy');e.textContent=m;e.style.color=err?'#e06a6a':''};
 async function fetchRemote(){if(!REPO())throw new Error('Sin repositorio configurado');let sh=null;
 if(cfg.token){const m=await fetch(api(),{headers:hdr(false),cache:'no-store'});if(m.status==404)return{doc:null,sha:null};if(!m.ok)throw new Error('GitHub respondió '+m.status);sh=(await m.json()).sha}
 const r=await fetch(api(),{headers:hdr(true),cache:'no-store'});if(r.status==404)return{doc:null,sha:sh};if(!r.ok)throw new Error('GitHub respondió '+r.status);return{doc:await r.json(),sha:sh}}
-async function applyRemote(doc){for(const s of await DB.all())if(s.src=='gh')await DB.del(s.id);
-for(const s of(doc&&doc.songs)||[])await DB.put({id:s.id,title:s.title,author:s.author||'',cat:s.cat,catName:s.catName||'',name:s.name,buf:b2buf(s.data),src:'gh',added:s.added||0});await loadSongs()}
+async function fetchFile(f){const viaApi=()=>fetch(ghUrl(f),{headers:hdr(true),cache:'no-store'}),viaSite=()=>fetch(f,{cache:'no-store'});
+const order=cfg.token&&REPO()?[viaApi,viaSite]:REPO()?[viaSite,viaApi]:[viaSite];
+for(const t of order){try{const r=await t();if(r.ok)return await r.arrayBuffer()}catch{}}throw new Error('No se pudo descargar '+f)}
+async function ghPut(path,buf,msg){const res=await fetch(ghUrl(path),{method:'PUT',headers:hdr(false),body:JSON.stringify({message:msg,content:buf2b(buf)})});
+if(res.status==401||res.status==403)throw new Error('El token no tiene permiso de escritura o ha caducado');if(!res.ok)throw new Error('GitHub respondió '+res.status)}
+async function ghDel(path,msg){try{const m=await fetch(ghUrl(path),{headers:hdr(false),cache:'no-store'});if(!m.ok)return;await fetch(ghUrl(path),{method:'DELETE',headers:hdr(false),body:JSON.stringify({message:msg,sha:(await m.json()).sha})})}catch{}}
+async function applyRemote(doc){const rem=(doc&&doc.songs)||[],have=new Map((await DB.all()).filter(x=>x.src=='gh').map(x=>[x.id,x])),ids=new Set(rem.map(x=>x.id));let bad=0;
+for(const x of have.values())if(!ids.has(x.id))await DB.del(x.id);
+for(const s of rem){const o=have.get(s.id),fl=s.file||'';let buf=s.data?b2buf(s.data):(o&&o.file==fl&&o.buf);
+if(!buf){setSync('Descargando «'+s.title+'»…');try{buf=await fetchFile(fl)}catch{bad++;if(o)buf=o.buf;else continue}}
+await DB.put({id:s.id,title:s.title,author:s.author||'',cat:s.cat,catName:s.catName||'',name:s.name,buf,src:'gh',file:fl,added:s.added||0})}
+await loadSongs();return bad}
 async function pull(){setSync('Sincronizando…');let doc=null,ok=false;
 try{const r=await fetchRemote();sha=r.sha;doc=r.doc;ok=true}catch(e){try{const r=await fetch('songs.json',{cache:'no-store'});if(r.ok){doc=await r.json();ok=true}else if(r.status==404&&!REPO()){doc=null;ok=false}}catch{}}
 if(!ok){setSync('Sin conexión con GitHub: se muestra la copia guardada en este dispositivo',1);return false}
-await applyRemote(doc);setSync('Sincronizado '+new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}));return true}
+const bad=await applyRemote(doc);setSync(bad?'Sincronizado, pero '+bad+' canción(es) no se pudieron descargar':'Sincronizado '+new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}),!!bad);return true}
 async function mutate(fn,msg){if(!isAdmin())throw new Error('Solo el administrador puede modificar la biblioteca');
 for(let k=0;k<2;k++){const r=await fetchRemote();sha=r.sha;const doc=r.doc&&Array.isArray(r.doc.songs)?r.doc:{version:1,songs:[]};fn(doc);doc.updated=new Date().toISOString();
 const body={message:msg||'Pianovist '+doc.updated,content:btoa(unescape(encodeURIComponent(JSON.stringify(doc))))};if(sha)body.sha=sha;
@@ -850,17 +877,20 @@ function secState(){$('sr').value=cfg.repo||CONF.repo||'';$('stk').value=cfg.tok
 function fillCats(){const sel=$('hca'),keep=sel.value,seen=new Set(Object.keys(DEFC));sel.textContent='';for(const k in DEFC){const o=h('option',0,DEFC[k][0]);o.value=k;sel.append(o)}
 for(const s of songs)if(!seen.has(s.cat)){seen.add(s.cat);const o=h('option',0,s.catName||s.cat);o.value=s.cat;sel.append(o)}
 const o=h('option',0,'Nueva categoría…');o.value='__new';sel.append(o);if(keep&&[...sel.options].some(x=>x.value==keep))sel.value=keep;$('hnp').hidden=sel.value!='__new'}
+async function addRemote(e,buf){e.file=fileFor(e.id,e.name);await ghPut(e.file,buf,'Archivo de '+e.title);try{await mutate(d=>d.songs.push(e),'Añadir '+e.title)}catch(err){await ghDel(e.file,'Deshacer');throw err}}
 async function run(fn,ok){$('hmsg').textContent='Guardando…';try{await fn();$('hmsg').textContent=ok||'';if(curCat&&!songs.some(x=>x.cat==curCat)){curCat=null;history.replaceState({v:'home'},'')}fillCats();fillList();renderHome();return true}catch(err){$('hmsg').textContent=String(err.message||err);return false}}
 function fillList(){const u=$('hsl');u.textContent='';if(!songs.length){u.append(h('small',0,'La biblioteca está vacía.'));$('hst').textContent='';return}const adm=isAdmin(),std=stRead();{const tot=songs.reduce((a,x)=>a+(std[x.id]||0),0);$('hst').textContent=tot>=60?'· estudio total: '+fmtT(tot):''}
 for(const s of songs){const loc=s.src!='gh',li=h('li'),sp=h('span');sp.append(s.title);sp.append(h('small',0,(s.author?s.author+' · ':'')+catInfo(s.cat,s.catName).nombre+(loc?' · solo en este dispositivo':'')+(std[s.id]>=60?' · estudio: '+fmtT(std[s.id]):'')));li.append(sp);
 if(adm&&!loc){const eb=h('button',0,'Editar');eb.onclick=()=>editSong(s);li.append(eb)}
-if(adm&&loc){const ub=h('button',0,'Subir a GitHub');ub.onclick=()=>run(async()=>{await mutate(d=>d.songs.push(toRemote(s)),'Subir '+s.title);await DB.del(s.id);await loadSongs()},'Subida ✓');li.append(ub)}
-if(adm||loc){const b=h('button',0,'Borrar');b.onclick=()=>{if(!confirm('¿Borrar «'+s.title+'»?'))return;run(async()=>{if(loc){await DB.del(s.id);await loadSongs()}else await mutate(d=>{d.songs=d.songs.filter(x=>x.id!=s.id)},'Borrar '+s.title)},'Borrada ✓')};li.append(b)}
+if(adm&&loc){const ub=h('button',0,'Subir a GitHub');ub.onclick=()=>run(async()=>{await addRemote({id:s.id,title:s.title,author:s.author||'',cat:s.cat,catName:s.catName||'',name:s.name,added:s.added||Date.now()},s.buf);await DB.del(s.id);await loadSongs()},'Subida ✓');li.append(ub)}
+if(adm||loc){const b=h('button',0,'Borrar');b.onclick=()=>{if(!confirm('¿Borrar «'+s.title+'»?'))return;run(async()=>{if(loc){await DB.del(s.id);await loadSongs()}else{await mutate(d=>{d.songs=d.songs.filter(x=>x.id!=s.id)},'Borrar '+s.title);if(s.file)await ghDel(s.file,'Borrar archivo de '+s.title)}},'Borrada ✓')};li.append(b)}
 u.append(li)}}
 $('hcg').onclick=()=>{endEdit();$('hmsg').textContent='';showTab('gen');$('hcfgd').showModal()};$('hcl').onclick=$('hbk').onclick=()=>$('hcfgd').close();
 $('hca').onchange=()=>{$('hnp').hidden=$('hca').value!='__new'};
 $('hf').onchange=async e=>{const f=e.target.files[0];pend=null;$('hmsg').textContent='';if(!f){$('hfn').textContent='Ningún archivo';return}
-try{const buf=await f.arrayBuffer(),sg=await parseFile(f.name,buf.slice(0));pend={name:f.name,buf,title:sg.title,author:sg.composer||''};$('hfn').textContent=f.name;$('hti').value=sg.title;$('hco').value=pend.author}
+try{let buf=await f.arrayBuffer(),nm=f.name,info='';const sg=await parseFile(nm,buf.slice(0));
+if(/\.(musicxml|xml)$/i.test(nm)){try{const z=await toMxl(nm,buf);if(z){await parseFile(z.name,z.buf.slice(0));info=' · comprimido '+fmtKB(buf.byteLength)+' → '+fmtKB(z.buf.byteLength);nm=z.name;buf=z.buf}}catch{}}
+pend={name:nm,buf,title:sg.title,author:sg.composer||''};$('hfn').textContent=nm+info;$('hti').value=sg.title;$('hco').value=pend.author}
 catch(err){$('hfn').textContent='Ningún archivo';$('hmsg').textContent='No se pudo leer: '+err.message}};
 function endEdit(){editId=null;pend=null;$('hf').value='';$('hfn').textContent='Ningún archivo';$('hti').value='';$('hco').value='';$('hnc').value='';$('hh').textContent='Añadir canción';$('hadd').textContent='Añadir canción';$('hcan').hidden=true;$('hca').onchange()}
 function editSong(sg){editId=sg.id;pend=null;$('hf').value='';$('hfn').textContent='Archivo actual: '+sg.name;$('hti').value=sg.title;$('hco').value=sg.author||'';fillCats();$('hca').value=sg.cat;$('hca').onchange();$('hh').textContent='Editar canción';$('hadd').textContent='Guardar cambios';$('hcan').hidden=false;$('hmsg').textContent='';$('hcfgd').querySelector('.tpw').scrollTop=0}
@@ -868,8 +898,10 @@ $('hcan').onclick=()=>{endEdit();$('hmsg').textContent=''};
 $('hadd').onclick=async()=>{const old=editId?songs.find(x=>x.id==editId):null;if(!pend&&!old)return $('hmsg').textContent='Elige primero un archivo.';
 let cat=$('hca').value,catName=$('hca').selectedOptions[0].textContent;if(cat=='__new'){catName=$('hnc').value.trim();if(!catName)return $('hmsg').textContent='Escribe el nombre de la categoría.';cat=slug(catName)}
 const title=$('hti').value.trim()||(pend||old).title,author=$('hco').value.trim();
-const ok=await run(async()=>{if(old)await mutate(d=>{const i=d.songs.findIndex(x=>x.id==old.id);if(i>=0)d.songs[i]={...d.songs[i],title,author,cat,catName,...(pend?{name:pend.name,data:buf2b(pend.buf)}:{})}},'Editar '+title);
-else await mutate(d=>d.songs.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),title,author,cat,catName,name:pend.name,data:buf2b(pend.buf),added:Date.now()}),'Añadir '+title)},old?'Guardado ✓':'Añadida ✓');
+const ok=await run(async()=>{if(old){let nf=old.file||'';if(pend){nf=fileFor(old.id,pend.name);await ghPut(nf,pend.buf,'Archivo de '+title)}
+try{await mutate(d=>{const i=d.songs.findIndex(x=>x.id==old.id);if(i>=0){const e={...d.songs[i],title,author,cat,catName};if(pend){e.name=pend.name;e.file=nf;delete e.data}d.songs[i]=e}},'Editar '+title)}catch(e){if(pend)await ghDel(nf,'Deshacer');throw e}
+if(pend&&old.file&&old.file!=nf)await ghDel(old.file,'Reemplazar archivo de '+title)}
+else await addRemote({id:newId(),title,author,cat,catName,name:pend.name,added:Date.now()},pend.buf)},old?'Guardado ✓':'Añadida ✓');
 if(ok)endEdit()};
 $('hsync').onclick=async()=>{await pull();renderHome()};
 $('sok').onclick=async()=>{cfg.repo=$('sr').value.trim();cfg.token=$('stk').value.trim();cfg.ok=false;saveCfg();$('smsg').textContent='Comprobando…';
