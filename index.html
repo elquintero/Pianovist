@@ -367,7 +367,7 @@ body:not(.home) #pgw{padding-left:calc(14px + env(safe-area-inset-left));padding
 </div>
 </dialog>
 <script>
-const VER='1.1.17';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
+const VER='1.1.18';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,ctlT=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
 let brM=null;let song=null,mode='idle',pos=0,bpm=80,t0=0,sp0=0,nb=0,ni=0,ac,fontOK=false,W=600,wrong=0,hits=0,miss=0,sel=null,BD=[];
 const pressed=new Set(),voices={};
@@ -807,7 +807,7 @@ if(!((mode!='idle'&&mode!='')||performance.now()-lastAct<30000))return;
 const a=stAcc[stud]=(stAcc[stud]||0)+1;if(a==60)stPend+=60;else if(a>60)stPend++;if(stPend&&(a==60||a%5==0))stFlush()},1000);
 addEventListener('pagehide',stFlush);document.addEventListener('visibilitychange',()=>{if(document.hidden)stFlush()});
 function showHome(){stFlush();stud=null;try{screen.orientation.unlock()}catch{}if(document.fullscreenElement)try{document.exitFullscreen()}catch{}stop();document.body.classList.add('home');renderHome()}
-async function playSong(s){goFs();try{const sg=await parseFile(s.name,s.buf);setSong(sg,s.title);if(s.author){song.composer=s.author;$('cmp').textContent=s.author}pushRec(s.id);stFlush();stud=s.id;stMark();document.body.classList.remove('home');history.pushState({v:'play'},'');lockL();size();setTimeout(size,60)}catch(err){alert('No se pudo abrir la canción: '+err.message)}}
+async function playSong(s){goFs();try{const sg=await parseFile(s.name,s.buf);setSong(sg,s.title);if(s.author){song.composer=s.author;$('cmp').textContent=s.author}pushRec(s.id);stFlush();stud=s.id;stMark();history.pushState({v:'play'},'');lockL();const go=()=>{if(!history.state||history.state.v!='play')return;document.body.classList.remove('home');size();setTimeout(size,60)};/* en vertical se espera a que el móvil gire antes de mostrar el player, así no aparece ningún fondo intermedio */if(innerHeight>innerWidth&&innerWidth<=700){let d=0;const f=()=>{if(d)return;d=1;removeEventListener('resize',f);setTimeout(go,80)};addEventListener('resize',f);setTimeout(f,900)}else go()}catch(err){alert('No se pudo abrir la canción: '+err.message)}}
 $('hback').onclick=()=>history.back();$('bk').onclick=()=>history.back();
 addEventListener('popstate',e=>{const st=e.state||{v:'home'};if(st.v=='play'&&!song)return history.go(-1);if(st.v=='play'){document.body.classList.remove('home');lockL();size();return}
 curCat=st.v=='cat'?st.id:null;if(st.v=='cat')view='songs';else if(st.view)view=st.view;showHome()});
