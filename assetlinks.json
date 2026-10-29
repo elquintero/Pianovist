@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "io.github.elquintero.twa",
+        "sha256_cert_fingerprints": ["BA:08:E7:44:55:5D:9F:58:16:17:8D:72:E4:13:77:46:F9:67:C3:D2:D3:CC:C0:6C:7C:78:67:98:AC:0D:BA:7A"]
+      }
+    }]
