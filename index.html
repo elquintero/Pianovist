@@ -396,7 +396,7 @@ dialog input[type=checkbox]:checked::after{content:"";width:5px;height:9px;margi
 </div>
 </dialog>
 <script>
-const VER='1.2.6';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
+const VER='1.2.7';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,ctlT=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
 let brM=null;let song=null,mode='idle',pos=0,bpm=80,t0=0,sp0=0,nb=0,ni=0,ac,fontOK=false,W=600,wrong=0,hits=0,miss=0,sel=null,BD=[];
 const pressed=new Set(),voices={};
@@ -533,14 +533,14 @@ function setSong(sg,title){stop();song=sg;if(title)song.title=title;$('tt').text
 let midiOk=0,midiBusy=0,midiTry=0;
 function initMidi(){if(!navigator.requestMIDIAccess){$('mi').innerHTML='<option>MIDI no disponible</option>';say('Este navegador no tiene Web MIDI. Usa Chrome en Android o escritorio, y abre la app por https.');return}
 if(midiOk||midiBusy)return;midiBusy=1;
-navigator.requestMIDIAccess().then(m=>{midiOk=1;midiBusy=0;say('');const fill=()=>{const s=$('mi');s.innerHTML='';const ins=[...m.inputs.values()];
+navigator.requestMIDIAccess().then(m=>{midiOk=1;midiBusy=0;say('');let prev=null;const fill=()=>{const s=$('mi');s.innerHTML='';const ins=[...m.inputs.values()].filter(i=>i.state!='disconnected');const now=new Set(ins.map(i=>i.id));if(prev&&[...prev].some(id=>!now.has(id)))dcBeep();prev=now;
 if(!ins.length)s.innerHTML='<option>Sin teclado</option>';ins.forEach(i=>s.add(new Option(i.name,i.id)));$('dot').className=ins.length?'on':'';sel()};
 const sel=()=>{m.inputs.forEach(i=>i.onmidimessage=null);const i=m.inputs.get($('mi').value);if(i)i.onmidimessage=onmsg};
-m.onstatechange=e=>{const p=e&&e.port;if(p&&p.type=='input'&&p.state=='disconnected'&&p.id==$('mi').value&&!document.body.classList.contains('home'))dcBeep();fill()};$('mi').onchange=sel;fill()},err=>{midiBusy=0;if(err&&err.name=='InvalidStateError'&&midiTry++<3){setTimeout(initMidi,1500);return}midiTry=0;$('mi').innerHTML='<option>Toca para activar MIDI</option>';$('dot').className='';
+m.onstatechange=fill;$('mi').onchange=sel;fill()},err=>{midiBusy=0;if(err&&err.name=='InvalidStateError'&&midiTry++<3){setTimeout(initMidi,1500);return}midiTry=0;$('mi').innerHTML='<option>Toca para activar MIDI</option>';$('dot').className='';
 say('No se pudo activar MIDI ('+(err&&err.name||'error')+'). Toca el selector de teclado para volver a intentarlo. '+(err&&err.name=='InvalidStateError'?'Chrome no logra abrir el sistema MIDI del móvil: cierra otras apps o navegadores que usen el teclado (por ejemplo Brave), desconecta y vuelve a conectar el cable y reabre Chrome.':'Si Chrome lo tiene bloqueado: ⋮ › Ajustes › Ajustes de sitios › Dispositivos MIDI.'))})}
 $('mw').addEventListener('click',e=>{if(!midiOk){e.preventDefault();e.stopPropagation();initMidi()}},true);
 addEventListener('pointerdown',()=>{if(!midiOk)initMidi()},{capture:true});
-function dcBeep(){try{AC();if(ac.state!='running')ac.resume();const t=ac.currentTime;[[660,0],[392,.12]].forEach(([f,o])=>{const os=ac.createOscillator(),g=ac.createGain();os.type='sine';os.frequency.value=f;g.gain.setValueAtTime(0,t+o);g.gain.linearRampToValueAtTime(.3,t+o+.01);g.gain.exponentialRampToValueAtTime(.001,t+o+.11);os.connect(g);g.connect(ac.destination);os.start(t+o);os.stop(t+o+.13)})}catch{}}
+function dcBeep(){try{AC();const play=()=>{const t=ac.currentTime+.02;[[740,0],[440,.13]].forEach(([f,o])=>{const os=ac.createOscillator(),g=ac.createGain();os.type='sine';os.frequency.value=f;g.gain.setValueAtTime(0,t+o);g.gain.linearRampToValueAtTime(.5,t+o+.01);g.gain.exponentialRampToValueAtTime(.001,t+o+.12);os.connect(g);g.connect(ac.destination);os.start(t+o);os.stop(t+o+.14)})};ac.state=='running'?play():ac.resume().then(play,play)}catch{}}
 function onmsg(e){stMark();const[s,a,b]=e.data,k=s&240;if(k==144&&b>0)down(a,b/127);else if(k==128||k==144)up(a)}
 function up(m){pressed.delete(m);voices[m]&&voices[m](ac.currentTime);delete voices[m]}
 function down(m,v){A();pressed.add(m);if(voices[m])voices[m](ac.currentTime);voices[m]=$('phs').checked?tone(m,ac.currentTime,0,v):null;if(!song)return;
