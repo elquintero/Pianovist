@@ -384,15 +384,18 @@ dialog input[type=checkbox]:checked::after{content:"";width:5px;height:9px;margi
 <section><h3>Sonido</h3>
 <p><label>Sonido <select id="sn"><option value="p">Piano real</option><option value="s">Sintetizador</option></select></label></p>
 <p><label>Volumen <input id="vl" type="range" min="0" max="100" value="60"> <b id="vv">60%</b></label></p>
+<p><label><input id="phs" type="checkbox" checked> Oír mis notas en el móvil</label></p>
+<p><small>Desactívalo si tu teclado ya suena por sí mismo (por ejemplo un Yamaha): así se oye solo el teclado. La reproducción y la otra mano siguen sonando en el móvil.</small></p>
 <p><small id="ps"></small></p></section>
 <section><h3>Pantalla</h3>
 <p><label>Tamaño <input id="zm" type="range" min="70" max="250" step="10" value="140"> <b id="zv">140%</b></label></p>
 <p><label>Estilo <select id="th"><option value="clasico">Blanco</option><option value="negro">Oscuro</option></select></label></p>
+<p><label><input id="afs" type="checkbox"> Girar y pantalla completa al abrir una canción</label></p>
 <p><label>Fuente <select id="fn2"><option value="serif">Clásica</option><option value="sans">Moderna</option></select></label></p></section>
 </div>
 </dialog>
 <script>
-const VER='1.2.4';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
+const VER='1.2.5';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,ctlT=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
 let brM=null;let song=null,mode='idle',pos=0,bpm=80,t0=0,sp0=0,nb=0,ni=0,ac,fontOK=false,W=600,wrong=0,hits=0,miss=0,sel=null,BD=[];
 const pressed=new Set(),voices={};
@@ -539,7 +542,7 @@ addEventListener('pointerdown',()=>{if(!midiOk)initMidi()},{capture:true});
 function dcBeep(){try{AC();if(ac.state!='running')ac.resume();const t=ac.currentTime;[[660,0],[392,.12]].forEach(([f,o])=>{const os=ac.createOscillator(),g=ac.createGain();os.type='sine';os.frequency.value=f;g.gain.setValueAtTime(0,t+o);g.gain.linearRampToValueAtTime(.3,t+o+.01);g.gain.exponentialRampToValueAtTime(.001,t+o+.11);os.connect(g);g.connect(ac.destination);os.start(t+o);os.stop(t+o+.13)})}catch{}}
 function onmsg(e){stMark();const[s,a,b]=e.data,k=s&240;if(k==144&&b>0)down(a,b/127);else if(k==128||k==144)up(a)}
 function up(m){pressed.delete(m);voices[m]&&voices[m](ac.currentTime);delete voices[m]}
-function down(m,v){A();pressed.add(m);if(voices[m])voices[m](ac.currentTime);voices[m]=tone(m,ac.currentTime,0,v);if(!song)return;
+function down(m,v){A();pressed.add(m);if(voices[m])voices[m](ac.currentTime);voices[m]=$('phs').checked?tone(m,ac.currentTime,0,v):null;if(!song)return;
 if(mode=='tempo'){let b=null;for(const n of song.ev)if(live(n)&&!n.st&&n.midi==m&&isSel(n)&&Math.abs(n.t-pos)<.6&&(!b||Math.abs(n.t-pos)<Math.abs(b.t-pos)))b=n;
 if(b){b.st='hit';hits++}else wrong++;stat()}
 else if(mode=='wait'&&!dr){const g=group(),n=g.find(x=>x.midi==m&&!x.st);if(n){n.st='hit';hits++}else wrong++;stat()}}
@@ -729,9 +732,11 @@ document.addEventListener('contextmenu',e=>{if(e.target.closest&&e.target.closes
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>0));
 let fsOut=0,pickT=0;const inFs=()=>document.fullscreenElement||matchMedia('(display-mode: fullscreen)').matches;
 const WIN=/Windows/i.test(navigator.userAgent)||(navigator.userAgentData&&navigator.userAgentData.platform=='Windows');if(WIN)document.documentElement.classList.add('win');addEventListener('wheel',e=>{if(e.ctrlKey)e.preventDefault()},{passive:false});document.addEventListener('touchmove',e=>{if(e.touches.length>1)e.preventDefault()},{passive:false});for(const ev of['gesturestart','gesturechange','gestureend'])addEventListener(ev,e=>e.preventDefault());
-const goFs=()=>{if(WIN)return;try{const d=document.documentElement;if(!inFs()&&d.requestFullscreen)d.requestFullscreen({navigationUI:'hide'}).catch(()=>{})}catch{}};
+const AFS=()=>$('afs').checked;
+const goFs=()=>{if(WIN||!AFS())return;try{const d=document.documentElement;if(!inFs()&&d.requestFullscreen)d.requestFullscreen({navigationUI:'hide'}).catch(()=>{})}catch{}};
 document.addEventListener('fullscreenchange',()=>{if(document.fullscreenElement)return;const away=document.hidden||Date.now()-pickT<90000;if(away)return;fsOut=1;/* el botón atrás del móvil sale primero de pantalla completa: en el player se trata como «atrás» y vuelve a la pantalla anterior */if(!document.body.classList.contains('home')&&history.state&&history.state.v=='play')history.back()});
 for(const id of['mode','oth','met','ci']){const e=$(id),ck=e.type=='checkbox';try{const v=localStorage['lp_'+id];if(v!=null){if(ck)e.checked=v=='1';else e.value=v}}catch{}e.onchange=()=>sv('lp_'+id,ck?(e.checked?1:0):e.value)}
+for(const[id,k,d]of[['phs','lp_phs',1],['afs','lp_afs',0]]){const c=$(id);try{const v=localStorage[k];c.checked=v!=null?v=='1':!!d}catch{}c.onchange=()=>sv(k,c.checked?1:0)}
 {const c=$('pgb'),ap=()=>document.body.classList.toggle('nopg',!c.checked);try{const v=localStorage.lp_pgb;if(v!=null)c.checked=v=='1'}catch{}c.onchange=()=>{sv('lp_pgb',c.checked?1:0);ap()};ap()}
 try{const h=localStorage.lph||'00';for(const[i,x]of['L','R'].entries())if(h[i]=='1')$('h'+x).onclick()}catch{}
 
@@ -853,7 +858,7 @@ if(!ci){hd('Biblioteca de Canciones');w.append(h('div','hint',songs.length+(song
 const cl=songs.filter(x=>x.cat==curCat);hd(ci.nombre,1);w.append(h('div','hint',cl.length+(cl.length==1?' canción':' canciones')+' · elige una para tocarla'));cl.forEach(x=>w.append(songCard(x)))}
 document.querySelectorAll('#nav [data-v]').forEach(b=>b.onclick=()=>{view=b.dataset.v;curCat=null;history.replaceState({v:'home',view},'');renderHome();$('hl').scrollTop=0});
 $('hcg2').onclick=()=>$('hcg').click();
-function lockL(){try{screen.orientation.lock('landscape').catch(()=>0)}catch{}}
+function lockL(){if(!AFS())return;try{screen.orientation.lock('landscape').catch(()=>0)}catch{}}
 /* tiempo de estudio por canción (se guarda en este dispositivo) */
 const stRead=()=>{try{return JSON.parse(localStorage.pv_study||'{}')}catch{return{}}};
 const fmtT=sec=>{const m=Math.floor(sec/60),hh=Math.floor(m/60),mm=m%60;return hh?hh+' h '+String(mm).padStart(2,'0')+' min':m+' min'};
