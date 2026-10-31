@@ -392,7 +392,7 @@ dialog input[type=checkbox]:checked::after{content:"";width:5px;height:9px;margi
 </div>
 </dialog>
 <script>
-const VER='1.2.3';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
+const VER='1.2.4';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 const S=10,Y=[150,270],BOT=[30,18],PXB=90;let SH=335,HDR=150,CX=HDR+70,Z=1,Zu=1.4,H=430,KW=600,pgd=0,ctlT=0,mg,vol=.6,xp=0,lo=-1,dr=null,fr=-1e9,ps=-1e9,KH=85;
 let brM=null;let song=null,mode='idle',pos=0,bpm=80,t0=0,sp0=0,nb=0,ni=0,ac,fontOK=false,W=600,wrong=0,hits=0,miss=0,sel=null,BD=[];
 const pressed=new Set(),voices={};
@@ -532,10 +532,11 @@ if(midiOk||midiBusy)return;midiBusy=1;
 navigator.requestMIDIAccess().then(m=>{midiOk=1;midiBusy=0;say('');const fill=()=>{const s=$('mi');s.innerHTML='';const ins=[...m.inputs.values()];
 if(!ins.length)s.innerHTML='<option>Sin teclado</option>';ins.forEach(i=>s.add(new Option(i.name,i.id)));$('dot').className=ins.length?'on':'';sel()};
 const sel=()=>{m.inputs.forEach(i=>i.onmidimessage=null);const i=m.inputs.get($('mi').value);if(i)i.onmidimessage=onmsg};
-m.onstatechange=fill;$('mi').onchange=sel;fill()},err=>{midiBusy=0;if(err&&err.name=='InvalidStateError'&&midiTry++<3){setTimeout(initMidi,1500);return}midiTry=0;$('mi').innerHTML='<option>Toca para activar MIDI</option>';$('dot').className='';
+m.onstatechange=e=>{const p=e&&e.port;if(p&&p.type=='input'&&p.state=='disconnected'&&p.id==$('mi').value&&!document.body.classList.contains('home'))dcBeep();fill()};$('mi').onchange=sel;fill()},err=>{midiBusy=0;if(err&&err.name=='InvalidStateError'&&midiTry++<3){setTimeout(initMidi,1500);return}midiTry=0;$('mi').innerHTML='<option>Toca para activar MIDI</option>';$('dot').className='';
 say('No se pudo activar MIDI ('+(err&&err.name||'error')+'). Toca el selector de teclado para volver a intentarlo. '+(err&&err.name=='InvalidStateError'?'Chrome no logra abrir el sistema MIDI del móvil: cierra otras apps o navegadores que usen el teclado (por ejemplo Brave), desconecta y vuelve a conectar el cable y reabre Chrome.':'Si Chrome lo tiene bloqueado: ⋮ › Ajustes › Ajustes de sitios › Dispositivos MIDI.'))})}
 $('mw').addEventListener('click',e=>{if(!midiOk){e.preventDefault();e.stopPropagation();initMidi()}},true);
 addEventListener('pointerdown',()=>{if(!midiOk)initMidi()},{capture:true});
+function dcBeep(){try{AC();if(ac.state!='running')ac.resume();const t=ac.currentTime;[[660,0],[392,.12]].forEach(([f,o])=>{const os=ac.createOscillator(),g=ac.createGain();os.type='sine';os.frequency.value=f;g.gain.setValueAtTime(0,t+o);g.gain.linearRampToValueAtTime(.3,t+o+.01);g.gain.exponentialRampToValueAtTime(.001,t+o+.11);os.connect(g);g.connect(ac.destination);os.start(t+o);os.stop(t+o+.13)})}catch{}}
 function onmsg(e){stMark();const[s,a,b]=e.data,k=s&240;if(k==144&&b>0)down(a,b/127);else if(k==128||k==144)up(a)}
 function up(m){pressed.delete(m);voices[m]&&voices[m](ac.currentTime);delete voices[m]}
 function down(m,v){A();pressed.add(m);if(voices[m])voices[m](ac.currentTime);voices[m]=tone(m,ac.currentTime,0,v);if(!song)return;
@@ -679,7 +680,7 @@ let hd=null;
 function lpUI(run){if(!song||BD.length<2||document.body.classList.contains('home')){lpPos(lpB,0,0,0);lpPos(lpL,0,0,0);lpPos(lpR,0,0,0);return}
 const y=(Y[0]+Y[1])/2*Z,wp=$('pw').clientWidth,lo_=HDR*Z;lpB.classList.toggle('x',!!sel);
 if(!sel){lpPos(lpB,CX*Z,y,!run);lpPos(lpL,0,0,0);lpPos(lpR,0,0,0);return}
-if(hd){let sh=0;if(hd.sx>wp-50)sh=(hd.sx-(wp-50))*.12/Z;else if(hd.sx<lo_+50)sh=(hd.sx-(lo_+50))*.12/Z;if(sh&&mode=='idle'){seek(invX(xp+sh));xp=XT(pos)}hdSet()}
+if(hd){let sh=0;if(hd.sx>wp-50)sh=(hd.sx-(wp-50))*.2/Z;else if(hd.sx<lo_+50)sh=(hd.sx-(lo_+50))*.2/Z;if(sh&&mode=='idle'){seek(invX(xp+sh));xp=XT(pos)}hdSet()}
 const x0=xe(sel.a)*Z,x1=xe(sel.b)*Z,cl=x=>Math.min(Math.max(x,lo_+(hd?17:50)),wp-(hd?17:50));
 lpPos(lpL,cl(x0),y,!run);lpPos(lpR,cl(x1),y,!run);
 const a=Math.max(x0,lo_),b=Math.min(x1,wp);lpPos(lpB,b>a?(a+b)/2:CX*Z,y,!run)}
@@ -693,6 +694,7 @@ el.onpointermove=e=>{if(!hd||hd.side!=side)return;hd.sx=e.clientX-$('pw').getBou
 el.onpointerup=el.onpointercancel=()=>{hd=null}}
 hdrag(lpL,0);hdrag(lpR,1);
 function loop(){if(document.body.classList.contains('home')){requestAnimationFrame(loop);return}
+if(stud&&!hd){const k=sel?sel.a+','+sel.b:'';if(k!==selS){selS=k;selSave()}}
 if(fl){const n=performance.now(),dt=Math.min(50,n-fl.t);fl.t=n;if(!song||mode!='idle'||dr)fl=null;else{fl.x+=fl.v*dt;fl.v*=Math.exp(-dt/330);const q=invX(fl.x);seek(q);if(q<=-song.bm||q>=song.end||Math.abs(fl.v)<.03){fl=null;snap()}}}if(song){
 if(mode=='listen'||mode=='tempo'){pos=sp0+(ac.currentTime-t0)*bpm/60;
 if(sel&&!pgd&&pos>=sel.b+(mode=='tempo'?.65:0)){if(selHas())start(mode,true);else finish()}
@@ -855,16 +857,24 @@ function lockL(){try{screen.orientation.lock('landscape').catch(()=>0)}catch{}}
 /* tiempo de estudio por canción (se guarda en este dispositivo) */
 const stRead=()=>{try{return JSON.parse(localStorage.pv_study||'{}')}catch{return{}}};
 const fmtT=sec=>{const m=Math.floor(sec/60),hh=Math.floor(m/60),mm=m%60;return hh?hh+' h '+String(mm).padStart(2,'0')+' min':m+' min'};
+let selS='';
+function selSave(){if(!stud)return;try{const d=JSON.parse(localStorage.pv_sel||'{}');if(sel)d[stud]=[+sel.a.toFixed(4),+sel.b.toFixed(4)];else delete d[stud];localStorage.pv_sel=JSON.stringify(d)}catch{}}
+function selLoad(id){let r=null;try{r=JSON.parse(localStorage.pv_sel||'{}')[id]}catch{}
+if(Array.isArray(r)&&song&&r[0]>=-.01&&r[1]<=song.end+.01&&r[1]-r[0]>=.2){sel={a:r[0],b:r[1]};selS=sel.a+','+sel.b;if(mode=='idle'){seek(sel.a);pos=sel.a}}else selS=''}
 let stud=null,lastAct=0,stPend=0;const stAcc={};
 function stFlush(){if(!stud||!stPend)return;const d=stRead();d[stud]=(d[stud]||0)+stPend;stPend=0;try{localStorage.pv_study=JSON.stringify(d)}catch{}}
 const stMark=()=>{lastAct=performance.now()};
 for(const ev of['pointerdown','keydown'])addEventListener(ev,stMark,true);
 setInterval(()=>{if(!stud||document.hidden||document.body.classList.contains('home'))return;
+if(!(hs.L||hs.R||mode=='tempo'))return;/* sin mano elegida ni modo con tempo es solo reproducción: no cuenta */
 if(!((mode!='idle'&&mode!='')||performance.now()-lastAct<30000))return;
 const a=stAcc[stud]=(stAcc[stud]||0)+1;if(a==60)stPend+=60;else if(a>60)stPend++;if(stPend&&(a==60||a%5==0))stFlush()},1000);
+let wl=null,wlB=0;async function wkSync(){if(wlB||!navigator.wakeLock)return;wlB=1;try{const want=!document.hidden&&!document.body.classList.contains('home')&&((mode!='idle'&&mode!='')||performance.now()-lastAct<600000);
+if(want&&!wl){try{wl=await navigator.wakeLock.request('screen');wl.addEventListener('release',()=>{wl=null})}catch{wl=null}}else if(!want&&wl){try{await wl.release()}catch{}wl=null}}finally{wlB=0}}
+setInterval(wkSync,2000);document.addEventListener('visibilitychange',wkSync);/* la pantalla no se apaga mientras el player está abierto y hay actividad (10 min sin tocar nada la liberan) */
 addEventListener('pagehide',stFlush);document.addEventListener('visibilitychange',()=>{if(document.hidden)stFlush()});
 function showHome(){stFlush();stud=null;try{screen.orientation.unlock()}catch{}if(document.fullscreenElement)try{document.exitFullscreen()}catch{}stop();document.body.classList.add('home');renderHome()}
-async function playSong(s){goFs();try{const sg=await parseFile(s.name,s.buf);setSong(sg,s.title);if(s.author){song.composer=s.author;$('cmp').textContent=s.author}pushRec(s.id);stFlush();stud=s.id;stMark();history.pushState({v:'play'},'');lockL();const go=()=>{if(!history.state||history.state.v!='play')return;document.body.classList.remove('home');size();setTimeout(size,60)};/* en vertical se espera a que el móvil gire antes de mostrar el player, así no aparece ningún fondo intermedio */if(innerHeight>innerWidth&&innerWidth<=700){let d=0;const f=()=>{if(d)return;d=1;removeEventListener('resize',f);setTimeout(go,80)};addEventListener('resize',f);setTimeout(f,900)}else go()}catch(err){alert('No se pudo abrir la canción: '+err.message)}}
+async function playSong(s){goFs();try{const sg=await parseFile(s.name,s.buf);setSong(sg,s.title);if(s.author){song.composer=s.author;$('cmp').textContent=s.author}pushRec(s.id);stFlush();stud=s.id;stMark();selLoad(s.id);history.pushState({v:'play'},'');lockL();const go=()=>{if(!history.state||history.state.v!='play')return;document.body.classList.remove('home');size();setTimeout(size,60)};/* en vertical se espera a que el móvil gire antes de mostrar el player, así no aparece ningún fondo intermedio */if(innerHeight>innerWidth&&innerWidth<=700){let d=0;const f=()=>{if(d)return;d=1;removeEventListener('resize',f);setTimeout(go,80)};addEventListener('resize',f);setTimeout(f,900)}else go()}catch(err){alert('No se pudo abrir la canción: '+err.message)}}
 $('hback').onclick=()=>history.back();$('bk').onclick=()=>history.back();
 addEventListener('popstate',e=>{const st=e.state||{v:'home'};if(st.v=='play'&&!song)return history.go(-1);if(st.v=='play'){document.body.classList.remove('home');lockL();size();return}
 curCat=st.v=='cat'?st.id:null;if(st.v=='cat')view='songs';else if(st.view)view=st.view;showHome()});
