@@ -398,7 +398,7 @@ dialog input[type=checkbox]:checked::after{content:"";width:5px;height:9px;margi
 </div>
 </dialog>
 <script>
-const VER='1.3.7';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
+const VER='1.3.8';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 /* plicas de un grupo con barras: hacia arriba si hay alguna nota por debajo de la línea central y la más alejada por arriba no la supera en más de un grado (como en las ediciones impresas); hacia abajo si todas están en o sobre la línea o dominan claramente las de arriba */
 function farUpG(l){const mid=l[0].bt+4;let a=0,b=0;for(const n of l){const d=n.pos-mid;if(d>a)a=d;else if(-d>b)b=-d}return b>=1&&b>=a-1}
 let XPR=1;try{XPR=localStorage.lp_xpr=='0'?0:1}catch{}
@@ -456,13 +456,34 @@ function click(w,acc){const o=ac.createOscillator(),g=ac.createGain();o.frequenc
 g.gain.setValueAtTime(.15,w);g.gain.exponentialRampToValueAtTime(.001,w+.05);o.connect(g);g.connect(mg);o.start(w);o.stop(w+.06)}
 /* ---------- parsers ---------- */
 const STEP={C:0,D:1,E:2,F:3,G:4,A:5,B:6},SEMI=[0,2,4,5,7,9,11],PCS=[0,0,1,1,2,3,3,4,4,5,5,6],PCA=[0,1,0,1,0,0,1,0,1,0,1,0];
+/* Repeticiones: se despliega la partitura en el orden real (|: :| y casillas 1.ª/2.ª vez) */
+function repOrder(M){const N=M.length,fwd=[],bwd=[],ends=[];let cur=null;
+for(let i=0;i<N;i++){const bl=[...M[i].children].filter(e=>e.tagName=='barline');
+for(const b of bl){const r=b.querySelector('repeat'),ed=b.querySelector('ending');
+if(r){if(r.getAttribute('direction')=='forward')fwd[i]=1;else bwd[i]=+r.getAttribute('times')||2}
+if(ed&&ed.getAttribute('type')=='start'){cur={set:new Set((ed.getAttribute('number')||'1').split(/[\s,]+/).map(Number))}}}
+ends[i]=cur;
+for(const b of bl){const ed=b.querySelector('ending');if(ed&&(ed.getAttribute('type')=='stop'||ed.getAttribute('type')=='discontinue'))cur=null}}
+const order=[],cnt={};let i=0,rs=0,pass=1;
+while(i<N&&order.length<N*6+50){
+if(ends[i]&&!ends[i].set.has(pass)){const g=ends[i];while(i<N&&ends[i]===g)i++;continue}
+if(fwd[i])rs=i;order.push(i);
+if(bwd[i]&&(cnt[i]||0)+1<bwd[i]){cnt[i]=(cnt[i]||0)+1;pass=cnt[i]+1;i=rs;continue}
+if(bwd[i]){cnt[i]=0;pass=1;rs=i+1}
+else if(ends[i]&&(i+1>=N||ends[i+1]!==ends[i])){pass=1;rs=i+1}
+i++}
+return order}
+function expandReps(d){const ps=[...d.querySelectorAll('part')];if(!ps.length)return;const M0=[...ps[0].children].filter(e=>e.tagName=='measure');
+if(!M0.some(m=>m.querySelector('barline repeat, barline ending')))return;
+const o=repOrder(M0);if(o.length==M0.length&&o.every((v,k)=>v==k))return;
+for(const p of ps){const M=[...p.children].filter(e=>e.tagName=='measure');if(M.length!=M0.length)continue;const cl=o.map(k=>M[k].cloneNode(true));M.forEach(m=>m.remove());cl.forEach(m=>p.appendChild(m))}}
 function mkVel(dyns,hairs){const M={ppp:.2,pp:.3,p:.42,mp:.52,mf:.62,f:.75,ff:.88,fff:.96},lv=[],AC=new Set();
 for(const d of dyns){if(M[d.s]!=null)lv.push({t:d.t,v:M[d.s]});else if(d.s=='fp'){lv.push({t:d.t,v:.8},{t:d.t+.5,v:M.p})}else AC.add(d.t)}
 const srt=()=>lv.sort((a,b)=>a.t-b.t),at=t=>{let v=.62;for(const l of lv){if(l.t<=t+1e-4)v=l.v;else break}return v};srt();
 const hs=[...hairs].sort((a,b)=>a.a-b.a).map(h=>{const v0=at(h.a),e=lv.find(l=>Math.abs(l.t-h.b)<.02),v1=e?e.v:Math.max(.15,Math.min(.98,v0+(h.cr?.18:-.18)));if(!e){lv.push({t:h.b,v:v1});srt()}return{a:h.a,b:h.b,v0,v1}});
 return t=>{for(const h of hs)if(t>=h.a-1e-4&&t<h.b)return h.v0+(h.v1-h.v0)*(t-h.a)/(h.b-h.a);let v=at(t);for(const a of AC)if(Math.abs(a-t)<.02)v=Math.max(v,.92);return v}}
 function parseXML(txt){
-const d=new DOMParser().parseFromString(txt,'text/xml');if(d.querySelector('parsererror'))throw Error('XML no válido');
+const d=new DOMParser().parseFromString(txt,'text/xml');if(d.querySelector('parsererror'))throw Error('XML no válido');expandReps(d);
 const q=(e,s)=>e.querySelector(s)?.textContent,ev=[],bars=[],clefs={R:[],L:[]},ccs=[],slurs=[],dyns=[],hairs=[];let fifths=0,ts=[4,4],tempo=0,mtempo=0;
 const btAt=(h,t)=>{let b=clefs[h][0]?clefs[h][0].bt:BOT[h=='R'?0:1];for(const c of clefs[h])if(c.t<=t+1e-6)b=c.bt;return b};
 [...d.querySelectorAll('part')].forEach((p,pi)=>{let div=1,t=0,last=0;const ties={},slo={},wo={};
