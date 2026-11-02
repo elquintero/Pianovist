@@ -449,6 +449,10 @@ dialog input[type=checkbox]:checked::after{content:"";width:5px;height:9px;margi
 <div class="r"><span>Tema</span><span class="seg" data-for="th2"></span><select id="th2" hidden><option value="clasico" selected>Blanco</option><option value="negro">Oscuro</option></select></div>
 <div class="r"><span>Fuente</span><span class="seg" data-for="fn"></span><select id="fn" hidden><option value="serif" selected>Clásica</option><option value="sans">Moderna</option></select></div>
 <label class="r"><span>Iconos con color</span><input type="checkbox" id="ico" class="sw"></label>
+<h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 3v6h6V3M8 15h8"/></svg>Copia de seguridad</h3>
+<div class="r"><span>Exportar<small>Canciones, progreso y ajustes en un solo archivo (sin el token)</small></span><button id="bkx">Exportar copia</button></div>
+<div class="r"><span>Importar<small>Añade las canciones que falten y recupera tu progreso sin borrar lo que ya tienes</small></span><button id="bki">Importar copia</button><input id="bkf" type="file" accept=".zip,application/zip" hidden></div>
+<p class="hint"><small id="bkl"></small></p><p class="hint"><small id="bkm"></small></p>
 <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Instalación</h3>
 <div class="r"><span>App en el móvil</span><span class="rr"><button id="hin" class="p" hidden>Instalar app</button><small id="hist"></small></span></div>
 <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 01-15.5 6.2M3 12a9 9 0 0115.5-6.2M18 2v4h-4M6 22v-4h4"/></svg>Biblioteca compartida</h3>
@@ -483,7 +487,7 @@ dialog input[type=checkbox]:checked::after{content:"";width:5px;height:9px;margi
 </dialog>
 <dialog id="std"><div class="dh"><h2>Estadísticas</h2><button class="p" id="stc">Cerrar</button></div><div id="stb"></div></dialog>
 <script>
-const VER='1.5.2';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
+const VER='1.6.0';const $=i=>document.getElementById(i),cv=$('cv'),c=cv.getContext('2d'),kv=$('kv'),kc=kv.getContext('2d');
 /* plicas de un grupo con barras: hacia arriba si hay alguna nota por debajo de la línea central y la más alejada por arriba no la supera en más de un grado (como en las ediciones impresas); hacia abajo si todas están en o sobre la línea o dominan claramente las de arriba */
 function farUpG(l){const mid=l[0].bt+4;let a=0,b=0;for(const n of l){const d=n.pos-mid;if(d>a)a=d;else if(-d>b)b=-d}return b>=1&&b>=a-1}
 let VIS=null,XPR=1,GRC=1,FNG=1,PED=1,REP='s';try{REP=localStorage.lp_rep=='p'?'p':'s';XPR=localStorage.lp_xpr=='0'?0:1;GRC=localStorage.lp_grc=='0'?0:1;FNG=localStorage.lp_fng=='0'?0:1;PED=localStorage.lp_ped=='0'?0:1}catch{}
@@ -545,6 +549,7 @@ const r=t=>{g.gain.setTargetAtTime(0,t,.1);o.stop(t+.8);o2.stop(t+.8)};if(d)r(w+
 function click(w,acc){const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=acc?1500:1000;o.type='square';
 g.gain.setValueAtTime(.15,w);g.gain.exponentialRampToValueAtTime(.001,w+.05);o.connect(g);g.connect(mg);o.start(w);o.stop(w+.06)}
 /* ---------- parsers ---------- */
+const SMUO={ornamentShortTrill:'im',ornamentMordent:'mo',ornamentTrill:'tr',ornamentTurn:'tn',ornamentTurnInverted:'it',ornamentTurnSlash:'tn',ornamentTremblement:'im',ornamentPrecompMordentUpperPrefix:'im'};
 const ORNM={'trill-mark':'tr',shake:'tr','mordent':'mo','inverted-mordent':'im',turn:'tn','delayed-turn':'tn','inverted-turn':'it','delayed-inverted-turn':'it'};
 const STEP={C:0,D:1,E:2,F:3,G:4,A:5,B:6},SEMI=[0,2,4,5,7,9,11],PCS=[0,0,1,1,2,3,3,4,4,5,5,6],PCA=[0,1,0,1,0,0,1,0,1,0,1,0];
 /* Repeticiones: se despliega la partitura en el orden real (|: :| y casillas 1.ª/2.ª vez) */
@@ -604,6 +609,7 @@ const bms=[...e.querySelectorAll('beam')].map(b=>[+b.getAttribute('number'),b.te
 if(e.querySelector('tie[type=stop]')&&ties[k]){const o=ties[k],c2={t:on,dur,dd:dur,midi:mid,pos:pp,step:STEP[st],alter:al,hand,vo,bms,bt:btAt(hand,on),tc:1,par:o,pv:o.lc||o};o.dur+=dur;o.lc=c2;ev.push(c2);sl(e,c2);if(!e.querySelector('tie[type=start]'))delete ties[k];continue}
 const fe=e.querySelector('fermata'),n={t:on,dur,dd:dur,midi:mid,pos:pp,step:STEP[st],alter:al,hand,vo,bms,bt:btAt(hand,on)};const orE=e.getElementsByTagName('ornaments')[0];let orT=null,orA=null,wvS=null,wvE=null;
 if(orE){for(const k of orE.children){const o=ORNM[k.tagName];if(o&&!orT)orT=o;if(k.tagName=='accidental-mark'){const v={sharp:1,flat:-1,natural:0,'double-sharp':2,'flat-flat':-2}[k.textContent.trim()];if(v!=null)(orA??={})[k.getAttribute('placement')=='below'?'b':'a']=v}if(k.tagName=='wavy-line'){const wt=k.getAttribute('type'),wk=pi+'|'+(k.getAttribute('number')||'1');if(wt=='start')wvS=wk;else if(wt=='stop')wvE=wk}}}
+if(!orT)for(const oa of e.getElementsByTagName('other-articulation')){const m=SMUO[oa.getAttribute('smufl')];if(m){orT=m;break}}
 const fg=e.querySelector('fingering');if(fg&&/^\d/.test(fg.textContent.trim()))n.fg=fg.textContent.trim().slice(0,3);if(orT){n.orn=orT;if(orA)n.oa=orA}if(wvS)wvo[wvS]=n;if(wvE&&wvo[wvE]){wvo[wvE].tre=n;delete wvo[wvE]}if(fe)n.fm=fe.getAttribute('type')=='inverted'?-1:1;if(e.getElementsByTagName('arpeggiate').length)n.arp=1;ev.push(n);sl(e,n);if(e.querySelector('tie[type=start]'))ties[k]=n}}}});
 const sg=fin(ev,bars,mtempo||tempo||90,fifths,ts,ccs,grs);sg.tps=tps;sg.tau=mkTau(tps);if(ped.o&&sg.end>ped.o.a)peds.push({a:ped.o.a,b:sg.end,ps:ped.o.ps});sg.peds=peds.sort((a,b)=>a.a-b.a);if(repM&&sg.bars.length==repM.order.length){const o=repM.order,bs=sg.bars,N=repM.N,inst=[];o.forEach((m,k)=>(inst[m]??=[]).push(k));const Wst=[];let w=0;for(let m=0;m<N;m++){Wst[m]=w;const k=inst[m]?.[0];if(k!=null)w+=(k+1<bs.length?bs[k+1]:sg.end)-bs[k]}
 const kOf=t=>{let a=0,b=bs.length-1;while(a<b){const mm=(a+b+1)>>1;bs[mm]<=t+1e-6?a=mm:b=mm-1}return a};
@@ -1146,6 +1152,51 @@ function catChips(){const sl=$('hca'),box=$('hcc');if(!box)return;box.textConten
 $('hq').oninput=fillList;
 {const d=$('hdrop');for(const t of['dragenter','dragover'])d.addEventListener(t,e=>{e.preventDefault();d.classList.add('over')});for(const t of['dragleave','drop'])d.addEventListener(t,e=>{e.preventDefault();d.classList.remove('over')});
 d.addEventListener('drop',e=>{const f=e.dataTransfer&&e.dataTransfer.files[0];if(f){const dt=new DataTransfer();dt.items.add(f);$('hf').files=dt.files;$('hf').dispatchEvent(new Event('change'))}})}
+/* ---------- copia de seguridad ---------- */
+const BKRE=/^(pv_(study|stats|sel|recent)|lp[A-Za-z_]*)$/;
+function zipMake(ents){const enc=new TextEncoder(),parts=[],cen=[];let off=0;
+for(const e of ents){const nb=enc.encode(e.n),raw=e.d,crc=crc32(raw),h=new DataView(new ArrayBuffer(30));
+h.setUint32(0,0x04034b50,true);h.setUint16(4,20,true);h.setUint16(6,0x0800,true);h.setUint16(12,0x21,true);h.setUint32(14,crc,true);h.setUint32(18,raw.length,true);h.setUint32(22,raw.length,true);h.setUint16(26,nb.length,true);
+const c=new DataView(new ArrayBuffer(46));c.setUint32(0,0x02014b50,true);c.setUint16(4,20,true);c.setUint16(6,20,true);c.setUint16(8,0x0800,true);c.setUint16(14,0x21,true);c.setUint32(16,crc,true);c.setUint32(20,raw.length,true);c.setUint32(24,raw.length,true);c.setUint16(28,nb.length,true);c.setUint32(42,off,true);
+parts.push(new Uint8Array(h.buffer),nb,raw);cen.push(new Uint8Array(c.buffer),nb);off+=30+nb.length+raw.length}
+const cl=cen.reduce((a,x)=>a+x.length,0),end=new DataView(new ArrayBuffer(22));end.setUint32(0,0x06054b50,true);end.setUint16(8,ents.length,true);end.setUint16(10,ents.length,true);end.setUint32(12,cl,true);end.setUint32(16,off,true);
+return new Blob([...parts,...cen,new Uint8Array(end.buffer)],{type:'application/zip'})}
+async function zipRead(buf){const v=new DataView(buf),u=new Uint8Array(buf),out={};let e=buf.byteLength-22;while(e>=0&&v.getUint32(e,true)!=0x06054b50)e--;if(e<0)throw Error('No es un archivo de copia válido');
+let n=v.getUint16(e+10,true),p=v.getUint32(e+16,true);
+for(;n--;){const cm=v.getUint16(p+10,true),cs=v.getUint32(p+20,true),nl=v.getUint16(p+28,true),xl=v.getUint16(p+30,true),kl=v.getUint16(p+32,true),lo=v.getUint32(p+42,true),nm=new TextDecoder().decode(u.subarray(p+46,p+46+nl));p+=46+nl+xl+kl;
+const ds=lo+30+v.getUint16(lo+26,true)+v.getUint16(lo+28,true),raw=u.subarray(ds,ds+cs);
+out[nm]=cm?new Uint8Array(await new Response(new Blob([raw]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).arrayBuffer()):raw.slice()}
+return out}
+function bkInfo(){const t=+localStorage.pv_lastbk||0;$('bkl').textContent=t?'Última copia: '+new Date(t).toLocaleString('es-ES',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}):'Aún no has hecho ninguna copia.'}
+async function bkExport(){const m=$('bkm');m.textContent='Preparando…';
+try{const all=await DB.all(),enc=new TextEncoder(),ents=[],lib=[],used=new Set();
+for(const s of all){if(!s.buf)continue;const ext=((s.name||'').split('.').pop()||'mxl').toLowerCase().replace(/[^a-z0-9]/g,'')||'mxl';let fn='songs/'+String(s.id).replace(/[^\w.-]/g,'_')+'.'+ext;while(used.has(fn))fn+='_';used.add(fn);
+ents.push({n:fn,d:new Uint8Array(s.buf)});lib.push({id:s.id,title:s.title,author:s.author||'',cat:s.cat,catName:s.catName||'',name:s.name,src:s.src,added:s.added||0,file:fn})}
+const ls={};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(BKRE.test(k))ls[k]=localStorage.getItem(k)}
+ents.unshift({n:'library.json',d:enc.encode(JSON.stringify({format:'pianovist-backup',v:1,app:VER,created:new Date().toISOString(),songs:lib}))},{n:'data.json',d:enc.encode(JSON.stringify({ls}))});
+const blob=zipMake(ents),nm='Pianovist-copia-'+new Date().toISOString().slice(0,10)+'.zip',file=new File([blob],nm,{type:'application/zip'});let shared=false;
+if(navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],title:nm});shared=true}catch(e){if(e&&e.name=='AbortError'){m.textContent='';return}}}
+if(!shared){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=nm;document.body.append(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000)}
+sv('pv_lastbk',Date.now());bkInfo();m.textContent='Copia creada: '+lib.length+(lib.length==1?' canción':' canciones')+' · '+fmtKB(blob.size)}
+catch(err){m.textContent='No se pudo crear la copia: '+(err.message||err)}}
+function bkMerge(ls){const rd=k=>{try{return JSON.parse(localStorage[k]||'null')}catch{return null}};
+for(const k in ls){if(!BKRE.test(k))continue;const v=ls[k];try{
+if(k=='pv_study'){const a=rd(k)||{},b=JSON.parse(v);for(const i in b)a[i]=Math.max(a[i]||0,+b[i]||0);localStorage[k]=JSON.stringify(a)}
+else if(k=='pv_stats'){const a=rd(k)||{},b=JSON.parse(v);for(const i in b){const x=a[i]??={m:{},s:[]},y=b[i];for(const q in y.m||{}){const t=x.m[q]??=[0,0,0,0];y.m[q].forEach((n,j)=>t[j]=Math.max(t[j]||0,n||0))}const seen=new Set(x.s.map(r=>r[0]));for(const r of y.s||[])if(!seen.has(r[0]))x.s.push(r);x.s.sort((p,q)=>p[0]-q[0]);if(x.s.length>40)x.s=x.s.slice(-40)}localStorage[k]=JSON.stringify(a)}
+else if(k=='pv_sel'){const a=rd(k)||{},b=JSON.parse(v);for(const i in b)if(!a[i])a[i]=b[i];localStorage[k]=JSON.stringify(a)}
+else if(k=='pv_recent'){const a=rd(k)||[],b=JSON.parse(v);localStorage[k]=JSON.stringify([...new Set([...a,...b])].slice(0,12))}
+else if(localStorage.getItem(k)==null)localStorage[k]=v}catch{}}}
+async function bkImport(f){const m=$('bkm');m.textContent='Leyendo…';
+try{const z=await zipRead(await f.arrayBuffer()),dec=new TextDecoder();if(!z['library.json']||!z['data.json'])throw Error('No es una copia de Pianovist');
+const lib=JSON.parse(dec.decode(z['library.json'])),dat=JSON.parse(dec.decode(z['data.json']));if(lib.format!='pianovist-backup')throw Error('No es una copia de Pianovist');
+const have=new Set((await DB.all()).map(x=>x.id)),nw=(lib.songs||[]).filter(s=>s&&s.id&&!have.has(String(s.id))&&z[s.file]);
+if(!confirm('Se añadirán '+nw.length+(nw.length==1?' canción nueva':' canciones nuevas')+' (quedarán en este dispositivo) y se fusionarán tu progreso y ajustes sin borrar lo que ya tienes. ¿Continuar?')){m.textContent='';return}
+let ok=0,bad=0;for(const s of nw){try{const u=z[s.file],buf=u.buffer.slice(u.byteOffset,u.byteOffset+u.byteLength);await parseFile(String(s.name),buf.slice(0));
+await DB.put({id:String(s.id),title:String(s.title||s.name),author:String(s.author||''),cat:String(s.cat||'otras'),catName:String(s.catName||''),name:String(s.name),src:'local',added:+s.added||Date.now(),buf});ok++}catch{bad++}}
+bkMerge(dat.ls||{});await loadSongs();fillCats();fillList();renderHome();
+m.textContent='Importada: '+ok+(ok==1?' canción añadida':' canciones añadidas')+(bad?' ('+bad+' no válidas)':'')+'. Reinicia la app para aplicar los ajustes.'}
+catch(err){m.textContent='No se pudo importar: '+(err.message||err)}}
+$('bkx').onclick=bkExport;$('bki').onclick=()=>$('bkf').click();$('bkf').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(f)await bkImport(f)};bkInfo();
 $('hcg').onclick=()=>{endEdit();$('hmsg').textContent='';showTab('gen');$('hcfgd').showModal()};$('hcl').onclick=$('hbk').onclick=()=>$('hcfgd').close();
 $('hca').onchange=()=>{$('hnp').hidden=$('hca').value!='__new'};
 $('hf').onchange=async e=>{const f=e.target.files[0];pend=null;$('hmsg').textContent='';if(!f){fcard(0);return}
